@@ -14,9 +14,10 @@ class Expediente(models.Model):
 		
 class ExpedienteLey(Expediente):
 	#expediente = models.ForeignKey(Expediente)
-    #partido = models.ForeignKey(Partido)
-    partido = models.OneToOneField(Partido)
-    region = models.CharField(max_length=200)
+	#partido = models.ForeignKey(Partido)
+	#partido = models.OneToOneField(Partido)
+	partido = models.ForeignKey(Partido)
+	region = models.CharField(max_length=200)
 	
 class Pase(models.Model):
 	expediente = models.ForeignKey(Expediente)
