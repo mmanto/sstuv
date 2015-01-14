@@ -20,6 +20,19 @@ class ExpedienteAdmin(admin.ModelAdmin):
 	list_display = ('caracteristica', 'partido', 'region', 'numero', 'fecha' ,'alcance',  'cuerpo')
     
     
-admin.site.register(Expediente)
+    
+class ExpAdmin(admin.ModelAdmin):
+  fildsets= [
+	(None, {'fields': ['caracteristica']}),
+	(None, {'fields': ['numero']}),
+        (None, {'fields': ['fecha']}),
+	(None, {'fields': ['alcance']}),
+	(None, {'fields': ['cuerpo']})
+    ]
+  
+  list_display = ('caracteristica', 'numero', 'fecha' ,'alcance',  'cuerpo')
+    
+    
+admin.site.register(Expediente, ExpAdmin)
 admin.site.register(ExpedienteLey, ExpedienteAdmin)
 admin.site.register(Pase)
