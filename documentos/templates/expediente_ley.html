@@ -1,0 +1,87 @@
+{% extends "base.html" %} {% block content %}
+<h2>Expedientes</h2>
+
+
+
+
+<form action="/guardar/" method="post"> 
+
+
+
+<div>
+	<label>Número</label> 
+	<input name="numero" value={{expediente.numero}} readonly>
+
+</div>
+<div>
+	<label>Características</label> 
+	<input name="caracteristica" value={{expediente.caracteristica}} >
+
+</div>
+
+<div>
+	<label>Fecha</label> 
+	<input name="fecha" value={{expediente.fecha}}  type="date">
+
+</div>
+
+<div>
+	<label>Alcance</label> 
+	<input name="alcance" value={{expediente.alcance}}>
+
+</div>
+
+<div>
+	<label>Cuerpo</label> 
+	<input name="cuerpo" value={{expediente.cuerpo}} >
+
+</div>
+
+
+<div>
+	<label>Partido</label> 
+<!-- 	<input name="fecha" value={{expediente.partido.nombre}} > -->
+
+
+<select>
+
+{% for partido in partidos%}
+
+	{% if partido.numero == expediente.partido.numero %}
+	  <option value={{partido.numero}} selected="true" >{{partido.nombre}}</option>
+	{% else %}  
+	  <option value={{partido.numero}}>{{partido.nombre}}</option>
+	{% endif %}
+ 
+{% endfor %}
+
+
+</select>
+
+</div>
+
+
+<div>
+	<label>Región</label> 
+	<select>
+
+		{% for departamento in departamentos%}
+
+			{% if departamento.numero == expediente.departamento.numero %}
+			  <option value={{departamento.numero}} selected="true" >{{departamento.nombre}}</option>
+			{% else %}  
+			  <option value={{departamento.numero}}>{{departamento.nombre}}</option>
+			{% endif %}
+ 
+		{% endfor %}
+
+
+	</select>
+</div>
+
+<input type="submit" value="Guardar">
+
+
+</form>
+
+{% endblock %}
