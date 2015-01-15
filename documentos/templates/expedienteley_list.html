@@ -2,9 +2,59 @@
 
 {% block content %}
 <h2>Expedientes</h2>
-<ul>
-{% for expediente in object_list %}
-<li>{{ expediente.numero }}</li>
-{% endfor %}
-</ul>
+
+
+
+<form action="/buscar/" method="get">
+        <input type="text" id="id" name="id" value="0" type="number" >
+        <input type="submit" value="Buscar">
+</form>
+
+
+<form action="/nuevo/0/" method="get">
+        <input type="submit" value="Nuevo Expediente Ley">
+</form>
+
+
+
+
+<table style="width:100%">
+  <tr>
+    <th>Número</th>
+    <th>Caracteristica</th>
+ 	<th>Fecha</th>
+ 	<th>Alcance</th>
+ 	<th>Cuerpo</th>
+ 	<th>Partido</th>
+ 	<th>Región</th>		
+  </tr>
+  
+  
+  	{% for expediente in expedientes %}
+
+		<tr>
+	    <td>
+        <a href="/inspeccionar/{{ expediente.numero }}/" >{{ expediente.numero }}</a>
+	     </td>
+	    
+	    <td>{{ expediente.caracteristica }}</td>		
+		
+	    
+	    <td>{{ expediente.fecha }}</td>		
+		
+		<td>{{ expediente.alcance }}</td>		
+		
+		<td>{{ expediente.cuerpo }}</td>		
+			
+		<td>{{ expediente.partido.nombre }}</td>		
+		
+		<td>{{ expediente.region.nombre }}</td>		
+		</tr>
+					
+		
+	{% endfor %}
+
+</table>
+
+
 {% endblock %}
