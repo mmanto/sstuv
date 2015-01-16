@@ -9,10 +9,10 @@ from comun.models import Partido, Departamento
 
 
 
-def showExpediente(request, id):
+def showExpediente(request, tipo, id):
     
     id= int(id)
-    
+        
     partidos =  Partido.objects.all()
    
     departamentos=Departamento.objects.all()
@@ -23,7 +23,7 @@ def showExpediente(request, id):
 
    
     else:
-        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos})
+        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
     
    
   
@@ -33,18 +33,30 @@ def showExpediente(request, id):
 
 def loadBusquedaExpediente(request):
     
-        return render(request, 'expedienteley_list.html')
+        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'})
+
+
+
+
+def loadBusquedaExpedienteLey(request):
     
+        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'})
+
+
+ 
+
+
+  
     
-def showResultados(request):
+def showResultados(request, tipo):
     
     expedientes= []
     if 'id' in request.GET:
         
         id= int(request.GET['id'],0)
 
-        if not id:
-            id=0
+#         if not id:
+#             id=0
 
         if id == 0 :   
             expedientes = ExpedienteLey.objects.all()
@@ -53,9 +65,10 @@ def showResultados(request):
              if(ExpedienteLey.objects.filter(numero=id).exists()):         
                 expedientes.append(  ExpedienteLey.objects.get(numero=id))
  
-    return render(request, 'expedienteley_list.html', {'expedientes' : expedientes})
+    return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
 
      
+   
     
 def saveExpediente(request):
     
@@ -65,12 +78,7 @@ def saveExpediente(request):
         if form.is_valid():
             cd = form.cleaned_data
             
-            send_mail(
-                cd['subject'],
-                cd['message'],
-                cd.get('email', 'noreply@example.com'),
-                ['siteowner@example.com'],
-            )
+            #  TODO persistir         
             
     else:
         form = ContactForm()
@@ -79,6 +87,4 @@ def saveExpediente(request):
     return render(request, 'expedienteley_list.html')
     
     
-# def loadPartidos(request):
-#    partidos= Partido.objects.all()
         

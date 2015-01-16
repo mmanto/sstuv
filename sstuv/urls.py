@@ -11,11 +11,20 @@ urlpatterns = patterns('',
    
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^expedientes/$', views.loadBusquedaExpediente),
-    url(r'^buscar/$', views.showResultados),
-    url(r'^inspeccionar/(\d+)/$', views.showExpediente),
-    url(r'^guardar/$', views.saveExpediente),
     
-    url(r'^nuevo/(\d+)/$', views.showExpediente),
+    #ExpedienteLey     
+    
+    url(r'^expedientesLey/$', views.loadBusquedaExpedienteLey),
+    url(r'^expedientes/$', views.loadBusquedaExpediente),
+   
+        
+    url(r'^buscar/(.+)/$', views.showResultados),
+    url(r'^inspeccionar/(.+)/(\d+)/$', views.showExpediente),
+    url(r'^guardar/$', views.saveExpediente),
+    url(r'^nuevo/(.+)/(\d+)/$', views.showExpediente)
+
+    
+    #Pase     
+
 
 )
