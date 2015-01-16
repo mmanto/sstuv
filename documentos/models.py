@@ -19,6 +19,7 @@ class ExpedienteLey(Expediente):
 	partido = models.ForeignKey(Partido)
 	region = models.CharField(max_length=200)
 	
+	
 class Pase(models.Model):
 	expediente = models.ForeignKey(Expediente)
 	departamento_origen = models.OneToOneField(Departamento, primary_key=True)

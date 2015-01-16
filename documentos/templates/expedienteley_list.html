@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Expedientes</h2>
+<h2>{{tipo}}</h2>
 
 
 
@@ -12,7 +12,7 @@
 
 
 <form action="/nuevo/{{tipo}}/0/" method="get">
-        <input type="submit" value="Nuevo Expediente Ley">
+        <input type="submit" value="Nuevo {{tipo}}">
         
 </form>
 
