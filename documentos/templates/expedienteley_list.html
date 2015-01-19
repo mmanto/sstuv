@@ -1,10 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Expedientes</h2>
-<ul>
-{% for expediente in object_list %}
-<li>{{ expediente.numero }}</li>
-{% endfor %}
-</ul>
+<h2>{{tipo}}</h2>
+
+
+
+<form action="/buscar/{{tipo}}" method="get">
+        <input type="text" id="id" name="id" value="0" type="number" >
+        <input type="submit" value="Buscar">
+</form>
+
+
+<form action="/nuevo/{{tipo}}/0/" method="get">
+        <input type="submit" value="Nuevo {{tipo}}">
+        
+</form>
+
+
+
+<table style="width:100%">
+  <tr>
+    <th>Número</th>
+    <th>Caracteristica</th>
+ 	<th>Fecha</th>
+ 	<th>Alcance</th>
+ 	<th>Cuerpo</th>
+ 	
+ 	{% if tipo == 'ExpedienteLey'%}
+	 	<th>Partido</th>
+	 	<th>Región</th>		
+ 	{% endif %}
+  </tr>
+  
+  
+  	{% for expediente in expedientes %}
+
+		<tr>
+		    <td>
+	      	  <a href="/inspeccionar/{{tipo}}/{{ expediente.numero }}/" >{{ expediente.numero }}</a>
+		    </td>
+		    
+		    <td>{{ expediente.caracteristica }}</td>		
+			
+		    
+		    <td>{{ expediente.fecha }}</td>		
+			
+			<td>{{ expediente.alcance }}</td>		
+			
+			<td>{{ expediente.cuerpo }}</td>		
+		
+	
+			{% if tipo == 'ExpedienteLey'%}
+				<td>{{ expediente.partido.nombre }}</td>		
+				<td>{{ expediente.region.nombre }}</td>		
+			{% endif %}
+		</tr>
+		
+	{% endfor %}
+
+</table>
+
+
 {% endblock %}

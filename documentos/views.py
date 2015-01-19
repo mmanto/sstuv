@@ -1,39 +1,105 @@
-from django.shortcuts import render, render_to_response
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.http.response import HttpResponse
+from django.shortcuts import render
+
+
+from django.views import generic
+from documentos.models import ExpedienteLey, Expediente
 from django.core.context_processors import request
-from django.views.generic.list import ListView
-from documentos.models import ExpedienteLey
-from django.contrib.redirects.models import Redirect
-from django.contrib.auth import authenticate, logout, login, user_logged_in
-from django.contrib.auth.views import redirect_to_login, logout_then_login
-from django.contrib import messages
-from django.template import RequestContext
+from documentos.forms import ExpedienteLeyForm, ExpedienteForm
+from comun.models import Partido, Departamento
+
+
+
+def showExpediente(request, tipo, id):
+    
+    id= int(id)
+        
+    partidos =  Partido.objects.all()
+   
+    departamentos=Departamento.objects.all()
+    
+    #Si el id es 0 es uno nuevo
+    if(id != 0):
+        
+        if(tipo == 'ExpedienteLey'):
+            expediente = ExpedienteLey.objects.get(numero=id)
+        else:
+            expediente = Expediente.objects.get(numero=id)
+        return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+  
+    else:
+        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+    
+   
+  
+   
+        
+
+
+def loadBusquedaExpediente(request):
+    
+        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'})
+
+
+
+
+
+
+def loadBusquedaExpedienteLey(request):
+    
+        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'})
+
+
  
 
-class LoginView(ListView):
+
+  
     
-    def login(request, template_name='registration/login.html'):
-        return render(request, 'login.html')
+def showResultados(request, tipo):
+    
+    expedientes= []
+    if 'id' in request.GET:
         
-    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
-    def home(request, template_name='registration/login.html'):
-        return HttpResponseRedirect('/sig/expedientes/')
-                    
-    def logout(request):
-        template_name = 'auth/login_out.html'
-        return logout_then_login(request,login_url='/sig/auth/login')
+        id= int(request.GET['id'],0)
+
+#         if id == 0 :   
+#             expedientes = ExpedienteLey.objects.all()
+#         else :
+        if(tipo == 'ExpedienteLey'):
+           if(ExpedienteLey.objects.filter(numero=id).exists()):         
+                expedientes.append(ExpedienteLey.objects.get(numero=id))
+        else:    
+             if(Expediente.objects.filter(numero=id).exists()):         
+                expedientes.append(Expediente.objects.get(numero=id))
+
+            
+ 
+ 
+    return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
+
+     
+   
+    
+def saveExpediente(request):
+    
+    tipo= request.POST.get('tipo','')
+
+    if request.method == 'POST':
         
-    def get_queryset(self):
-        return ExpedienteLey.objects.all()
+        if(tipo == 'Expediente'):
+            form = ExpedienteForm(request.POST)
+        else:
+            form = ExpedienteLeyForm(request.POST)
+            
+        if form.is_valid():
+            form.save()   
+        else:
+#             form_errors = form.erros 
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+   
+            
+    
+    
+    return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+    
     
         
-class ExpedientesView(ListView):
-    #model = ExpedienteLey.objects.all()
-    template_name = 'expedienteley_list.html'
-    paginate_by = 10
-    
-    def get_queryset(self):
-        return ExpedienteLey.objects.all()
-    

@@ -89,3 +89,4 @@ STATIC_URL = '/static/'
 # url to redirect after successfull login
 LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
+
