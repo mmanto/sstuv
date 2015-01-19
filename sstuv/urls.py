@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^expedientes/$', views.loadBusquedaExpediente),
    
         
-    url(r'^buscar/(.+)/$', views.showResultados),
+    url(r'^buscar/(.*)/$', views.showResultados),
     url(r'^inspeccionar/(.+)/(\d+)/$', views.showExpediente),
     url(r'^guardar/$', views.saveExpediente),
     url(r'^nuevo/(.+)/(\d+)/$', views.showExpediente)

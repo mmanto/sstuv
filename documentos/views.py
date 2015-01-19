@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from documentos.models import ExpedienteLey, Expediente
 from django.core.context_processors import request
-from documentos import forms
+from documentos.forms import ExpedienteLeyForm, ExpedienteForm
 from comun.models import Partido, Departamento
 
 
@@ -81,19 +81,25 @@ def showResultados(request, tipo):
     
 def saveExpediente(request):
     
-    
+    tipo= request.POST.get('tipo','')
+
     if request.method == 'POST':
-        form = ExpedienteLeyForm(request.POST)
+        
+        if(tipo == 'Expediente'):
+            form = ExpedienteForm(request.POST)
+        else:
+            form = ExpedienteLeyForm(request.POST)
+            
         if form.is_valid():
-            cd = form.cleaned_data
+            form.save()   
+        else:
+#             form_errors = form.erros 
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+   
             
-            #  TODO persistir         
-            
-    else:
-        form = ContactForm()
     
     
-    return render(request, 'expedienteley_list.html')
+    return render(request, 'expedienteley_list.html',{'tipo' : tipo})
     
     
         
