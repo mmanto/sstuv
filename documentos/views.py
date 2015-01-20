@@ -66,20 +66,24 @@ class ExpedientesView(ListView):
         expedientes= []
         if 'id' in request.GET:
             
-            id= int(request.GET['id'],0)
+#             id= int(request.GET['id'],0)
     
-            if id == 0 :
-                expedientes = ExpedienteLey.objects.all()
+            if request.GET['id'] =='' or request.GET['id'] == '0'  :
+                expedientes = Expediente.objects.all()
             else :
-                if(tipo == 'ExpedienteLey'):
-                   if(ExpedienteLey.objects.filter(numero=id).exists()):         
-                        expedientes.append(ExpedienteLey.objects.get(numero=id))
-                else:    
-                     if(Expediente.objects.filter(numero=id).exists()):         
-                        expedientes.append(Expediente.objects.get(numero=id))
-    
+             
+                try:
                 
-     
+                    id= int(request.GET['id'],0)
+    
+                    if(tipo == 'ExpedienteLey'):
+                       if(ExpedienteLey.objects.filter(numero=id).exists()):         
+                            expedientes.append(ExpedienteLey.objects.get(numero=id))
+                    else:    
+                         if(Expediente.objects.filter(numero=id).exists()):         
+                            expedientes.append(Expediente.objects.get(numero=id))
+                except:         
+                    expedientes= []
      
         return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
 
