@@ -38,7 +38,7 @@
                 {% if user.has_usable_password %}
                 <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
                 {% endif %}
-                <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a>
+                <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
             {% endblock %}
         </div>
         {% endif %}
@@ -48,7 +48,9 @@
     {% block breadcrumbs %}
     <div class="breadcrumbs">
     
-    <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a>
+
+    <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a> 
+    <a href='/sig/expedientes/buscar/{{tipo}}/0'> | Expedientes </a>
     
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>

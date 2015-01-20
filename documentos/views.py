@@ -1,105 +1,130 @@
 from django.shortcuts import render
 
 
-from django.views import generic
+from django.views.generic import ListView
 from documentos.models import ExpedienteLey, Expediente
 from django.core.context_processors import request
 from documentos.forms import ExpedienteLeyForm, ExpedienteForm
 from comun.models import Partido, Departamento
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import logout_then_login
+from django.http import HttpResponseRedirect
 
-
-
-def showExpediente(request, tipo, id):
+class LoginView(ListView):
     
-    id= int(id)
+    def login(request, template_name='registration/login.html'):
+        return render(request, 'login.html')
         
-    partidos =  Partido.objects.all()
-   
-    departamentos=Departamento.objects.all()
+    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
+    def home(request, template_name='registration/login.html'):
+        return HttpResponseRedirect('/sig/expedientes/')
+                    
+    def logout(request):
+        template_name = 'auth/login_out.html'
+        return logout_then_login(request,login_url='/sig/auth/login')
+        
+    def get_queryset(self):
+        return ExpedienteLey.objects.all()
     
-    #Si el id es 0 es uno nuevo
-    if(id != 0):
+    
+class ExpedientesView(ListView):
+    #model = ExpedienteLey.objects.all()
+    template_name = 'expedienteley_list.html'
+    paginate_by = 10
+    
+    def showExpediente(request, tipo, id):
+    
+        id= int(id)
+            
+        partidos =  Partido.objects.all()
+       
+        departamentos=Departamento.objects.all()
         
-        if(tipo == 'ExpedienteLey'):
-            expediente = ExpedienteLey.objects.get(numero=id)
+        #Si el id es 0 es uno nuevo
+        if(id != 0):
+            
+            if(tipo == 'ExpedienteLey'):
+                expediente = ExpedienteLey.objects.get(numero=id)
+            else:
+                expediente = Expediente.objects.get(numero=id)
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+      
         else:
-            expediente = Expediente.objects.get(numero=id)
-        return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
-  
-    else:
-        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
-    
-   
-  
-   
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
         
-
-
-def loadBusquedaExpediente(request):
     
+ 
+    def loadBusquedaExpediente(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'})
-
-
-
-
-
-
-def loadBusquedaExpedienteLey(request):
     
+
+    def loadBusquedaExpedienteLey(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'})
 
+    def showResultados(request, tipo):
 
- 
-
-
-  
-    
-def showResultados(request, tipo):
-    
-    expedientes= []
-    if 'id' in request.GET:
-        
-        id= int(request.GET['id'],0)
-
-#         if id == 0 :   
-#             expedientes = ExpedienteLey.objects.all()
-#         else :
-        if(tipo == 'ExpedienteLey'):
-           if(ExpedienteLey.objects.filter(numero=id).exists()):         
-                expedientes.append(ExpedienteLey.objects.get(numero=id))
-        else:    
-             if(Expediente.objects.filter(numero=id).exists()):         
-                expedientes.append(Expediente.objects.get(numero=id))
-
+        expedientes= []
+        if 'id' in request.GET:
             
- 
- 
-    return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
-
+            id= int(request.GET['id'],0)
+    
+            if id == 0 :
+                expedientes = ExpedienteLey.objects.all()
+            else :
+                if(tipo == 'ExpedienteLey'):
+                   if(ExpedienteLey.objects.filter(numero=id).exists()):         
+                        expedientes.append(ExpedienteLey.objects.get(numero=id))
+                else:    
+                     if(Expediente.objects.filter(numero=id).exists()):         
+                        expedientes.append(Expediente.objects.get(numero=id))
+    
+                
      
-   
-    
-def saveExpediente(request):
-    
-    tipo= request.POST.get('tipo','')
+     
+        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
 
-    if request.method == 'POST':
+    
+         
+    def saveExpediente(request):
         
-        if(tipo == 'Expediente'):
-            form = ExpedienteForm(request.POST)
-        else:
+        if request.method == 'POST':
             form = ExpedienteLeyForm(request.POST)
-            
-        if form.is_valid():
-            form.save()   
+            if form.is_valid():
+                cd = form.cleaned_data
+                
+                send_mail(
+                    cd['subject'],
+                    cd['message'],
+                    cd.get('email', 'noreply@example.com'),
+                    ['siteowner@example.com'],
+                )
+                
         else:
-#             form_errors = form.erros 
-            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-   
-            
-    
-    
-    return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-    
-    
+            form = ContactForm()
         
+        
+        return render(request, 'expedienteley_list.html')
+    
+    def saveExpediente(request):
+    
+        tipo= request.POST.get('tipo','')
+    
+        if request.method == 'POST':
+            
+            if(tipo == 'Expediente'):
+                form = ExpedienteForm(request.POST)
+            else:
+                form = ExpedienteLeyForm(request.POST)
+                
+            if form.is_valid():
+                form.save()   
+            else:
+    #             form_errors = form.erros 
+                return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+        
+        return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+        
+
+    def get_queryset(self):
+        return ExpedienteLey.objects.all()
+

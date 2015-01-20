@@ -5,17 +5,16 @@
 
 
 
-<form action="/buscar/{{tipo}}" method="get">
+<form action="/sig/expedientes/buscar/cc" method="get">
         <input type="text" id="id" name="id" value="0" type="number" >
         <input type="submit" value="Buscar">
 </form>
 
 
-<form action="/nuevo/{{tipo}}/0/" method="get">
+<form action="/sig/expedientes/nuevo/{{tipo}}/0/" method="get">
         <input type="submit" value="Nuevo {{tipo}}">
         
 </form>
-
 
 
 <table style="width:100%">
@@ -37,7 +36,7 @@
 
 		<tr>
 		    <td>
-	      	  <a href="/inspeccionar/{{tipo}}/{{ expediente.numero }}/" >{{ expediente.numero }}</a>
+	      	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.numero }}/" >{{ expediente.numero }}</a>
 		    </td>
 		    
 		    <td>{{ expediente.caracteristica }}</td>		
