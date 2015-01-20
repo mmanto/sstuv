@@ -89,25 +89,6 @@ class ExpedientesView(ListView):
 
     
          
-    def saveExpediente(request):
-        
-        if request.method == 'POST':
-            form = ExpedienteLeyForm(request.POST)
-            if form.is_valid():
-                cd = form.cleaned_data
-                
-                send_mail(
-                    cd['subject'],
-                    cd['message'],
-                    cd.get('email', 'noreply@example.com'),
-                    ['siteowner@example.com'],
-                )
-                
-        else:
-            form = ContactForm()
-        
-        
-        return render(request, 'expedienteley_list.html')
     
     def saveExpediente(request):
     
@@ -120,7 +101,7 @@ class ExpedientesView(ListView):
             else:
                 form = ExpedienteLeyForm(request.POST)
                 
-            if form.is_valid():
+            if form.is_valid():                
                 form.save()   
             else:
     #             form_errors = form.erros 
