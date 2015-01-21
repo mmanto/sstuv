@@ -12,17 +12,25 @@
 
 
 
-
-
-
-
 {% csrf_token %}
 
-{% for field in form.visible_fields %}
-   {{ field.errors }}
-   {{ field.help_text }}
-   {{ field }}
-{% endfor %}
+{% if form.errors %}
+	<!-- Error messaging -->
+	<div id="errors">
+		<div class="inner">
+			<p>Errores:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}
+						<li>{{ field.label }}: Requerido</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<!-- /Error messaging -->
+{% endif %}
 
 
 <input name="tipo" value="{{tipo}}" type="hidden">

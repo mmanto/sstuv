@@ -112,7 +112,7 @@ class ExpedientesView(ListView):
             else:
                 
     #             form_errors = form.erros 
-                return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form})
+                return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form, 'accion' : 'nuevo'})
         
         return render(request, 'expedienteley_list.html',{'tipo' : tipo})
     
@@ -122,10 +122,10 @@ class ExpedientesView(ListView):
     
             tipo= request.POST.get('tipo','')
             numero =request.POST.get('numero','')
-        
+            
         
             if request.method == 'POST':
-                
+                form=''
                 if(tipo == 'Expediente'):
                     
                     expediente = Expediente.objects.get(numero = numero)
@@ -140,8 +140,8 @@ class ExpedientesView(ListView):
                      form.save()   
                 else:
                     
-        #             form_errors = form.erros 
-                    return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form})
+        #           form_errors = form.erros 
+                    return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
             return render(request, 'expedienteley_list.html',{'tipo' : tipo})
     
