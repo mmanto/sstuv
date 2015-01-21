@@ -9,6 +9,8 @@ from comun.models import Partido, Departamento
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 from django.http import HttpResponseRedirect
+from idlelib.SearchEngine import get
+from asyncio.base_events import Server
 
 class LoginView(ListView):
     
@@ -35,7 +37,7 @@ class ExpedientesView(ListView):
     def showExpediente(request, tipo, id):
     
         id= int(id)
-            
+        
         partidos =  Partido.objects.all()
        
         departamentos=Departamento.objects.all()
@@ -43,14 +45,18 @@ class ExpedientesView(ListView):
         #Si el id es 0 es uno nuevo
         if(id != 0):
             
+                  
             if(tipo == 'ExpedienteLey'):
                 expediente = ExpedienteLey.objects.get(numero=id)
             else:
                 expediente = Expediente.objects.get(numero=id)
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion' : 'editar'})
       
         else:
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+            
+           
+            
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion' : 'nuevo'})
         
     
  
@@ -104,10 +110,41 @@ class ExpedientesView(ListView):
             if form.is_valid():                
                 form.save()   
             else:
+                
     #             form_errors = form.erros 
-                return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+                return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form})
         
         return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+    
+
+
+    def updateExpediente(request):
+    
+            tipo= request.POST.get('tipo','')
+            numero =request.POST.get('numero','')
+        
+        
+            if request.method == 'POST':
+                
+                if(tipo == 'Expediente'):
+                    
+                    expediente = Expediente.objects.get(numero = numero)
+                    
+                    form = ExpedienteForm(request.POST, instance=expediente)
+                else:
+                    form = ExpedienteLeyForm(request.POST)
+                    
+                if form.is_valid():  
+                   
+                     
+                     form.save()   
+                else:
+                    
+        #             form_errors = form.erros 
+                    return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form})
+            
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+    
         
 
     def get_queryset(self):
