@@ -9,6 +9,7 @@ from comun.models import Partido, Departamento
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 from django.http import HttpResponseRedirect
+from django.template import RequestContext 
 
 class LoginView(ListView):
     
@@ -47,19 +48,19 @@ class ExpedientesView(ListView):
                 expediente = ExpedienteLey.objects.get(numero=id)
             else:
                 expediente = Expediente.objects.get(numero=id)
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo}, context_instance=RequestContext(request))
       
         else:
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo})
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo},context_instance=RequestContext(request))
         
     
  
     def loadBusquedaExpediente(request):
-        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'})
+        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
 
     def loadBusquedaExpedienteLey(request):
-        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'})
+        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
     def showResultados(request, tipo):
 
@@ -85,7 +86,7 @@ class ExpedientesView(ListView):
                 except:         
                     expedientes= []
      
-        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
+        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
 
     
          
@@ -107,7 +108,7 @@ class ExpedientesView(ListView):
             form = ContactForm()
         
         
-        return render(request, 'expedienteley_list.html')
+        return render(request, 'expedienteley_list.html', context_instance=RequestContext(request))
     
     def saveExpediente(request):
     
@@ -126,7 +127,7 @@ class ExpedientesView(ListView):
     #             form_errors = form.erros 
                 return render(request, 'expedienteley_list.html',{'tipo' : tipo})
         
-        return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+        return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
         
 
     def get_queryset(self):
