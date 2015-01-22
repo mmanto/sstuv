@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_site.html" %}
 
 {% block content %}
 <h2>{{tipo}}</h2>
@@ -42,7 +42,7 @@
 		    <td>{{ expediente.caracteristica }}</td>		
 			
 		    
-		    <td>{{ expediente.fecha }}</td>		
+		    <td>{{expediente.fecha | date:"SHORT_DATE_FORMAT"}}</td>		
 			
 			<td>{{ expediente.alcance }}</td>		
 			
