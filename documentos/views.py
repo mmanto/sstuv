@@ -49,6 +49,7 @@ class ExpedientesView(ListView):
                 expediente = ExpedienteLey.objects.get(numero=id)
             else:
                 expediente = Expediente.objects.get(numero=id)
+
             return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar'}, context_instance=RequestContext(request) )
       
         else:
