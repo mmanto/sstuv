@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-
 from django.views.generic import ListView
 from documentos.models import ExpedienteLey, Expediente
 from django.core.context_processors import request
@@ -9,8 +7,10 @@ from comun.models import Partido, Departamento
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 from django.http import HttpResponseRedirect
+from django.template import RequestContext 
 from idlelib.SearchEngine import get
 from asyncio.base_events import Server
+
 
 class LoginView(ListView):
     
@@ -37,7 +37,7 @@ class ExpedientesView(ListView):
     def showExpediente(request, tipo, id):
     
         id= int(id)
-        
+            
         partidos =  Partido.objects.all()
        
         departamentos=Departamento.objects.all()
@@ -45,27 +45,23 @@ class ExpedientesView(ListView):
         #Si el id es 0 es uno nuevo
         if(id != 0):
             
-                  
             if(tipo == 'ExpedienteLey'):
                 expediente = ExpedienteLey.objects.get(numero=id)
             else:
                 expediente = Expediente.objects.get(numero=id)
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion' : 'editar'})
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar'}, context_instance=RequestContext(request) )
       
         else:
-            
-           
-            
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion' : 'nuevo'})
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
         
     
  
     def loadBusquedaExpediente(request):
-        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'})
+        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
 
     def loadBusquedaExpedienteLey(request):
-        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'})
+        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
     def showResultados(request, tipo):
 
@@ -91,10 +87,8 @@ class ExpedientesView(ListView):
                 except:         
                     expedientes= []
      
-        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo })
+        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
 
-    
-         
     
     def saveExpediente(request):
     
@@ -107,16 +101,14 @@ class ExpedientesView(ListView):
             else:
                 form = ExpedienteLeyForm(request.POST)
                 
-            if form.is_valid():                
+            if form.is_valid():
                 form.save()   
             else:
-                
     #             form_errors = form.erros 
-                return render(request, 'expediente_ley.html',{'tipo' : tipo, 'form':form, 'accion' : 'nuevo'})
+                return render(request, 'expedienteley_list.html',{'tipo' : tipo})
         
-        return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-    
-
+        return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
+        
 
     def updateExpediente(request):
     
@@ -144,9 +136,7 @@ class ExpedientesView(ListView):
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
             return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-    
         
-
     def get_queryset(self):
         return ExpedienteLey.objects.all()
 
