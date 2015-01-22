@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.shortcuts import render
 from documentos.views import LoginView
 from documentos import sites
-
+from django.conf import settings
 
 
 
@@ -13,6 +13,7 @@ urlpatterns = patterns('',
                    url(r'^auth/logout/$', LoginView.logout, name='logout_view' ),
                    url(r'^$', LoginView.home),
                    url(r'^admin/', include(admin.site.urls)),
+                   url(r'^static/(.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
 
                    #ExpedienteLey
                    url(r'^sig/', include(sites)),   
