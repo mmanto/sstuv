@@ -7,8 +7,11 @@ class ExpedienteForm(ModelForm):
     class Meta:
         model = Expediente
         
+
         
-class ExpedienteLeyForm(ExpedienteForm, ModelForm):
+        
+        
+class ExpedienteLeyForm(ExpedienteForm):
    
     class Meta:
         model = ExpedienteLey

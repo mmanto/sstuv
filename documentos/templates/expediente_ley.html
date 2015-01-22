@@ -2,20 +2,46 @@
 <h2>Expedientes</h2>
 
 
+{% if accion == 'nuevo' %}
+<form action="/sig/expedientes/guardar/" method="post"> 
+{% endif %}
+
+{% if accion == 'editar' %}
+<form action="/sig/expedientes/editar/" method="post"> 
+{% endif %}
 
 
-<form action="/guardar/" method="post"> 
 
 {% csrf_token %}
 
-{{ form.errors }}
+{% if form.errors %}
+	<!-- Error messaging -->
+	<div id="errors">
+		<div class="inner">
+			<p>Errores:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}
+						<li>{{ field.label }}: Requerido</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<!-- /Error messaging -->
+{% endif %}
 
 
 <input name="tipo" value="{{tipo}}" type="hidden">
 
 <div>
 	<label>Número</label> 
-	<input name="numero" value="{{expediente.numero}}">
+	<input name="numero" value="{{expediente.numero}}"  
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %}
+	 >
 
 </div>
 <div>

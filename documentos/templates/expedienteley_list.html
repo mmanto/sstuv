@@ -1,12 +1,11 @@
 {% extends "base_site.html" %}
 
-
 {% block content %}
 <h2>{{tipo}}</h2>
 
 
 
-<form action="/sig/expedientes/buscar/cc" method="get">
+<form action="/sig/expedientes/buscar/{{tipo}}" method="get">
         <input type="text" id="id" name="id" value="0" type="number" >
         <input type="submit" value="Buscar">
 </form>
