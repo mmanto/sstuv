@@ -50,10 +50,15 @@
 
 </div>
 
+
+
 <div>
 	<label>Fecha</label> 
-	<input name="fecha" value="{{expediente.fecha}}"  type="date">
-
+	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	</input>		
+	
+	
+ 
 </div>
 
 <div>

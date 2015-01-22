@@ -2,10 +2,17 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
+{% load static %}
 <title>{% block title %}{% endblock %}</title>
 <!-- <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}" /> -->
 <link rel="styleheet" type="text/css" href={{STATIC_URL}}css/style.css/>
 <link rel="shortcut icon" href={{STATIC_URL}}img/logo.png/>
+<script src=/{{STATIC_URL}}js/jquery.js></script>
+<script src=/{{STATIC_URL}}js/jquery-ui.js></script>
+<script src=/{{STATIC_URL}}js/fecha.js></script>
+<link rel='stylesheet' type='text/css' href=/{{STATIC_URL}}css/jquery-ui/ui-lightness/jquery-ui.css/>
+
+
 
 {% block extrastyle %}{% endblock %}
 
