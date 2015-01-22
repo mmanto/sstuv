@@ -40,7 +40,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'comun', 'documentos'
+    'comun', 'documentos',
+    'jquery',
+    'jquery_ui',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,13 +90,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/mmanto/git/sstuv/sstuv/static'
+STATIC_ROOT = '/home/avazzano/git/sstuv/sstuv/static'
 '''
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, "static"), '/home/mmanto/git/sstuv/sstuv/static',
+    os.path.join(BASE_DIR, "static"), '/home/avazzano/git/sstuv/sstuv/static',
 )
 '''
 STATICFILES_FINDERS = (
