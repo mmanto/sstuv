@@ -90,27 +90,6 @@ class ExpedientesView(ListView):
         return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
 
     
-         
-    def saveExpediente(request):
-        
-        if request.method == 'POST':
-            form = ExpedienteLeyForm(request.POST)
-            if form.is_valid():
-                cd = form.cleaned_data
-                
-                send_mail(
-                    cd['subject'],
-                    cd['message'],
-                    cd.get('email', 'noreply@example.com'),
-                    ['siteowner@example.com'],
-                )
-                
-        else:
-            form = ContactForm()
-        
-        
-        return render(request, 'expedienteley_list.html', context_instance=RequestContext(request))
-    
     def saveExpediente(request):
     
         tipo= request.POST.get('tipo','')
@@ -131,6 +110,33 @@ class ExpedientesView(ListView):
         return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
         
 
+    def updateExpediente(request):
+    
+            tipo= request.POST.get('tipo','')
+            numero =request.POST.get('numero','')
+            
+        
+            if request.method == 'POST':
+                form=''
+                if(tipo == 'Expediente'):
+                    
+                    expediente = Expediente.objects.get(numero = numero)
+                    
+                    form = ExpedienteForm(request.POST, instance=expediente)
+                else:
+                    form = ExpedienteLeyForm(request.POST)
+                    
+                if form.is_valid():  
+                   
+                     
+                     form.save()   
+                else:
+                    
+        #           form_errors = form.erros 
+                    return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
+            
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+        
     def get_queryset(self):
         return ExpedienteLey.objects.all()
 
