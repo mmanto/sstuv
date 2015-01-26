@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from documentos.models import ExpedienteLey, Expediente
+from documentos.models import ExpedienteLey, Expediente, Pase
 from django.core.context_processors import request
-from documentos.forms import ExpedienteLeyForm, ExpedienteForm
+from documentos.forms import ExpedienteLeyForm, ExpedienteForm, PaseForm
 from comun.models import Partido, Departamento
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext 
 from idlelib.SearchEngine import get
 from asyncio.base_events import Server
+from django.shortcuts import render_to_response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class LoginView(ListView):
@@ -50,7 +52,10 @@ class ExpedientesView(ListView):
             else:
                 expediente = Expediente.objects.get(numero=id)
 
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar'}, context_instance=RequestContext(request) )
+            pases= expediente.pase_set.all()
+
+
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request) )
       
         else:
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
@@ -68,9 +73,7 @@ class ExpedientesView(ListView):
 
         expedientes= []
         if 'id' in request.GET:
-            
-#             id= int(request.GET['id'],0)
-    
+       
             if request.GET['id'] =='' or request.GET['id'] == '0'  :
                 expedientes = Expediente.objects.all()
             else :
@@ -87,8 +90,19 @@ class ExpedientesView(ListView):
                             expedientes.append(Expediente.objects.get(numero=id))
                 except:         
                     expedientes= []
-     
-        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+         
+        paginator = Paginator(expedientes, 25) # Show 25 contacts per page
+        page = request.GET.get('page')
+        try:
+            expedientes = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            expedientes = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            expedientes = paginator.page(paginator.num_pages)           
+        
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
 
     
     def saveExpediente(request):
@@ -133,11 +147,45 @@ class ExpedientesView(ListView):
                      form.save()   
                 else:
                     
-        #           form_errors = form.erros 
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
             return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+  
+  
+  
+  
         
     def get_queryset(self):
         return ExpedienteLey.objects.all()
 
+
+
+
+
+
+class PasesView(ListView):
+    
+    
+    #Se persiste un Pase    
+    def savePase(request):
+      
+        form=PaseForm(request.POST)
+        
+        if form.is_valid():  
+                   
+            form.save() 
+            
+            return render(request, 'expediente_ley.html')
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    

@@ -1,29 +1,43 @@
-
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<!-- <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}> -->
+<html>
 <head>
-{% load static %}
+
+<!-- <link rel="styleheet" type="text/css" href="http://localhost:3000/static/css/sstuv.css" > -->
 <title>{% block title %}{% endblock %}</title>
-<!-- <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}" /> -->
-<link rel="styleheet" type="text/css" href={{STATIC_URL}}css/style.css/>
-<link rel="shortcut icon" href={{STATIC_URL}}img/logo.png/>
-<script src=/{{STATIC_URL}}js/jquery.js></script>
-<script src=/{{STATIC_URL}}js/jquery-ui.js></script>
-<script src=/{{STATIC_URL}}js/fecha.js></script>
-<link rel='stylesheet' type='text/css' href=/{{STATIC_URL}}css/jquery-ui/ui-lightness/jquery-ui.css/>
 
 
+<script src="http://localhost:3000/static/js/jquery.js" ></script>
+<script src="http://localhost:3000/static/js/jquery-ui.js" ></script>
+<script src="http://localhost:3000/static/js/fecha.js" ></script>
+<!-- <link rel='stylesheet' type='text/css' href=/{{STATIC_URL}}css/jquery-ui/ui-lightness/jquery-ui.css/> -->
 
-{% block extrastyle %}{% endblock %}
 
-{% block extrahead %}{% endblock %}
-{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+	
+<!-- {% block extrastyle %} -->
+
+
+<!-- {% endblock %} -->
+
+<!-- {% block extrahead %} -->
+
+<!-- {% endblock %} -->
+<!-- {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %} -->
 </head>
 {% load i18n %}
+{% load staticfiles %}
+{% block style_base %}
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
+    <link href="{% static "css/jquery-ui/ui-lightness/jquery-ui.css" %}" rel="stylesheet">
+    
+    {% block extra_style %}{% endblock %}
+{% endblock %}
 
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
-<!-- <body class="login"> -->
+<!-- <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"> -->
+
+<body class="nada">
 
 <!-- Container -->
 <div id="container">
@@ -91,6 +105,8 @@
     {% block footer %}<div id="footer"></div>{% endblock %}
 </div>
 <!-- END Container -->
+
+
 
 </body>
 </html>
