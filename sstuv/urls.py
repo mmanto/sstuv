@@ -4,6 +4,7 @@ from django.shortcuts import render
 from documentos.views import LoginView
 from documentos import sites
 from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 
@@ -13,12 +14,13 @@ urlpatterns = patterns('',
                    url(r'^auth/logout/$', LoginView.logout, name='logout_view' ),
                    url(r'^$', LoginView.home),
                    url(r'^admin/', include(admin.site.urls)),
-                   url(r'^static/(.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
+                   #url(r'^static/(.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
 
                    #ExpedienteLey
                    url(r'^sig/', include(sites)),   
         
                    #Pase     
 
-
 )
+
+urlpatterns += staticfiles_urlpatterns()

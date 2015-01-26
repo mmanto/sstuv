@@ -1,6 +1,6 @@
 from django.conf.urls import *
 
-from documentos.views import ExpedientesView
+from documentos.views import ExpedientesView, PasesView
 
 urlpatterns = patterns('',
                         url(r'^expedientesLey/$', ExpedientesView.loadBusquedaExpedienteLey),
@@ -10,6 +10,9 @@ urlpatterns = patterns('',
                         url(r'^expedientes/guardar/$', ExpedientesView.saveExpediente),
                         url(r'^expedientes/nuevo/(.+)/(\d+)/$', ExpedientesView.showExpediente),
                         url(r'^expedientes/editar/$', ExpedientesView.updateExpediente),
+
+                        url(r'^pase/guardar/$', PasesView.savePase),
+
 
                       )
         

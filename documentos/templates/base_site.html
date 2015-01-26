@@ -1,11 +1,13 @@
 {% extends "base.html" %}
-{% load i18n static %}
+
+{% load i18n  %}
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
 	<a href="/sig/expedientes/">
-		<img src="/{{STATIC_URL}}/img/logo.png" alt="SSTUV" />
+		<img src="http://localhost:3000/static/img/logo.png" alt="SSTUV" />
+		
 	</a>
 </h1>
 {% endblock %}
