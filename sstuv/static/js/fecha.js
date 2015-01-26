@@ -7,12 +7,20 @@ $(document).ready(function() {
 
 	$.datepicker.setDefaults($.datepicker.regional['es']);
 
-	$( "#datepicker" ).datepicker();
+//	$( "#datepicker" ).datepicker();
      
+	$("input[id^='datepicker']").datepicker();
+
+//	"select[id^='select']"
+	
+//	$("select[id^='select']").select().change(function() {
+	
+	
+	
 	
 });
 
-
+//$("input[name$='datepicker']").datepicker();
 
 
 
