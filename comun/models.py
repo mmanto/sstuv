@@ -4,8 +4,8 @@ class Partido(models.Model):
     
     codigo= models.IntegerField(default=0)
     nombre = models.CharField(max_length=200)
-    codcatas = models.CharField(max_length=200)
-    
+    codcas=models.CharField(max_length=20, default=0)
+
     def __str__(self):
         return self.nombre
 

@@ -8,22 +8,29 @@ class Expediente(models.Model):
 	fecha = models.DateField('Fecha')
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
-		
+# 	pases = models.ManyToManyField(Pase, related_name="expediente")
+	
 	def __str__(self):
 		return self.numero
 		
 class ExpedienteLey(Expediente):
-	#expediente = models.ForeignKey(Expediente)
-	#partido = models.ForeignKey(Partido)
-	#partido = models.OneToOneField(Partido)
+	
 	partido = models.ForeignKey(Partido)
+	
 	region = models.CharField(max_length=200)
 	
 	
 class Pase(models.Model):
-	expediente = models.ForeignKey(Expediente)
-	departamento_origen = models.OneToOneField(Departamento, primary_key=True)
+	
+	expediente = models.ForeignKey(Expediente, related_name="pase_set")
+	
+	departamento_origen = models.ForeignKey(Departamento, related_name='origen')
+	
+	departamento_destino = models.ForeignKey(Departamento, related_name='destino')
+	
 	fecha = models.DateTimeField('fecha de movimiento')
+	
 	def __str__(self):
 		return '%s' % self.departamento_origen.nombre
-
+	
+	

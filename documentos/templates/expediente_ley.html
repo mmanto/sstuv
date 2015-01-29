@@ -79,23 +79,21 @@
 
 	<div>
 		<label>Partido</label> 
-	<!-- 	<input name="fecha" value={{expediente.partido.nombre}} > -->
 	
+		<input id="inputpartido" name= "partido"  type="hidden">
+		
+		<select id="selectpartido" >
 	
-	<select>
-	
-	{% for partido in partidos%}
-	
-		{% if partido.numero == expediente.partido.numero %}
-		  <option value="{{partido.numero}}" selected="true" >{{partido.nombre}}</option>
-		{% else %}  
-		  <option value="{{partido.numero}}">{{partido.nombre}}</option>
-		{% endif %}
-	 
-	{% endfor %}
-	
-	
-	</select>
+			{% for partido in partidos%}
+		
+				{% if partido.numero == expediente.partido.numero %}
+					  <option value="{{partido.codigo}}" selected="true" >{{partido.nombre}}</option>
+				{% else %}  
+					  <option value="{{partido.codigo}}">{{partido.nombre}}</option>
+				{% endif %}
+			 
+			{% endfor %}
+		</select>
 	
 	</div>
 	
@@ -137,15 +135,15 @@
   
   	{% for pase in pases %}
 
-		<tr>
+	<tr>
 		    
-		    <td>{{pase.fecha  | date:"SHORT_DATE_FORMAT"}}</td>		
+	    <td>{{pase.fecha  | date:"SHORT_DATE_FORMAT"}}</td>		
 			
-		    <td>{{pase.departamento_origen.nombre}}</td>		
+	    <td>{{pase.departamento_origen.nombre}}</td>		
 			
-			<td>{{pase.departamento_destino.nombre}}</td>	
+		<td>{{pase.departamento_destino.nombre}}</td>	
 			
-		</tr>
+	</tr>
 		
 	{% endfor %}
 
@@ -165,8 +163,13 @@
 
 		<form  action="/sig/pase/guardar/" method="post">
 	
+		{% csrf_token %}
+		
+	
 	
 		<input name="expediente_id" value={{expediente.numero}} type="hidden">
+		<input name="expediente_tipo" value={{expediente.tipo}} type="hidden">
+		
 	
 		<div>
 			<label>Fecha</label> 
@@ -183,22 +186,26 @@
 		<div>
 			<label>Departamento origen</label>  
 			
-			<select id="selectorigen" > 	
+			<select id="selectorigen" > 
+				<option value="0">Ingrese un departamento</option>
+				
+					
 				{% for departamento	in departamentos%} 
-					<option value="{{departamento.nombre}}">{{departamento.nombre}}</option>
+					<option value="{{departamento.codigo}}">{{departamento.nombre}}</option>
 				{% endfor %}
 			</select>
 		</div>
 			
 		
-		<input id="inputdestino"  type="hidden">	
+		<input id="inputdestino" name= "departamento_destino" type="hidden">	
 			
 		<div>
 			<label>Departamento destino</label> 
 			
 			<select id="selectdestino"> 	
+				<option value="0">Ingrese un departamento</option>
 				{% for departamento	in departamentos%} 
-					<option value="{{departamento.nombre}}" >{{departamento.nombre}}</option>
+					<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
 				{% endfor %}
 			</select>
 		</div>

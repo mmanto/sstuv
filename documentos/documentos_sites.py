@@ -10,7 +10,9 @@ urlpatterns = patterns('',
                         url(r'^expedientes/guardar/$', ExpedientesView.saveExpediente),
                         url(r'^expedientes/nuevo/(.+)/(\d+)/$', ExpedientesView.showExpediente),
                         url(r'^expedientes/editar/$', ExpedientesView.updateExpediente),
-
+                        url(r'^expedientes/importarExpedienteLey/$', ExpedientesView.importarExpedientesLey),
+                        url(r'^expedientes/importarExpediente/$', ExpedientesView.importarExpedientes),    
+                        
                         url(r'^pase/guardar/$', PasesView.savePase),
 
 
