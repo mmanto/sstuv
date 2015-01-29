@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
+    'django_extensions',
     'comun', 'documentos',
 )
 
@@ -165,15 +166,24 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SSTUV','USER': 'postgres',
-	'PASSWORD': 'postgres',
-	'HOST': 'localhost',
-	'PORT': '',                      # Set to empty string for default.
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'SSTUV',
+            'USER': 'postgres',
+	        'PASSWORD': 'postgres',
+	        'HOST': 'localhost',
+	        'PORT': '',                      # Set to empty string for default.
+    },
+    'legacy': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'SIG_DESA',
+            'USER':'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '',
     }
 }
 
-
+#DATABASE_ROUTERS = ['comun.Integration_router.IntegrationRouter']
 
 
 # url to redirect after successfull login

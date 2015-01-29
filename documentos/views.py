@@ -12,6 +12,13 @@ from idlelib.SearchEngine import get
 from asyncio.base_events import Server
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import connections, Error
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import ConnectionDoesNotExist
+from django.http.response import HttpResponse
+from documentos import models    
+from datetime import datetime
+from django.conf.global_settings import DATE_FORMAT    
 
 
 class LoginView(ListView):
@@ -52,7 +59,7 @@ class ExpedientesView(ListView):
             else:
                 expediente = Expediente.objects.get(numero=id)
 
-            pases= expediente.pase_set.all()
+            pases = expediente.pase_set.all()
 
 
             return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request) )
@@ -114,7 +121,12 @@ class ExpedientesView(ListView):
             if(tipo == 'Expediente'):
                 form = ExpedienteForm(request.POST)
             else:
+                
+                
                 form = ExpedienteLeyForm(request.POST)
+                
+                form.model.partido = Departamento.objects.get( codigo = int (request.POST.get('partido')))
+
                 
             if form.is_valid():
                 form.save()   
@@ -150,17 +162,58 @@ class ExpedientesView(ListView):
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
             return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-  
-  
-  
-  
         
+    def importarExpedientesLey(self):
+        sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
+        mensaje = ''
+    
+        try:
+            cursor = connections['legacy'].cursor()
+            ## it's important selecting the id field, so that we can keep the publisher - book relationship
+            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            cursor.execute(sql)
+            for row in cursor.fetchall():
+                expedientesLey = models.ExpedienteLey(id=row[0], partido_id=row[1], alcance=row[2], cuerpo=row[3], extracto=row[4], fecha_inicio=row[5], tipo_expediente=row[6], barrio_id=row[7], numero=row[8], fechas=row[9])
+                expedientesLey.save()
+            mensaje = 'Importación realizada con éxito'
+        except ConnectionDoesNotExist:
+            mensaje = 'legacy database is not configured'
+            return None
+        except Error:
+            mensaje = 'Error.'
+        if cursor is None:
+            mensaje = 'Cursor None'
+        
+        return HttpResponse(mensaje)
+        
+    def importarExpedientes(self):
+
+        mensaje = ''
+    
+        try:
+            cursor = connections['legacy'].cursor()
+            ## it's important selecting the id field, so that we can keep the publisher - book relationship
+            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            #extracto,  tipo_expediente, tipo_expediente_id, barrio_id, fechas
+            cursor.execute("""SELECT id, numero, fecha_inicio, cuerpo FROM expediente where cuerpo = '' """)
+            for row in cursor.fetchall():
+                #caracteristica=row[1]
+                #alcance=row[4],
+                partidos = models.Expediente(id=row[0], numero=row[1], fecha=row[2], cuerpo=row[3])
+                partidos.save()
+            mensaje = 'Importación realizada con éxito'
+        except ConnectionDoesNotExist:
+            mensaje = 'legacy database is not configured'
+            return None
+        except Error:
+            mensaje = 'Error.'
+        if cursor is None:
+            mensaje = 'Cursor None'
+        
+        return HttpResponse(mensaje)
+  
     def get_queryset(self):
         return ExpedienteLey.objects.all()
-
-
-
-
 
 
 class PasesView(ListView):
@@ -168,20 +221,35 @@ class PasesView(ListView):
     
     #Se persiste un Pase    
     def savePase(request):
-      
-        form=PaseForm(request.POST)
+                 
+        pase = Pase()
+           
+        pase.departamento_origen = Departamento.objects.get( codigo = int (request.POST.get('departamento_origen')))
+         
+        pase.departamento_destino = Departamento.objects.get( codigo = int (request.POST.get('departamento_destino')))
+                                  
+        fecha= (request.POST.get('fecha'))
         
-        if form.is_valid():  
+        fecha1 =   datetime.strptime( fecha, "%d/%m/%Y" )
+                           
+        pase.fecha =  datetime.strptime( fecha, "%d/%m/%Y" )
+
+        pase.expediente = Expediente.objects.get( numero = int (request.POST.get('expediente_id')))
+      
+        pase.save()
+      
+        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+
+            
+            
+    def removePase(request):
+                 
+        
+        
+        
                    
-            form.save() 
-            
-            return render(request, 'expediente_ley.html')
-    
-            
-            
-            
-            
-            
+        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+
             
             
             
