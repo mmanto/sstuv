@@ -10,6 +10,9 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext 
 from idlelib.SearchEngine import get
 from asyncio.base_events import Server
+from datetime import datetime
+from django.conf.global_settings import DATE_FORMAT
+
 
 
 class LoginView(ListView):
@@ -50,7 +53,7 @@ class ExpedientesView(ListView):
             else:
                 expediente = Expediente.objects.get(numero=id)
 
-            pases= expediente.pase_set.all()
+            pases = expediente.pase_set.all()
 
 
             return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request) )
@@ -101,7 +104,12 @@ class ExpedientesView(ListView):
             if(tipo == 'Expediente'):
                 form = ExpedienteForm(request.POST)
             else:
+                
+                
                 form = ExpedienteLeyForm(request.POST)
+                
+                form.model.partido = Departamento.objects.get( codigo = int (request.POST.get('partido')))
+
                 
             if form.is_valid():
                 form.save()   
@@ -155,20 +163,35 @@ class PasesView(ListView):
     
     #Se persiste un Pase    
     def savePase(request):
-      
-        form=PaseForm(request.POST)
+                 
+        pase = Pase()
+           
+        pase.departamento_origen = Departamento.objects.get( codigo = int (request.POST.get('departamento_origen')))
+         
+        pase.departamento_destino = Departamento.objects.get( codigo = int (request.POST.get('departamento_destino')))
+                                  
+        fecha= (request.POST.get('fecha'))
         
-        if form.is_valid():  
+        fecha1 =   datetime.strptime( fecha, "%d/%m/%Y" )
+                           
+        pase.fecha =  datetime.strptime( fecha, "%d/%m/%Y" )
+
+        pase.expediente = Expediente.objects.get( numero = int (request.POST.get('expediente_id')))
+      
+        pase.save()
+      
+        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+
+            
+            
+    def removePase(request):
+                 
+        
+        
+        
                    
-            form.save() 
-            
-            return render(request, 'expediente_ley.html')
-    
-            
-            
-            
-            
-            
+        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+
             
             
             
