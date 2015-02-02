@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% block content %}
+ 
+{% extends "base_site.html" %}
+
+
+{% block content %}
 <h2>Expedientes</h2>
 
 
@@ -167,17 +171,13 @@
 		
 	
 	
-		<input name="expediente_id" value={{expediente.numero}} type="hidden">
-		<input name="expediente_tipo" value={{expediente.tipo}} type="hidden">
+		<input name="expediente_id" value="{{expediente.numero}}" type="hidden">
+		<input name="expediente_tipo" value="{{expediente.tipo}}" type="hidden">
 		
 	
 		<div>
 			<label>Fecha</label> 
 			<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
-			
-		
-			
-			
 		</div>
 		
 		
