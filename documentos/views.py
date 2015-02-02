@@ -10,9 +10,15 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext 
 from idlelib.SearchEngine import get
 from asyncio.base_events import Server
+from django.shortcuts import render_to_response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import connections, Error
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import ConnectionDoesNotExist
+from django.http.response import HttpResponse
+from documentos import models    
 from datetime import datetime
-from django.conf.global_settings import DATE_FORMAT
-
+from django.conf.global_settings import DATE_FORMAT    
 
 
 class LoginView(ListView):
@@ -91,8 +97,19 @@ class ExpedientesView(ListView):
                             expedientes.append(Expediente.objects.get(numero=id))
                 except:         
                     expedientes= []
-     
-        return render(request, 'expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+         
+        paginator = Paginator(expedientes, 25) # Show 25 contacts per page
+        page = request.GET.get('page')
+        try:
+            expedientes = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            expedientes = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            expedientes = paginator.page(paginator.num_pages)           
+        
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
 
     
     def saveExpediente(request):
@@ -108,7 +125,7 @@ class ExpedientesView(ListView):
                 
                 form = ExpedienteLeyForm(request.POST)
                 
-                form.model.partido = Departamento.objects.get( codigo = int (request.POST.get('partido')))
+                form.model.partido = Partido.objects.get( codigo = int (request.POST.get('partido')))
 
                 
             if form.is_valid():
@@ -144,18 +161,59 @@ class ExpedientesView(ListView):
                     
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
-            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
-  
-  
-  
-  
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo})     
         
+    def importarExpedientesLey(self):
+        sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
+        mensaje = ''
+    
+        try:
+            cursor = connections['legacy'].cursor()
+            ## it's important selecting the id field, so that we can keep the publisher - book relationship
+            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            cursor.execute(sql)
+            for row in cursor.fetchall():
+                expedientesLey = models.ExpedienteLey(id=row[0], partido_id=row[1], alcance=row[2], cuerpo=row[3], extracto=row[4], fecha_inicio=row[5], tipo_expediente=row[6], barrio_id=row[7], numero=row[8], fechas=row[9])
+                expedientesLey.save()
+            mensaje = 'Importación realizada con éxito'
+        except ConnectionDoesNotExist:
+            mensaje = 'legacy database is not configured'
+            return None
+        except Error:
+            mensaje = 'Error.'
+        if cursor is None:
+            mensaje = 'Cursor None'
+        
+        return HttpResponse(mensaje)
+        
+    def importarExpedientes(self):
+
+        mensaje = ''
+    
+        try:
+            cursor = connections['legacy'].cursor()
+            ## it's important selecting the id field, so that we can keep the publisher - book relationship
+            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            #extracto,  tipo_expediente, tipo_expediente_id, barrio_id, fechas
+            cursor.execute("""SELECT id, numero, fecha_inicio, cuerpo FROM expediente where cuerpo = '' """)
+            for row in cursor.fetchall():
+                #caracteristica=row[1]
+                #alcance=row[4],
+                partidos = models.Expediente(id=row[0], numero=row[1], fecha=row[2], cuerpo=row[3])
+                partidos.save()
+            mensaje = 'Importación realizada con éxito'
+        except ConnectionDoesNotExist:
+            mensaje = 'legacy database is not configured'
+            return None
+        except Error:
+            mensaje = 'Error.'
+        if cursor is None:
+            mensaje = 'Cursor None'
+        
+        return HttpResponse(mensaje)
+      
     def get_queryset(self):
         return ExpedienteLey.objects.all()
-
-
-
-
 
 
 class PasesView(ListView):
