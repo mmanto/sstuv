@@ -82,7 +82,11 @@ class ExpedientesView(ListView):
         if 'id' in request.GET:
        
             if request.GET['id'] =='' or request.GET['id'] == '0'  :
-                expedientes = Expediente.objects.all()
+                if(tipo == 'ExpedienteLey'):
+                    expedientes = ExpedienteLey.objects.all()
+                else:
+                    expedientes = Expediente.objects.all()
+
             else :
              
                 try:
@@ -125,7 +129,9 @@ class ExpedientesView(ListView):
                 
                 form = ExpedienteLeyForm(request.POST)
                 
-                form.model.partido = Partido.objects.get( codigo = int (request.POST.get('partido')))
+                form.fields['partido']= Partido.objects.get( codigo = int (request.POST.get('partido')))
+                
+#                 form.model.partido = Partido.objects.get( codigo = int (request.POST.get('partido')))
 
                 
             if form.is_valid():
@@ -238,17 +244,13 @@ class PasesView(ListView):
       
         pase.save()
       
-        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+        return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), request.POST.get('expediente_id'))
 
             
             
-    def removePase(request):
-                 
-        
-        
-        
-                   
-        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+#     def removePase(request):
+#                            
+#         return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), request.POST.get('expediente_id'))
 
             
             
