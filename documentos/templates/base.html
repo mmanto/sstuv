@@ -5,34 +5,26 @@
 
 <title>{% block title %}{% endblock %}</title>
 
-<script src="http://localhost:3000/static/js/jquery.js" ></script>
-<script src="http://localhost:3000/static/js/jquery-ui.js" ></script>
-<script src="http://localhost:3000/static/js/fecha.js" ></script>
-	
-<!-- {% block extrastyle %} -->
-
-
-<!-- {% endblock %} -->
-
-<!-- {% block extrahead %} -->
-
-<!-- {% endblock %} -->
-<!-- {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %} -->
 </head>
 {% load i18n %}
 {% load staticfiles %}
 {% block style_base %}
     <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="{% static "css/login.css" %}" rel="stylesheet">
     <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
     <link href="{% static "css/jquery-ui/ui-lightness/jquery-ui.css" %}" rel="stylesheet">
     
     {% block extra_style %}{% endblock %}
 {% endblock %}
 
+{% block script_base %}
+ <script src="{% static 'js/bootstrap.min.js' %}"></script>
+ <script src="{% static 'js/jquery.js' %}" ></script>
+ <script src="{% static 'js/jquery-ui.js' %}" ></script>
+ <script src="{% static 'js/tools.js' %}" ></script>
+{% endblock %}
 
-<!-- <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"> -->
-
-<body class="nada">
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
 <!-- Container -->
 <div id="container">
