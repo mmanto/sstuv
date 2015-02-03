@@ -161,10 +161,10 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 
-<<<<<<< HEAD
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-=======
+
 USE_TZ = True
 
 
