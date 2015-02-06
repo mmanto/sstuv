@@ -785,7 +785,8 @@ table#change-history tbody th {
 
 #header {
     width: 100%;
-    background: #417690;
+/*     background: #417690; */
+	background: #F07A0C;
     color: #ffc;
     overflow: hidden;
 }

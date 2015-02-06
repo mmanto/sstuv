@@ -16,8 +16,9 @@
         
 </form>
 
-
+<div class="datagrid" >
 <table style="width:100%">
+<thead>
   <tr>
     <th>Número</th>
     <th>Caracteristica</th>
@@ -30,8 +31,9 @@
 	 	<th>Región</th>		
  	{% endif %}
   </tr>
-  
-  
+ </thead> 
+ <tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Anterior</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Siguiente</span></a></li></ul></div></tr></tfoot>
+ <tbody> 
   	{% for expediente in expedientes %}
 
 		<tr>
@@ -51,13 +53,32 @@
 	
 			{% if tipo == 'ExpedienteLey'%}
 				<td>{{ expediente.partido.nombre }}</td>		
-				<td>{{ expediente.region.nombre }}</td>		
+				<td>{{ expediente.region }}</td>		
 			{% endif %}
 		</tr>
 		
 	{% endfor %}
-
+</tbody>
 </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if expedientes.has_previous %}
+            <a href="?page={{ expedientes.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ expedientes.number }} of {{ expedientes.paginator.num_pages }}.
+        </span>
+
+        {% if expedientes.has_next %}
+            <a href="?page={{ expedientes.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
 
 
 {% endblock %}
+
+
+
