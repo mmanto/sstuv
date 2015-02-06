@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
+    'forms_builder.forms',
     'django_extensions',
     'wkhtmltopdf',
     'comun', 'documentos',
@@ -159,8 +160,6 @@ FIXTURE_DIRS = [
 
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-
 
 
 # Database
