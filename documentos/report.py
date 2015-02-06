@@ -18,18 +18,13 @@ class PaseReport(PDFTemplateView):
     
     def generar(request, idExpediente, idPase):
         
-#         return render(request, 'pase_pdf.html', {'pase':'Pase prueba'}, context_instance=RequestContext(request))
         template = 'pase_pdf.html'
-#         something = get_object_or_404(Something,id=sID)
+   
         expediente=[]
-       
-       
         expediente.append(Expediente.objects.get(numero = idExpediente))
         
         pase = Pase.objects.get(id=idPase)
-        
-        
-        
+         
         context = {
             'pase' : pase,
             'expediente' : expediente

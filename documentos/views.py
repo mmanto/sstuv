@@ -19,6 +19,15 @@ from django.http.response import HttpResponse
 from documentos import models    
 from datetime import datetime
 from django.conf.global_settings import DATE_FORMAT    
+# from reportlab.pdfgen import canvas
+from io import StringIO, BytesIO
+from django.template.loader import render_to_string
+from django_xhtml2pdf.utils import generate_pdf
+
+
+
+from django.conf.global_settings import DATE_FORMAT    
+
 
 
 class LoginView(ListView):
@@ -32,26 +41,26 @@ class LoginView(ListView):
                     
     def logout(request):
         template_name = 'auth/login_out.html'
-        return logout_then_login(request,login_url='/sig/auth/login')
+        return logout_then_login(request, login_url='/sig/auth/login')
         
     def get_queryset(self):
         return ExpedienteLey.objects.all()
     
     
 class ExpedientesView(ListView):
-    #model = ExpedienteLey.objects.all()
+    # model = ExpedienteLey.objects.all()
     template_name = 'expedienteley_list.html'
     paginate_by = 10
     
     def showExpediente(request, tipo, id):
     
-        id= int(id)
+        id = int(id)
             
-        partidos =  Partido.objects.all()
+        partidos = Partido.objects.all()
        
-        departamentos=Departamento.objects.all()
+        departamentos = Departamento.objects.all()
         
-        #Si el id es 0 es uno nuevo
+        # Si el id es 0 es uno nuevo
         if(id != 0):
             
             if(tipo == 'ExpedienteLey'):
@@ -62,10 +71,10 @@ class ExpedientesView(ListView):
             pases = expediente.pase_set.all()
 
 
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request) )
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request))
       
         else:
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'}, context_instance=RequestContext(request))
         
     
  
@@ -78,10 +87,10 @@ class ExpedientesView(ListView):
 
     def showResultados(request, tipo):
 
-        expedientes= []
+        expedientes = []
         if 'id' in request.GET:
        
-            if request.GET['id'] =='' or request.GET['id'] == '0'  :
+            if request.GET['id'] == '' or request.GET['id'] == '0'  :
                 if(tipo == 'ExpedienteLey'):
                     expedientes = ExpedienteLey.objects.all()
                 else:
@@ -91,7 +100,7 @@ class ExpedientesView(ListView):
              
                 try:
                 
-                    id= int(request.GET['id'],0)
+                    id = int(request.GET['id'], 0)
     
                     if(tipo == 'ExpedienteLey'):
                        if(ExpedienteLey.objects.filter(numero=id).exists()):         
@@ -100,9 +109,9 @@ class ExpedientesView(ListView):
                          if(Expediente.objects.filter(numero=id).exists()):         
                             expedientes.append(Expediente.objects.get(numero=id))
                 except:         
-                    expedientes= []
+                    expedientes = []
          
-        paginator = Paginator(expedientes, 25) # Show 25 contacts per page
+        paginator = Paginator(expedientes, 25)  # Show 25 contacts per page
         page = request.GET.get('page')
         try:
             expedientes = paginator.page(page)
@@ -118,7 +127,7 @@ class ExpedientesView(ListView):
     
     def saveExpediente(request):
     
-        tipo= request.POST.get('tipo','')
+        tipo = request.POST.get('tipo', '')
     
         if request.method == 'POST':
             
@@ -129,7 +138,7 @@ class ExpedientesView(ListView):
                 
                 form = ExpedienteLeyForm(request.POST)
                 
-                form.fields['partido']= Partido.objects.get( codigo = int (request.POST.get('partido')))
+                form.fields['partido'] = Partido.objects.get(codigo=int (request.POST.get('partido')))
                 
 #                 form.model.partido = Partido.objects.get( codigo = int (request.POST.get('partido')))
 
@@ -138,22 +147,22 @@ class ExpedientesView(ListView):
                 form.save()   
             else:
     #             form_errors = form.erros 
-                return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+                return render(request, 'expedienteley_list.html', {'tipo' : tipo})
         
-        return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
+        return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
         
 
     def updateExpediente(request):
     
-            tipo= request.POST.get('tipo','')
-            numero =request.POST.get('numero','')
+            tipo = request.POST.get('tipo', '')
+            numero = request.POST.get('numero', '')
             
         
             if request.method == 'POST':
-                form=''
+                form = ''
                 if(tipo == 'Expediente'):
                     
-                    expediente = Expediente.objects.get(numero = numero)
+                    expediente = Expediente.objects.get(numero=numero)
                     
                     form = ExpedienteForm(request.POST, instance=expediente)
                 else:
@@ -165,9 +174,9 @@ class ExpedientesView(ListView):
                      form.save()   
                 else:
                     
-                    return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
+                    return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
-            return render(request, 'expedienteley_list.html',{'tipo' : tipo})     
+            return render(request, 'expedienteley_list.html', {'tipo' : tipo})     
         
     def importarExpedientesLey(self):
         sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
@@ -175,8 +184,8 @@ class ExpedientesView(ListView):
     
         try:
             cursor = connections['legacy'].cursor()
-            ## it's important selecting the id field, so that we can keep the publisher - book relationship
-            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            # # it's important selecting the id field, so that we can keep the publisher - book relationship
+            # sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
             cursor.execute(sql)
             for row in cursor.fetchall():
                 expedientesLey = models.ExpedienteLey(id=row[0], partido_id=row[1], alcance=row[2], cuerpo=row[3], extracto=row[4], fecha_inicio=row[5], tipo_expediente=row[6], barrio_id=row[7], numero=row[8], fechas=row[9])
@@ -198,13 +207,13 @@ class ExpedientesView(ListView):
     
         try:
             cursor = connections['legacy'].cursor()
-            ## it's important selecting the id field, so that we can keep the publisher - book relationship
-            #sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
-            #extracto,  tipo_expediente, tipo_expediente_id, barrio_id, fechas
+            # # it's important selecting the id field, so that we can keep the publisher - book relationship
+            # sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
+            # extracto,  tipo_expediente, tipo_expediente_id, barrio_id, fechas
             cursor.execute("""SELECT id, numero, fecha_inicio, cuerpo FROM expediente where cuerpo = '' """)
             for row in cursor.fetchall():
-                #caracteristica=row[1]
-                #alcance=row[4],
+                # caracteristica=row[1]
+                # alcance=row[4],
                 partidos = models.Expediente(id=row[0], numero=row[1], fecha=row[2], cuerpo=row[3])
                 partidos.save()
             mensaje = 'Importación realizada con éxito'
@@ -225,22 +234,22 @@ class ExpedientesView(ListView):
 class PasesView(ListView):
     
     
-    #Se persiste un Pase    
+    # Se persiste un Pase    
     def savePase(request):
                  
         pase = Pase()
            
-        pase.departamento_origen = Departamento.objects.get( codigo = int (request.POST.get('departamento_origen')))
+        pase.departamento_origen = Departamento.objects.get(codigo=int (request.POST.get('departamento_origen')))
          
-        pase.departamento_destino = Departamento.objects.get( codigo = int (request.POST.get('departamento_destino')))
+        pase.departamento_destino = Departamento.objects.get(codigo=int (request.POST.get('departamento_destino')))
                                   
-        fecha= (request.POST.get('fecha'))
+        fecha = (request.POST.get('fecha'))
         
-        fecha1 =   datetime.strptime( fecha, "%d/%m/%Y" )
+        fecha1 = datetime.strptime(fecha, "%d/%m/%Y")
                            
-        pase.fecha =  datetime.strptime( fecha, "%d/%m/%Y" )
+        pase.fecha = datetime.strptime(fecha, "%d/%m/%Y")
 
-        pase.expediente = Expediente.objects.get( numero = int (request.POST.get('expediente_id')))
+        pase.expediente = Expediente.objects.get(numero=int (request.POST.get('expediente_id')))
       
         pase.save()
       
@@ -253,9 +262,51 @@ class PasesView(ListView):
 #         return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), request.POST.get('expediente_id'))
 
             
-            
-            
-            
-            
-            
+#     def hello_pdf(request):
+#         # Create the HttpResponse object with the appropriate PDF headers.
+#         response = HttpResponse(content_type='application/liquid')
+#         response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+#      
+#         # Create the PDF object, using the response object as its "file."
+#         p = canvas.Canvas(response)
+#      
+#         # Draw things on the PDF. Here's where the PDF generation happens.
+#         # See the ReportLab documentation for the full list of functionality.
+#         p.drawString(100, 100, "Hello world.")
+#      
+#         # Close the PDF object cleanly, and we're done.
+#         p.showPage()
+#         p.save()
+#         return response     
+                
+    def prueba_reporte(request):
+                  
+#         html = render_to_string('libro_pdf.html', {'pagesize':'A4', 'libro':'prueba'}, context_instance=RequestContext(request))
+#          
+#          
+#         result =StringIO()
+#         pdf = pisa.CreatePDF( StringIO.StringIO(html.encode("UTF-8")),     result  )
+#  
+#         if not pdf.err:
+#             return HttpResponse(   result.getvalue(), mimetype='application/pdf'       )
+#         else:
+#            return HttpResponse('We had some errors')
+
+        resp = HttpResponse(content_type='application/pdf')
+        res = StringIO() #         BytesIO()
+        result = generate_pdf('libro_pdf.html', file_object = resp)
+        return result
+                
+        
+        
+        
+        
+        
+        
+         # Función para generar el archivo PDF y devolverlo mediante HttpResponse
+#          result = StringIO.StringIO()
+#          pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)
+#          return HttpResponse(result.getvalue(), type='application/liquid')
+#          return HttpResponse('Error al generar el PDF: %s' % cgi.escape(html))
+   
     
