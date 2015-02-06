@@ -20,10 +20,5 @@ urlpatterns = patterns('',
                             
                         url(r'^expedientes/imprimirremito/(\d+)/(\d+)/$',PaseReport.generar ),
 
-
-#                         #Prueba    
-# #                         url(r'^pase/pdf/$', PasesView.hello_pdf),
-#                         url(r'^pase/pdff/$', PasesView.prueba_reporte),
-
                       )
         
