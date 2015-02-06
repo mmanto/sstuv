@@ -1,4 +1,4 @@
-{% extends "base_site.html" %} {% block content %}
+{% extends "base.html" %} {% block content %}
 <h2>Expedientes</h2>
 
 
@@ -36,32 +36,13 @@
 <input name="tipo" value="{{tipo}}" type="hidden">
 
 <div>
-
-	<span>
-	
 	<label>Número</label> 
-	<input name="organismo" value="{{expediente.organismo}}"  
-	 {% if accion == 'editar' %}
-	 	readonly
-	 {% endif %}
-	 >
-	 
-	 
-	 
 	<input name="numero" value="{{expediente.numero}}"  
 	 {% if accion == 'editar' %}
 	 	readonly
 	 {% endif %}
 	 >
-	 
-	 
-	<input name="anio" value="{{expediente.anio}}"  
-	 {% if accion == 'editar' %}
-	 	readonly
-	 {% endif %}
-	 >
-	 
-	</span>
+
 </div>
 <div>
 	<label>Características</label> 
@@ -134,6 +115,7 @@
 
 
 
+
 <!-- Pases -->
 
 <h2>Pases</h2>
@@ -148,6 +130,7 @@
     <th>Fecha</th>
     <th>Origen</th>
  	<th>Destino</th>
+	<th>Remito</th>
   </tr>
   
   
@@ -165,8 +148,10 @@
 			<a href="/sig/expedientes/imprimirremito/{{expediente.numero}}/{{pase.id}}">Impirmir remito</a>
 			
 		
-		</td>	
-		
+		</td>		
+			
+			
+			
 	</tr>
 		
 	{% endfor %}
