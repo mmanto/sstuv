@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'wkhtmltopdf',
     'django_extensions',
+    'wkhtmltopdf',
     'comun', 'documentos',
 )
 
@@ -198,5 +199,9 @@ DATABASES = {
 LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
 
+<<<<<<< HEAD
 
 WKHTMLTOPDF_CMD = '/usr/local/bin'
+=======
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+>>>>>>> 952fbb58ee81fce3bf6517e29674cd790f1304b1
