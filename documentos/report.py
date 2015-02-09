@@ -18,8 +18,8 @@ class PaseReport(PDFTemplateView):
     
     def generar(request, idExpediente, idPase):
         
-        template = 'pase_pdf.html'
-   
+        template =  'pase_pdf.html'
+           
         expediente=[]
         expediente.append(Expediente.objects.get(numero = idExpediente))
         
@@ -35,8 +35,8 @@ class PaseReport(PDFTemplateView):
         return PDFTemplateResponse(request=request,
             context=context,
             template=template,
-            filename='pase.pdf',
-            show_content_in_browser=False)
+            show_content_in_browser=True, 
+            )
         
         
         
