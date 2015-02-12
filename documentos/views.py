@@ -139,7 +139,7 @@ class ExpedientesView(ListView):
     def updateExpediente(request):
     
             tipo= request.POST.get('tipo','')
-            numero =request.POST.get('numero','')
+            numero = request.POST.get('numero','')
             
         
             if request.method == 'POST':

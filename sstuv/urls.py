@@ -20,9 +20,6 @@ urlpatterns = patterns('',
                    #ExpedienteLey
                    url(r'^sig/', include(documentos_sites)),
                       
-                   url(r'^sig/', include(comun_sites))  , 
-                                                          filename='my_pdf.pdf'), name='pdf'),  
-        
                    #Pase 
 
                    url(r'^sig/', include(publicador_sites))  ,     
