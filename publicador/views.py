@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from publicador import models
 from django.views.generic import ListView
-from pip._vendor.requests.models import Response
+#from pip._vendor.requests.models import Response
 from django.template.loader import render_to_string
 from django.contrib.gis.shortcuts import render_to_text
 from django.http.response import HttpResponse
