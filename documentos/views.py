@@ -110,7 +110,6 @@ class ExpedientesView(ListView):
             expedientes = paginator.page(paginator.num_pages)           
         
         return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
-
     
     def saveExpediente(request):
     
@@ -243,11 +242,7 @@ class PasesView(ListView):
             
             
     def removePase(request):
-                 
-        
-        
-        
-                   
+
         return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
 
             
