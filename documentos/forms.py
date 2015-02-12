@@ -9,9 +9,7 @@ class ExpedienteForm(ModelForm):
        model = Expediente
        
 
-        
-        
-        
+    
 class ExpedienteLeyForm(ExpedienteForm):
    
     class Meta:
@@ -24,4 +22,6 @@ class PaseForm(ModelForm):
 
     class Meta:
        model = Pase
+
+
         

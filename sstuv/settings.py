@@ -86,10 +86,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
-    'forms_builder.forms',
     'django_extensions',
     'wkhtmltopdf',
-    'comun', 'documentos',
+    'comun', 'documentos', 'publicador'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -200,3 +199,4 @@ LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
 
 WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+
