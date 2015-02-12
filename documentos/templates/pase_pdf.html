@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+<meta charset="UTF-8">
+
+
+
+<style type="text/css">
+
+/* Eric Meyer's CSS Reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 120%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* End of Eric Meyer's CSS Reset */
+html {
+	height: 100%;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	main, nav, section, summary {
+	display: block;
+}
+
+body {
+	font: 12px/18px Arial, sans-serif;
+	height: 100%;
+}
+
+.wrapper {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+	height: 150px;
+	background: #FFE680;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.content {
+	padding: 0 0 100px;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+	margin: 800px auto 0; 
+	min-width: 200px;
+	height: 200px;
+	position: relative;
+}
+
+.der{
+	position: relative;
+	float: right;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+	<div class="wrapper">
+
+
+
+		<h1 align="center">REMITO ORIGINAL</h1>
+
+
+
+
+		<div>
+
+			<span> <!-- header -->
+				<div>
+					<!-- Panel iz1 -->
+					<label>Gobiernos de la porvincia de Buenos Aires</label> </br> <label>Ministerio
+						de infraestructura Vivienda y Servicios</label> </br> <label>Subsecretaria
+						Social de Tierras, Vivienda y Urbanismo</label>
+				</div> <!-- Panel der -->
+				<div align="right">
+					<h2>REMITO {{pase.id}}</h2>
+				</div>
+
+			</span>
+
+		</div>
+
+
+
+
+		<div>
+			<label>Remitente</label> <label>{{pase.departamento_origen.nombre}}</label>
+		</div>
+
+		<div>
+			<label>Destinatario</label> <label>{{pase.departamento_destino.nombre}}</label>
+		</div>
+
+
+
+		<div>
+			<h1>Expediente</h1>
+		</div>
+
+		<div class="datagrid">
+
+
+			<table style="width: 100%">
+				<thead>
+
+					<tr>
+
+						<th>Caract.</th>
+						<th>Pdo.</th>
+						<th>Reg.</th>
+						<th>Número</th>
+						<th>Año</th>
+						<th>Alc.</th>
+						<th>Cuerp.</th>
+						<th>Iniciado por</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+
+				<td colspan="9" class="divider"><hr /></td> 
+				
+				{% for exp in	expediente %}
+
+				<tr>
+
+					<hr>
+
+					<td>{{exp.caracteristica}}</td>
+
+					<td>{{exp.partido.nombre}}</td>
+
+					<td>{{exp.region}}</td>
+
+					<td>{{exp.numero}}</td>
+
+					<td></td>
+
+					<td>{{exp.alcance}}</td>
+
+					<td>{{exp.cuerpo}}</td>
+
+					<td></td>
+
+
+					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+
+
+				</tr>
+
+				{% endfor %}
+
+			</table>
+		</div>
+
+
+		</br> </br> </br> </br>
+
+		<div>
+			<label> Motivo: </label>
+		</div>
+
+
+		</br> </br> </br> </br>
+
+
+	</div>
+
+
+	<!-- Footer  -->
+
+
+	<footer class="footer">
+
+		<div>
+			<span><label>              Firma remitente</label></span>
+			
+			<span class="der"><label>Firma receptor                  </label></span>
+		</div>		
+		
+		</br> </br>
+		
+		<div>
+			<span><label>      ........................</label></span>
+			<span class="der"><label> ...........................      </label></span>
+		</div>
+		
+		</br> </br>
+		
+		<div>
+			<span> <label>        Aclaración y sello</label>	</span>
+			<span class="der">	<label>Aclaración y sello           </label> 	</span>
+		</div>
+				
+		
+	</footer>
+
+
+ </br></br></br></br></br>
+
+
+</body>
+</html>
+
+
+
+<html>
+
+
+<head>
+
+<meta charset="UTF-8">
+
+
+
+<style type="text/css">
+
+/* Eric Meyer's CSS Reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 120%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* End of Eric Meyer's CSS Reset */
+html {
+	height: 100%;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	main, nav, section, summary {
+	display: block;
+}
+
+body {
+	font: 12px/18px Arial, sans-serif;
+	height: 100%;
+}
+
+.wrapper {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+	height: 150px;
+	background: #FFE680;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.content {
+	padding: 0 0 100px;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+	margin: 800px auto 0; 
+	min-width: 200px;
+	height: 200px;
+	position: relative;
+}
+
+.der{
+	position: relative;
+	float: right;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+	<div class="wrapper">
+
+
+
+		<h1 align="center">REMITO COPIA</h1>
+
+
+
+
+		<div>
+
+			<span> <!-- header -->
+				<div>
+					<!-- Panel iz1 -->
+					<label>Gobiernos de la porvincia de Buenos Aires</label> </br> <label>Ministerio
+						de infraestructura Vivienda y Servicios</label> </br> <label>Subsecretaria
+						Social de Tierras, Vivienda y Urbanismo</label>
+				</div> <!-- Panel der -->
+				<div align="right">
+					<h2>REMITO {{pase.id}}</h2>
+				</div>
+
+			</span>
+
+		</div>
+
+
+
+
+		<div>
+			<label>Remitente</label> <label>{{pase.departamento_origen.nombre}}</label>
+		</div>
+
+		<div>
+			<label>Destinatario</label> <label>{{pase.departamento_destino.nombre}}</label>
+		</div>
+
+
+
+		<div>
+			<h1>Expediente</h1>
+		</div>
+
+		<div class="datagrid">
+
+
+			<table style="width: 100%">
+				<thead>
+
+					<tr>
+
+						<th>Caract.</th>
+						<th>Pdo.</th>
+						<th>Reg.</th>
+						<th>Número</th>
+						<th>Año</th>
+						<th>Alc.</th>
+						<th>Cuerp.</th>
+						<th>Iniciado por</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+
+				<td colspan="9" class="divider"><hr /></td> 
+				
+				{% for exp in	expediente %}
+
+				<tr>
+
+					<hr>
+
+					<td>{{exp.caracteristica}}</td>
+
+					<td>{{exp.partido.nombre}}</td>
+
+					<td>{{exp.region}}</td>
+
+					<td>{{exp.numero}}</td>
+
+					<td></td>
+
+					<td>{{exp.alcance}}</td>
+
+					<td>{{exp.cuerpo}}</td>
+
+					<td></td>
+
+
+					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+
+
+				</tr>
+
+				{% endfor %}
+
+			</table>
+		</div>
+
+
+		</br> </br> </br> </br>
+
+		<div>
+			<label> Motivo: </label>
+		</div>
+
+
+		</br> </br> </br> </br>
+
+
+	</div>
+
+
+	<!-- Footer  -->
+
+
+	<footer class="footer">
+
+		<div>
+			<span><label>              Firma remitente</label></span>
+			
+			<span class="der"><label>Firma receptor                  </label></span>
+		</div>		
+		
+		</br> </br>
+		
+		<div>
+			<span><label>      ........................</label></span>
+			<span class="der"><label> ...........................      </label></span>
+		</div>
+		
+		</br> </br>
+		
+		<div>
+			<span> <label>        Aclaración y sello</label>	</span>
+			<span class="der">	<label>Aclaración y sello           </label> 	</span>
+		</div>
+				
+		
+	</footer>
+
+
+
+
+
+</body>
+</html>

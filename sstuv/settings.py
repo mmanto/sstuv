@@ -88,7 +88,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'wkhtmltopdf',
+<<<<<<< HEAD
     'comun', 'documentos', 'publicador'
+=======
+    'comun', 'documentos',
+>>>>>>> 9e7fd03ca1c74e2a688150ba71f3003dba643c3a
 )
 
 MIDDLEWARE_CLASSES = (
