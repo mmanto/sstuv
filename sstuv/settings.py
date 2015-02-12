@@ -86,9 +86,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
-    'forms_builder.forms',
     'django_extensions',
-    'comun', 'documentos',
+    'comun', 'documentos', 'publicador'
 )
 
 MIDDLEWARE_CLASSES = (

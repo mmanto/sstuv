@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from documentos import documentos_sites
 from comun import comun_sites
+from publicador import publicador_sites
 
 
 urlpatterns = patterns('',
@@ -21,7 +22,10 @@ urlpatterns = patterns('',
                       
                    url(r'^sig/', include(comun_sites))  ,   
         
-                   #Pase     
+                   #Pase 
+                   
+                   
+                   url(r'^sig/', include(publicador_sites))  ,     
 
 )
 
