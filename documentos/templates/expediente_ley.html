@@ -3,74 +3,81 @@
 
 
 {% if accion == 'nuevo' %}
-<form action="/sig/expedientes/guardar/" method="post"> 
+<form id="form-expediente"  action="/sig/expedientes/guardar/" method="post" novalidate="novalidate"> 
 {% endif %}
 
 {% if accion == 'editar' %}
-<form action="/sig/expedientes/editar/" method="post"> 
+<form id="form-expediente" action="/sig/expedientes/editar/" method="post" novalidate="novalidate"> 
 {% endif %}
 
 
 
 {% csrf_token %}
 
-{% if form.errors %}
-	<!-- Error messaging -->
-	<div id="errors">
+
+	
+	<div id="errors" class="error_show">
 		<div class="inner">
-			<p>Errores:</p>
-			{{ form.non_field_errors }}
+			
 			<ul>
-				{% for field in form %}
-					{% if field.errors %}
-						<li>{{ field.label }}: Requerido</li>
-					{% endif %}
+				{% for error in errores %}
+					  
+						<li>{{error}}</li>
+					  
 				{% endfor %}
 			</ul>
+			
 		</div>
 	</div>
-	<!-- /Error messaging -->
-{% endif %}
+	
+	
+	
+	
+	
 
 
 <input name="tipo" value="{{tipo}}" type="hidden">
 
+<div id="validate-div">
+
 <div>
 	<label>Número</label> 
-	<input name="numero" value="{{expediente.numero}}"  
+	<input id="numero" name="numero" value="{{expediente.numero}}"  
 	 {% if accion == 'editar' %}
 	 	readonly
 	 {% endif %}
 	 >
+	 <label id="numero-error" class="error_hide">Campo requerido</span>
+	 
 
 </div>
 <div>
 	<label>Características</label> 
-	<input name="caracteristica" value="{{expediente.caracteristica}}" >
-
+	<input id="caracteristica" name="caracteristica" value="{{expediente.caracteristica}}" >
+	<span id="caracteristica-error" class="error_hide">Campo requerido</span>
 </div>
 
 
 
 <div>
 	<label>Fecha</label> 
-	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'SHORT_DATE_FORMAT'}}" type="text"  >
 	</input>		
-	
+	<span id="datepicker-error" class="error_hide">Campo requerido</span>
 	
  
 </div>
 
 <div>
 	<label>Alcance</label> 
-	<input name="alcance" value="{{expediente.alcance}}">
-
+	<input id="alcance" name="alcance" value="{{expediente.alcance}}">
+	<span id="alcance-error" class="error_hide">Campo requerido</span>
 </div>
 
 <div>
 	<label>Cuerpo</label> 
-	<input name="cuerpo" value="{{expediente.cuerpo}}" >
-
+	<input id="cuerpo" name="cuerpo" value="{{expediente.cuerpo}}" >
+	<span id="cuerpo-error" class="error_hide">Campo requerido</span>
 </div>
 
 
@@ -80,7 +87,7 @@
 	<div>
 		<label>Partido</label> 
 	
-		<input id="inputpartido" name= "partido"  type="hidden">
+		<input id="partido" name= "partido"  type="hidden">
 		
 		<select id="selectpartido" >
 	
@@ -94,6 +101,9 @@
 			 
 			{% endfor %}
 		</select>
+		
+		<span id="partido-error" class="error_hide">Campo requerido</span>
+		
 	
 	</div>
 	
@@ -101,14 +111,18 @@
 
 	<div>
 	<label>Región</label> 
-	<input name="region" value="{{expediente.region}}" >
+	<input id="region" name="region" value="{{expediente.region}}" >
+	<span id="region-error" class="error_hide">Campo requerido</span>
+	
 
 </div>
-
 {% endif %}
 
 
-<input type="submit" value="Guardar">
+
+</div>
+
+<input id="form-expediente-button" type="button" value="Guardar">
 
 
 </form>
@@ -181,7 +195,7 @@
 	
 		<div>
 			<label>Fecha</label> 
-			<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
+				<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
 			
 		
 			

@@ -112,29 +112,40 @@ class ExpedientesView(ListView):
         return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
     
     def saveExpediente(request):
-    
+        
+        valido=False
         tipo= request.POST.get('tipo','')
-    
+        
         if request.method == 'POST':
-            
+       
             if(tipo == 'Expediente'):
                 form = ExpedienteForm(request.POST)
             else:
-                
-                
                 form = ExpedienteLeyForm(request.POST)
-                
                 form.model.partido = Departamento.objects.get( codigo = int (request.POST.get('partido')))
-
-                
+    
+            errores=[]    
             if form.is_valid():
-                form.save()   
-            else:
-    #             form_errors = form.erros 
-                return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+               
+                #Validación para que no se repita el número de expediente. TODO: refactor
+                if(Expediente.objects.filter(numero = request.POST.get('numero')).exists()):
+                    errores.append('El número de expediente ya existe.')
+                else:
+                    form.save()
+                    valido=True   
         
-        return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
-        
+        if(valido): #Exito       
+            return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
+        else:  # Error
+            expediente =Expediente()
+            expediente.numero= request.POST.get('numero')
+            expediente.caracteristica=request.POST.get('caracteristica')
+            expediente.fecha = datetime.strptime( request.POST.get('fecha'), "%m/%d/%Y")   #datetime.strptime( fecha, "%M/%d/%Y" )
+            expediente.alcance=request.POST.get('alcance')
+            expediente.cuerpo=request.POST.get('cuerpo')
+                  
+            return render(request, 'expediente_ley.html', {'tipo' : tipo,'expediente': expediente ,'form':form ,'accion' : 'nuevo', "errores":errores}, context_instance=RequestContext(request) )
+
 
     def updateExpediente(request):
     
@@ -153,11 +164,8 @@ class ExpedientesView(ListView):
                     form = ExpedienteLeyForm(request.POST)
                     
                 if form.is_valid():  
-                   
-                     
                      form.save()   
                 else:
-                    
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
             return render(request, 'expedienteley_list.html',{'tipo' : tipo})
@@ -228,9 +236,7 @@ class PasesView(ListView):
         pase.departamento_destino = Departamento.objects.get( codigo = int (request.POST.get('departamento_destino')))
                                   
         fecha= (request.POST.get('fecha'))
-        
-        fecha1 =   datetime.strptime( fecha, "%d/%m/%Y" )
-                           
+                       
         pase.fecha =  datetime.strptime( fecha, "%d/%m/%Y" )
 
         pase.expediente = Expediente.objects.get( numero = int (request.POST.get('expediente_id')))
