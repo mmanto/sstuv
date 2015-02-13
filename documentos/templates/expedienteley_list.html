@@ -6,12 +6,14 @@
 
 
 <form action="/sig/expedientes/buscar/{{tipo}}" method="get">
-        <input type="text" id="id" name="id" value="0" type="number" >
+		<input type="text" id="organismo" name="organismo" value="0" type="number" >
+		<input type="text" id="numero" name="numero" value="0" type="number" >
+		<input type="text" id="anio" name="anio" value="0" type="number" >
         <input type="submit" value="Buscar">
 </form>
 
 
-<form action="/sig/expedientes/nuevo/{{tipo}}/0/" method="get">
+<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/" method="get">
         <input type="submit" value="Nuevo {{tipo}}">
         
 </form>
@@ -38,7 +40,7 @@
 
 		<tr>
 		    <td>
-	      	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.numero }}/" >{{ expediente.numero }}</a>
+	      	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }} </a>
 		    </td>
 		    
 		    <td>{{ expediente.caracteristica }}</td>		

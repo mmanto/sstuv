@@ -42,14 +42,22 @@
 
 <div>
 	<label>Número</label> 
+	<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %} >
+	<label>-</label> 
 	<input id="numero" name="numero" value="{{expediente.numero}}"  
 	 {% if accion == 'editar' %}
 	 	readonly
-	 {% endif %}
-	 >
-	 <label id="numero-error" class="error_hide">Campo requerido</span>
+	 {% endif %} >
+	 <label>-</label> 
+	<input id="aniopicker" name="anio" value="{{expediente.anio}}"  type="text"
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %} >
 	 
-
+	 <label id="numero-error" class="error_hide">Campo requerido</span>
 </div>
 <div>
 	<label>Características</label> 
@@ -61,7 +69,7 @@
 
 <div>
 	<label>Fecha</label> 
-	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'SHORT_DATE_FORMAT'}}" type="text"  >
+	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
 	</input>		
 	<span id="datepicker-error" class="error_hide">Campo requerido</span>
 	
@@ -189,13 +197,13 @@
 		
 	
 	
-		<input name="expediente_id" value="{{expediente.numero}}" type="hidden">
+		<input name="expediente_id" value="{{expediente.id}}" type="hidden">
 		<input name="expediente_tipo" value="{{tipo}}" type="hidden">
 		
 	
 		<div>
 			<label>Fecha</label> 
-				<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
+			<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
 			
 		
 			

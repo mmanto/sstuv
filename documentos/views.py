@@ -39,25 +39,25 @@ class LoginView(ListView):
     
     
 class ExpedientesView(ListView):
-    #model = ExpedienteLey.objects.all()
-    template_name = 'expedienteley_list.html'
     paginate_by = 10
     
-    def showExpediente(request, tipo, id):
+    def showExpediente(request, tipo, organismo, numero, anio):
     
-        id= int(id)
+        organismo=int(organismo)
+        numero= int(numero)
+        anio=int(anio)
             
         partidos =  Partido.objects.all()
        
         departamentos=Departamento.objects.all()
         
         #Si el id es 0 es uno nuevo
-        if(id != 0):
+        if(numero != 0):
             
             if(tipo == 'ExpedienteLey'):
-                expediente = ExpedienteLey.objects.get(numero=id)
+                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio)
             else:
-                expediente = Expediente.objects.get(numero=id)
+                expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio)
 
             pases = expediente.pase_set.all()
 
@@ -79,22 +79,22 @@ class ExpedientesView(ListView):
     def showResultados(request, tipo):
 
         expedientes= []
-        if 'id' in request.GET:
-       
-            if request.GET['id'] =='' or request.GET['id'] == '0'  :
+        
+        organismo=int(request.GET['organismo'])
+        numero=int(request.GET['numero'])
+        anio=int(request.GET['anio'])
+        
+        if numero == 0  :
                 expedientes = Expediente.objects.all()
-            else :
+        else :
              
                 try:
-                
-                    id= int(request.GET['id'],0)
-    
                     if(tipo == 'ExpedienteLey'):
-                       if(ExpedienteLey.objects.filter(numero=id).exists()):         
-                            expedientes.append(ExpedienteLey.objects.get(numero=id))
+                       if(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio ).exists()):         
+                            expedientes.append(ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio))
                     else:    
-                         if(Expediente.objects.filter(numero=id).exists()):         
-                            expedientes.append(Expediente.objects.get(numero=id))
+                         if(Expediente.objects.filter(organismo=organismo, numero=numero, anio=anio).exists()):         
+                            expedientes.append(Expediente.objects.get(organismo=organismo, numero=numero, anio=anio))
                 except:         
                     expedientes= []
          
@@ -128,7 +128,7 @@ class ExpedientesView(ListView):
             if form.is_valid():
                
                 #Validación para que no se repita el número de expediente. TODO: refactor
-                if(Expediente.objects.filter(numero = request.POST.get('numero')).exists()):
+                if(Expediente.objects.filter(organismo = request.POST.get('organismo') ,numero = request.POST.get('numero'), anio =  request.POST.get('anio')).exists()):
                     errores.append('El número de expediente ya existe.')
                 else:
                     form.save()
@@ -137,8 +137,13 @@ class ExpedientesView(ListView):
         if(valido): #Exito       
             return render(request, 'expedienteley_list.html',{'tipo' : tipo}, context_instance=RequestContext(request))
         else:  # Error
+            
+            errores.append(form._errors)
+            
             expediente =Expediente()
-            expediente.numero= request.POST.get('numero')
+            expediente.organismo=request.POST.get('organismo')
+            expediente.numero = request.POST.get('numero')
+            expediente.anio =request.POST.get('anio')
             expediente.caracteristica=request.POST.get('caracteristica')
             expediente.fecha = datetime.strptime( request.POST.get('fecha'), "%m/%d/%Y")   #datetime.strptime( fecha, "%M/%d/%Y" )
             expediente.alcance=request.POST.get('alcance')
@@ -234,16 +239,16 @@ class PasesView(ListView):
         pase.departamento_origen = Departamento.objects.get( codigo = int (request.POST.get('departamento_origen')))
          
         pase.departamento_destino = Departamento.objects.get( codigo = int (request.POST.get('departamento_destino')))
-                                  
+               
         fecha= (request.POST.get('fecha'))
                        
-        pase.fecha =  datetime.strptime( fecha, "%d/%m/%Y" )
+        pase.fecha =  datetime.strptime( fecha, "%m/%d/%Y" )
 
-        pase.expediente = Expediente.objects.get( numero = int (request.POST.get('expediente_id')))
+        pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
       
         pase.save()
       
-        return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
+        return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio)
 
             
             
