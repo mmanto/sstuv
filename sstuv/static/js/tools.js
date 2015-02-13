@@ -1,14 +1,6 @@
 $(function() {
 
-	// Date Picker
-	// $(document).ready(function() {
-	//
-	// $.datepicker.setDefaults($.datepicker.regional['es']);
-	//
-	// // $("input[id^='datepicker']").datepicker();
-	//
-	// });datepicker
-
+	// Date picker
 	$("[id^='datepicker']").datepicker(
 			{
 				regional: "es",
@@ -20,16 +12,10 @@ $(function() {
 					$("#ui-datepicker-div").removeClass('YearDatePicker');
 					$("#ui-datepicker-div").removeClass('HideTodayButton');
 				}, 
-//				onClose : function(dateText, inst) {
-//					var year = $(
-//							"#ui-datepicker-div .ui-datepicker-year :selected")
-//							.val();
-//					$(this).datepicker('setDate', new Date());
-//				}
 			});
 
 
-	// aniopicker
+	// Año Picker
 	$("#aniopicker").datepicker(
 			{
 				changeYear : true,
@@ -51,20 +37,20 @@ $(function() {
 				}
 			});
 
-	//
+	//Pop up para el alta de pases
 	$("#pase_popup").dialog({
 		autoOpen : false,
 		height : 600,
 		width : 800
 	});
 
-	//
+	//Evento para abrir el pop up de pases
 	$("#popup").click(function() {
 
 		$("#pase_popup").dialog("open");
 	});
 
-	//
+	//Evento para cerror el pop up de pases
 	$("#close_popup").click(function() {
 
 		$("#pase_popup").dialog("close");
@@ -110,4 +96,7 @@ $(function() {
 
 	});
 
+	
+	
+	
 });
