@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Expediente',
             fields=[
+
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('caracteristica', models.CharField(max_length=200)),
                 ('numero', models.CharField(max_length=200)),
@@ -41,9 +42,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('fecha', models.DateTimeField(verbose_name='fecha de movimiento')),
-                ('departamento_destino', models.ForeignKey(related_name='destino', to='comun.Departamento')),
-                ('departamento_origen', models.ForeignKey(related_name='origen', to='comun.Departamento')),
-                ('expediente', models.ForeignKey(related_name='pase_set', to='documentos.Expediente')),
+                ('departamento_destino', models.ForeignKey(to='comun.Departamento', related_name='destino')),
+                ('departamento_origen', models.ForeignKey(to='comun.Departamento', related_name='origen')),
+                ('expediente', models.ForeignKey(to='documentos.Expediente', related_name='pase_set')),
             ],
             options={
             },
