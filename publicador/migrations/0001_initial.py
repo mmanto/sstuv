@@ -7,16 +7,16 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('documentos', '0002_auto_20150112_1721'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='URLConf',
+            name='Articulo',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
-                ('clave', models.CharField(max_length=200)),
-                ('url', models.CharField(max_length=200)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('titulo', models.CharField(max_length=200)),
+                ('contenido', models.TextField()),
+                ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
             ],
             options={
             },

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Expediente',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('caracteristica', models.CharField(max_length=200)),
                 ('numero', models.CharField(max_length=200)),
                 ('fecha', models.DateField(verbose_name='Fecha')),
@@ -28,9 +28,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ExpedienteLey',
             fields=[
-                ('expediente_ptr', models.OneToOneField(serialize=False, to='documentos.Expediente', parent_link=True, auto_created=True, primary_key=True)),
+                ('expediente_ptr', models.OneToOneField(serialize=False, to='documentos.Expediente', primary_key=True, auto_created=True, parent_link=True)),
                 ('region', models.CharField(max_length=200)),
-                ('partido', models.OneToOneField(to='comun.Partido')),
+                ('partido', models.ForeignKey(to='comun.Partido')),
             ],
             options={
             },
@@ -39,9 +39,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pase',
             fields=[
-                ('departamento_origen', models.OneToOneField(serialize=False, to='comun.Departamento', primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('fecha', models.DateTimeField(verbose_name='fecha de movimiento')),
-                ('expediente', models.ForeignKey(to='documentos.Expediente')),
+                ('departamento_destino', models.ForeignKey(related_name='destino', to='comun.Departamento')),
+                ('departamento_origen', models.ForeignKey(related_name='origen', to='comun.Departamento')),
+                ('expediente', models.ForeignKey(related_name='pase_set', to='documentos.Expediente')),
             ],
             options={
             },

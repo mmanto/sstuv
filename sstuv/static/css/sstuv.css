@@ -113,3 +113,19 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv {
 .prueba{
 	color: green;
 }
+
+.error_hide{
+    display: none;
+    margin-left: 10px;
+}      
+ 
+.error_show{
+    color: red;
+    margin-left: 10px;
+
+}
+
+
+
+
+

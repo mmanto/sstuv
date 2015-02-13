@@ -86,9 +86,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
-    'forms_builder.forms',
+#     'forms_builder.forms',
     'django_extensions',
-    'comun', 'documentos',
+    'wkhtmltopdf',
+    'comun', 'documentos', 'publicador'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -161,8 +162,6 @@ FIXTURE_DIRS = [
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
-
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -199,3 +198,6 @@ DATABASES = {
 # url to redirect after successfull login
 LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
+
+
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
