@@ -37,6 +37,7 @@ class PaseReport(PDFTemplateView):
             template=template,
             show_content_in_browser=True, 
             )
+
         
         
         
