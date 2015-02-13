@@ -17,15 +17,30 @@ def import_partidos():
     if cursor is None:
         return
     ## it's important selecting the id field, so that we can keep the publisher - book relationship
-    sql = """SELECT id, codigo, nombre, codcas FROM partido"""
+    sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
     cursor.execute(sql)
     for row in cursor.fetchall():
-        partidos = models.Partido(id=row[0], codigo=row[1], nombre=row[2], codcas=row[3])
+        partidos = models.Partido(id=row[0], codigo=row[1], nombre=row[2], codcatas=row[3])
         partidos.save()
+  
+
+def import_departamentos():
+    print("estamos en departamentos")
+    cursor = setup_cursor()
+    if cursor is None:
+        return
+    sql = """SELECT id, nombre FROM departamento"""
+    cursor.execute(sql)
+    for row in cursor.fetchall():
+        departamento = models.Departamento(id=row[0], nombre=row[1])
+        departamento.save()
+
 
 def main():
     import_partidos()
-    
+    import_departamentos()
 
-if __name__=="__main__":
-    main()
+
+main()
+
+

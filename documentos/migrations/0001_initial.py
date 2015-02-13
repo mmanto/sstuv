@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Expediente',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('caracteristica', models.CharField(max_length=200)),
                 ('numero', models.CharField(max_length=200)),
                 ('fecha', models.DateField(verbose_name='Fecha')),
@@ -28,8 +29,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ExpedienteLey',
             fields=[
-
-                ('expediente_ptr', models.OneToOneField(to='documentos.Expediente', primary_key=True, serialize=False, parent_link=True, auto_created=True)),
+                ('expediente_ptr', models.OneToOneField(serialize=False, to='documentos.Expediente', primary_key=True, auto_created=True, parent_link=True)),
                 ('region', models.CharField(max_length=200)),
                 ('partido', models.ForeignKey(to='comun.Partido')),
             ],
@@ -40,19 +40,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pase',
             fields=[
-<<<<<<< HEAD
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('fecha', models.DateTimeField(verbose_name='fecha de movimiento')),
                 ('departamento_destino', models.ForeignKey(to='comun.Departamento', related_name='destino')),
                 ('departamento_origen', models.ForeignKey(to='comun.Departamento', related_name='origen')),
                 ('expediente', models.ForeignKey(to='documentos.Expediente', related_name='pase_set')),
-=======
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
-                ('fecha', models.DateTimeField(verbose_name='fecha de movimiento')),
-                ('departamento_destino', models.ForeignKey(related_name='destino', to='comun.Departamento')),
-                ('departamento_origen', models.ForeignKey(related_name='origen', to='comun.Departamento')),
-                ('expediente', models.ForeignKey(related_name='pase_set', to='documentos.Expediente')),
->>>>>>> 10ec905fd09b423b90611b4466510b330841dc11
             ],
             options={
             },

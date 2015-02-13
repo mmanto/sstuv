@@ -12,7 +12,6 @@ class Partido(models.Model):
         return self.nombre
 
 class Departamento(models.Model):
-
 #     descripcion = models.CharField(max_length=250)
     codigo= models.IntegerField(default=0)
 
