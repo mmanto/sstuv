@@ -200,3 +200,4 @@ LOGIN_URL='/admin/login/'
 
 WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
 
+
