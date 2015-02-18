@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %} {% block content %}
+﻿{% extends "base_site.html" %} {% block content %}
 <h2>Expedientes</h2>
 
 
@@ -42,14 +42,22 @@
 
 <div>
 	<label>Número</label> 
+	<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %} >
+	<label>-</label> 
 	<input id="numero" name="numero" value="{{expediente.numero}}"  
 	 {% if accion == 'editar' %}
 	 	readonly
-	 {% endif %}
-	 >
-	 <label id="numero-error" class="error_hide">Campo requerido</span>
+	 {% endif %} >
+	 <label>-</label> 
+	<input id="aniopicker" name="anio" value="{{expediente.anio}}"  type="text"
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %} >
 	 
-
+	 <label id="numero-error" class="error_hide">Campo requerido</span>
 </div>
 <div>
 	<label>Características</label> 
@@ -61,7 +69,7 @@
 
 <div>
 	<label>Fecha</label> 
-	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'SHORT_DATE_FORMAT'}}" type="text"  >
+	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
 	</input>		
 	<span id="datepicker-error" class="error_hide">Campo requerido</span>
 	
@@ -138,7 +146,7 @@
 <button id="popup">Nuevo Pase</button>
 
 
-
+<div class="datagrid" >
 <table style="width:100%">
   <tr>
     <th>Fecha</th>
@@ -148,6 +156,8 @@
   </tr>
   
   
+  
+  <tbody>
   	{% for pase in pases %}
 
 	<tr>
@@ -168,9 +178,41 @@
 	</tr>
 		
 	{% endfor %}
+	</tbody>
+
+
+	<tfoot>
+
+	<td colspan="5">
+		<div id="paging">
+			<ul>
+				{% if pases.has_previous %}
+					<li>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.previous_page_number }}">previous</a>
+					</li>
+				{% endif %}
+				
+				<span class="current">
+					<li>
+						Page {{ pases.number }} of {{ pases.paginator.num_pages }}.
+					</li>
+				</span>
+				
+				{% if pases.has_next %}
+					<li>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.next_page_number }}">next</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	
+
+<tfoot>
+
 
 </table>
 
+</div>
 
 
 
@@ -189,13 +231,13 @@
 		
 	
 	
-		<input name="expediente_id" value="{{expediente.numero}}" type="hidden">
+		<input name="expediente_id" value="{{expediente.id}}" type="hidden">
 		<input name="expediente_tipo" value="{{tipo}}" type="hidden">
 		
 	
 		<div>
 			<label>Fecha</label> 
-				<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
+			<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
 			
 		
 			
