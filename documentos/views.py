@@ -98,7 +98,7 @@ class ExpedientesView(ListView):
                 except:         
                     expedientes= []
          
-        paginator = Paginator(expedientes, 25) # Show 25 contacts per page
+        paginator = Paginator(expedientes, 10) # Show 25 contacts per page
         page = request.GET.get('page')
         try:
             expedientes = paginator.page(page)
@@ -109,7 +109,7 @@ class ExpedientesView(ListView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             expedientes = paginator.page(paginator.num_pages)           
         
-        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio }, context_instance=RequestContext(request))
     
     def saveExpediente(request):
         
@@ -251,7 +251,7 @@ class PasesView(ListView):
         return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio)
 
             
-            
+         #TODO   
     def removePase(request):
 
         return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
