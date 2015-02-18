@@ -51,20 +51,22 @@ class ExpedientesView(ListView):
        
         departamentos=Departamento.objects.all()
         
-        #Si el id es 0 es uno nuevo
-        if(numero != 0):
+        if(numero != 0):  #Expediente editar
             
             if(tipo == 'ExpedienteLey'):
                 expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio)
             else:
                 expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio)
 
-            pases = expediente.pase_set.all()
+#             pases = expediente.pase_set.all()
+        
+            pases = ExpedientesView.paginador(request, expediente.pase_set.all())
 
 
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases}, context_instance=RequestContext(request) )
+
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio}, context_instance=RequestContext(request) )
       
-        else:
+        else: # Expediente nuevo
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
         
     
@@ -226,6 +228,21 @@ class ExpedientesView(ListView):
   
     def get_queryset(self):
         return ExpedienteLey.objects.all()
+
+
+    def paginador(request, object):
+        paginator = Paginator(object, 5) # Show 25 contacts per page
+        page = request.GET.get('page')
+        try:
+            object = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            object = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            object = paginator.page(paginator.num_pages)   
+        return object
+
 
 
 class PasesView(ListView):

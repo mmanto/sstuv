@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %} {% block content %}
+﻿{% extends "base_site.html" %} {% block content %}
 <h2>Expedientes</h2>
 
 
@@ -146,7 +146,7 @@
 <button id="popup">Nuevo Pase</button>
 
 
-
+<div class="datagrid" >
 <table style="width:100%">
   <tr>
     <th>Fecha</th>
@@ -156,6 +156,8 @@
   </tr>
   
   
+  
+  <tbody>
   	{% for pase in pases %}
 
 	<tr>
@@ -176,9 +178,41 @@
 	</tr>
 		
 	{% endfor %}
+	</tbody>
+
+
+	<tfoot>
+
+	<td colspan="5">
+		<div id="paging">
+			<ul>
+				{% if pases.has_previous %}
+					<li>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.previous_page_number }}">previous</a>
+					</li>
+				{% endif %}
+				
+				<span class="current">
+					<li>
+						Page {{ pases.number }} of {{ pases.paginator.num_pages }}.
+					</li>
+				</span>
+				
+				{% if pases.has_next %}
+					<li>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.next_page_number }}">next</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	
+
+<tfoot>
+
 
 </table>
 
+</div>
 
 
 
