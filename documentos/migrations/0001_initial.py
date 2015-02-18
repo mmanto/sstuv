@@ -40,20 +40,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pase',
             fields=[
-<<<<<<< HEAD
-
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-=======
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
->>>>>>> branch 'master' of https://github.com/mmanto/sstuv.git
                 ('fecha', models.DateTimeField(verbose_name='fecha de movimiento')),
                 ('departamento_destino', models.ForeignKey(to='comun.Departamento', related_name='destino')),
                 ('departamento_origen', models.ForeignKey(to='comun.Departamento', related_name='origen')),
                 ('expediente', models.ForeignKey(to='documentos.Expediente', related_name='pase_set')),
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/mmanto/sstuv.git
             ],
             options={
             },
