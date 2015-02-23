@@ -12,4 +12,14 @@
 </h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+
+ {% load tags %}
+    
+    
+    {% block side_block%}
+    {% menu %}
+    {% endblock %}
+   
+
+{% endblock %}
