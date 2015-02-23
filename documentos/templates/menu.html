@@ -1,0 +1,40 @@
+<div>
+
+	<nav>
+
+	<ul id="menu">
+
+
+
+
+		{% for m in menu %}
+
+		<li>{{ m.nombreDireccion }}
+
+
+			<ul>
+				{% for submenu in m.subsistemas %}
+
+				<li>  
+					<a href="{{submenu.target}}">{{ submenu.nombreSistema }}</a> 
+			    </li> 
+				{% endfor %}
+
+			</ul>
+
+
+
+
+		</li> {% endfor %}
+
+	</ul>
+
+	</nav>
+	
+	</br> </br> </br> </br> </br> </br> </br> </br> </br> </br>
+
+
+</div>
+
+
+
