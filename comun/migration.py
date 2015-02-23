@@ -6,6 +6,7 @@ from comun import models
 def setup_cursor():
     try:
         cursor = connections['legacy'].cursor()
+        return cursor
     except ConnectionDoesNotExist:
         print("legacy database is not configured")
         return None
@@ -29,15 +30,16 @@ def import_departamentos():
     cursor = setup_cursor()
     if cursor is None:
         return
-    sql = """SELECT id, nombre FROM departamento"""
+    print("sigdesa")
+    sql = """SELECT id, nombre, codigo FROM departamento"""
     cursor.execute(sql)
     for row in cursor.fetchall():
-        departamento = models.Departamento(id=row[0], nombre=row[1])
+        departamento = models.Departamento(nombre=row[1], codigo=row[2] )
         departamento.save()
 
 
 def main():
-    import_partidos()
+#     import_partidos()
     import_departamentos()
 
 

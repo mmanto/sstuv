@@ -86,8 +86,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     "django.contrib.sites",
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_extensions',
-    'wkhtmltopdf',
+    'wkhtmltopdf', 
     'comun', 'documentos', 'publicador'
 )
 

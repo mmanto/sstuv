@@ -21,7 +21,7 @@ class PaseReport(PDFTemplateView):
         template =  'pase_pdf.html'
            
         expediente=[]
-        expediente.append(Expediente.objects.get(numero = idExpediente))
+        expediente.append(Expediente.objects.get(id = idExpediente))
         
         pase = Pase.objects.get(id=idPase)
          
