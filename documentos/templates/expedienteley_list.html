@@ -65,7 +65,13 @@
 
 <tfoot>
 
-	<td colspan="5">
+	{% if tipo == 'ExpedienteLey'%}
+			<td colspan="7">
+	{% else%}
+			<td colspan="5">
+	{% endif %}		
+			
+		
 		<div id="paging">
 			<ul>
 				{% if expedientes.has_previous %}
