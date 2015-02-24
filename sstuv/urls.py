@@ -7,6 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from documentos import documentos_sites
 from comun import comun_sites
 from publicador import publicador_sites
+from django.conf.urls.static import static
 
 urlpatterns = patterns('',
                    url(r'^sig/auth/login/$','django.contrib.auth.views.login' , {'template_name': 'login.html'}),
@@ -21,9 +22,10 @@ urlpatterns = patterns('',
                    url(r'^sig/', include(documentos_sites)),
                       
                    #Pase 
+                                    
+                  url(r'^sig/', include(publicador_sites))  ,     
+ 
+) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-                   url(r'^sig/', include(publicador_sites))  ,     
-
-)
 
 urlpatterns += staticfiles_urlpatterns()
