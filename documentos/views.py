@@ -18,7 +18,11 @@ from django.db.utils import ConnectionDoesNotExist
 from django.http.response import HttpResponse
 from documentos import models    
 from datetime import datetime
-from django.conf.global_settings import DATE_FORMAT
+from django.conf.global_settings import DATE_FORMAT   
+# import the logging library
+import logging
+# Get an instance of a logger
+logger = logging.getLogger('sstuv') 
 
 
 class LoginView(ListView):
@@ -42,6 +46,10 @@ class LoginView(ListView):
     
 class ExpedientesView(ListView):
     paginate_by = 10
+    
+#     def __init__(self):
+#         self.logger = logging.getLogger('documentos.views.ExpedientesView')
+        
     
     def showExpediente(request, tipo, organismo, numero, anio):
     
@@ -74,6 +82,8 @@ class ExpedientesView(ListView):
     
  
     def loadBusquedaExpediente(request):
+        logger.info('busqueda de expedientes en logger info')
+        logger.error('busqueda de expedientes en logger error')
         return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
 
