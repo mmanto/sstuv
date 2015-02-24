@@ -58,12 +58,11 @@
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->
+    
     {% block breadcrumbs %}
     <div class="breadcrumbs">
-    
 
-    <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a> 
-    <a href='/sig/expedientes/buscar/{{tipo}}/0'> | Expedientes </a>
+    
     
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
