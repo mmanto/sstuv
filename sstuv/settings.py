@@ -13,6 +13,7 @@ import os
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.global_settings import STATIC_ROOT
+#from testtinymce.settings import TINYMCE_DEFAULT_CONFIG
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -49,6 +50,7 @@ STATIC_ROOT = os.path.join(PACKAGE_ROOT, "site_media", "static")
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = "/site_media/static/"
+
 
 # Additional locations of static files
 STATICFILES_DIRS = [
@@ -87,12 +89,11 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     'django.contrib.staticfiles',
     'django_extensions',
-    'wkhtmltopdf',
-<<<<<<< HEAD
-    'comun', 'documentos', 'publicador'
-=======
-    'comun', 'documentos',
->>>>>>> 9e7fd03ca1c74e2a688150ba71f3003dba643c3a
+    #'wkhtmltopdf',
+    'comun', 'documentos', 'publicador',
+    #'tinymce',
+
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -203,3 +204,22 @@ LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
 
 WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+
+
+#TINYMCE
+'''
+TINYMCE_JS_URL = os.path.join(STATIC_ROOT, "js/tinymce/js/tinymce/tinymce.min.js")
+
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "js/tinymce/js/tinymce")
+
+
+TINYMCE_DEFAULT_CONFIG = {
+                          'file_browser_callback': 'mce_filebrowser',
+                          'height': '600',
+                          'plugins': 'advhr,table,emotions,media,insertdatetime,directionality',
+                          'theme_advances_toolbar_align': 'left',
+                          'theme_advances_toolbar_location': 'top',
+                          'theme_advances_toolbar_buttons1': 'bold,italic,underline',
+                          'theme_advances_toolbar_buttons2': 'bullist',
+                          }
+''' 

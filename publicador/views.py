@@ -44,10 +44,12 @@ class ArticulosView(ListView):
             
             if "guardar" in request.POST:
                               
-                form = ArticuloForm(request.POST)
+                form = ArticuloForm(request.POST, request.FILES)
+                    
             
                 if form.is_valid():
-                    form.save()   
+                    form.save()  
+                    
                 else:
                     return render(request, 'listArticulos.html')
 
@@ -63,7 +65,7 @@ class ArticulosView(ListView):
             articulo = Articulo.objects.get(id = id)
             
             if request.method == 'POST':
-                form = ArticuloForm(request.POST, instance=articulo)               
+                form = ArticuloForm(request.POST, request.FILES, instance=articulo)               
                 if form.is_valid():  
                     form.save()
          

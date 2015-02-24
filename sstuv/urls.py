@@ -7,6 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from documentos import documentos_sites
 from comun import comun_sites
 from publicador import publicador_sites
+from django.conf.urls.static import static
 
 
 urlpatterns = patterns('',
@@ -25,8 +26,11 @@ urlpatterns = patterns('',
                    #Pase 
                    
                    
-                   url(r'^sig/', include(publicador_sites))  ,     
+                   url(r'^sig/', include(publicador_sites))  ,  
+                   #url(r'^tinymce/', include('tinymce.urls')),
+                   
+                     
 
-)
+) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

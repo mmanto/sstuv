@@ -1,14 +1,48 @@
 {% extends "base_publicador.html" %}
+
+{% load staticfiles %}
+
+{% block script_base %}
+ <script src="{% static 'js/jquery.js' %}" ></script>
+ <script src="{% static 'js/jquery-ui.js' %}" ></script>
+ <script src="{% static 'js/tools.js' %}" ></script>
+ <script src="{% static 'js/jQuery-File-Upload-9.9.3/js/jquery.fileupload.js' %}"></script>
+ <script type="text/javascript">
+ 
+ $(document).ready(function(){		
+ 		$('#imagen').change(function(){
+ 			readURL(this);
+ 		});		
+ })
+ 
+function readURL(input){	
+	if(input.files && input.files[0]) {
+		var reader = new FileReader();
+		
+		reader.onload= function(e){ 
+			$('#preview').attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);		
+	} 
+}
+ 
+ </script>
+ 
+ 
+{% endblock %}
+
+ 
+
+
 {% block content %}
 <h2>Nuevo Articulo</h2>
 
-
 {% if accion == 'nuevo' %}
-<form action="/sig/publicador/guardar/" method="post"> 
+<form action="/sig/publicador/guardar/" method="post" enctype="multipart/form-data">
 {% endif %}
 
 {% if accion == 'editar' %}
-<form action="/sig/publicador/guardarEditado/" method="post"> 
+<form action="/sig/publicador/guardarEditado/" method="post" enctype="multipart/form-data">
 {% endif %}
 
 {% csrf_token %}
@@ -38,23 +72,36 @@
 
 <div>
 	<label>Contenido</label> 
-	<input name="contenido" value="{{articulo.contenido}}" >
-
+	<textarea name="contenido" rows="20" cols="80" value="{{articulo.contenido}}">{{articulo.contenido}}</textarea>
 </div>
 
 <div>
-	 
+	<label>Imagen</label> 
+	<input type="file" name="imagen" id="imagen" >
+</div>
+
+
+<div>
+		
+		<img name="preview" id="preview" width='100' 
+		{% if articulo.imagen and articulo.imagen|length > 0 %} 		
+				src="{{MEDIA_URL}}{{articulo.imagen}}"
+		{% endif %}
+		>
+	
+</div>
+
+
+<div>	 
 	<input type="hidden" name="id" value="{{articulo.id}}" >
 </div>
 
+<br>
 
 <input type="submit" name="guardar" value="Guardar">
 <input type="submit" name="cancelar" value="Cancelar">
 
 </form>
-
-
-
 
 
 {% endblock %}
