@@ -97,6 +97,9 @@ class ExpedientesView(ListView):
         anio=int(request.GET['anio'])
         
         if numero == 0  :
+            if(tipo == 'ExpedienteLey'):
+                expedientes = ExpedienteLey.objects.all()
+            else:    
                 expedientes = Expediente.objects.all()
         else :
              
@@ -201,10 +204,12 @@ class ExpedientesView(ListView):
                 expedientesLey.save()
             mensaje = 'Importación realizada con éxito'
         except ConnectionDoesNotExist:
-            mensaje = 'legacy database is not configured'
+            logger.error("BD Caida")
+            mensaje = 'Base de datos fuera de linea.'
             return None
         except Error:
-            mensaje = 'Error.'
+            logger.error("Error inestperado al importar expedientes Ley")
+            mensaje = 'Sistema en mantenimiento, intentelo en unos momentos.'
         if cursor is None:
             mensaje = 'Cursor None'
         
