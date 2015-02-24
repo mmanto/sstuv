@@ -2,13 +2,15 @@ from django.db import models
 from comun.models import Partido, Departamento
 
 class Expediente(models.Model):
-	caracteristica = models.CharField(max_length=200)
-# numero = models.IntegerField(default=0)
+	
+	organismo = models.IntegerField()
 	numero = models.CharField(max_length=200)
+	anio = models.IntegerField()
+	
+	caracteristica = models.CharField(max_length=200)
 	fecha = models.DateField('Fecha')
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
-# 	pases = models.ManyToManyField(Pase, related_name="expediente")
 	
 	def __str__(self):
 		return self.numero

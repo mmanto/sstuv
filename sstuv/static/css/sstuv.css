@@ -19,11 +19,11 @@
 }
 
 .datagrid table thead th {
-/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #A65B1A */
-/* 		), color-stop(1, #F07A0C)); */
-/* 	background: -moz-linear-gradient(center top, #A65B1A 5%, #F07A0C 100%); */
-/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', */
-/* 		endColorstr='#F07A0C'); */
+	/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #A65B1A */
+	/* 		), color-stop(1, #F07A0C)); */
+	/* 	background: -moz-linear-gradient(center top, #A65B1A 5%, #F07A0C 100%); */
+	/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', */
+	/* 		endColorstr='#F07A0C'); */
 	background-color: #f6a828;
 	color: #FFFFFF;
 	font-size: 15px;
@@ -110,6 +110,99 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv {
 	position: fixed !important;
 }
 
-.prueba{
+.prueba {
 	color: green;
 }
+
+.error_hide {
+	display: none;
+	margin-left: 10px;
+}
+
+.error_show {
+	color: red;
+	margin-left: 10px;
+}
+
+.YearDatePicker .ui-datepicker-month {
+	display: none;
+}
+
+.HideTodayButton .ui-datepicker-buttonpane .ui-datepicker-current {
+	visibility: hidden;
+}
+
+.hide-calendar .ui-datepicker-calendar {
+	display: none !important;
+	visibility: hidden !important
+}
+
+
+
+
+
+
+
+
+
+ul#menu {
+ background: #f6a828;
+ float:left;
+ padding: 5px;
+ width: 100%;
+ 
+}
+  
+ul#menu li {
+ color: #fff;
+ float: left;
+ width: 18%;
+ list-style: none;
+ margin: 0% 1%;
+}
+  
+ul#menu li:hover{
+ color: #000;
+ cursor:pointer;
+}
+  
+ul#menu ul {
+ display: none;
+ position: absolute;
+ background: #f6a828;
+ color: #fff;
+ padding: 5px 0px 5px 5px;
+ margin: 0;
+ }
+  
+ul#menu ul li{
+ float: left;
+ color: #fff;
+ width:100%;
+ margin:2% 0%;
+}
+ 
+ 
+ul#menu ul li a{
+ color: #fff;
+}
+  
+ul#menu ul li a:hover{
+ color: #0000ff;
+ cursor:pointer;
+}
+  
+ul#menu li:hover ul ul,ul#menu li:hover ul ul ul,ul#menu li.iehover ul ul,ul#menu li.iehover ul ul ul {
+ display: none;
+ cursor:pointer;
+}
+  
+ul#menu li:hover ul,ul#menu ul li:hover ul,ul#menu ul ul li:hover ul,ul#menu li.iehover ul,ul#menu ul li.iehover ul,ul#menu ul ul li.iehover ul {
+ display: block;
+ cursor:pointer;
+}
+
+
+
+
+	
