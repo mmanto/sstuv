@@ -18,12 +18,14 @@ from django.db.utils import ConnectionDoesNotExist
 from django.http.response import HttpResponse
 from documentos import models    
 from datetime import datetime
-from django.conf.global_settings import DATE_FORMAT    
+from django.conf.global_settings import DATE_FORMAT
 
 
 class LoginView(ListView):
     
+    
     def login(request, template_name='registration/login.html'):
+       
         return render(request, 'login.html')
         
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
@@ -79,7 +81,8 @@ class ExpedientesView(ListView):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
     def showResultados(request, tipo):
-
+        
+        
         expedientes= []
         
         organismo=int(request.GET['organismo'])

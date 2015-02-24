@@ -1,6 +1,5 @@
 from django.db import models
 from distutils.command.upload import upload
-from tinymce import models as tinymce_models
 # Create your models here.
 
 class Articulo(models.Model):
