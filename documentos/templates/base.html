@@ -4,6 +4,7 @@
 <head>
 
 <title>{% block title %}{% endblock %}</title>
+
 </head>
 {% load i18n %}
 {% load staticfiles %}
@@ -11,6 +12,7 @@
     <link href="{% static "css/base.css" %}" rel="stylesheet">
     <link href="{% static "css/login.css" %}" rel="stylesheet">
     <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
+<!--     <link href="{% static "css/remito.css" %}" rel="stylesheet"> -->
     <link href="{% static "css/jquery-ui/ui-lightness/jquery-ui.css" %}" rel="stylesheet">
     
     {% block extra_style %}{% endblock %}
@@ -20,6 +22,7 @@
  <script src="{% static 'js/bootstrap.min.js' %}"></script>
  <script src="{% static 'js/jquery.js' %}" ></script>
  <script src="{% static 'js/jquery-ui.js' %}" ></script>
+ <script src="{% static 'js/validation.js' %}" ></script>
  <script src="{% static 'js/tools.js' %}" ></script>
 {% endblock %}
 
@@ -55,12 +58,11 @@
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->
+    
     {% block breadcrumbs %}
     <div class="breadcrumbs">
-    
 
-    <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a> 
-    <a href='/sig/expedientes/buscar/{{tipo}}/0'> | Expedientes </a>
+    
     
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>

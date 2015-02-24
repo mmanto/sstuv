@@ -24,10 +24,8 @@ urlpatterns = patterns('',
                    url(r'^sig/', include(comun_sites))  ,   
         
                    #Pase 
-                   
-                   
+                                    
                    url(r'^sig/', include(publicador_sites))  ,  
-                   #url(r'^tinymce/', include('tinymce.urls')),
                    
                      
 

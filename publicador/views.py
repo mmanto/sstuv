@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from publicador import models
 from django.views.generic import ListView
-from pip._vendor.requests.models import Response
+#from pip._vendor.requests.models import Response
 from django.template.loader import render_to_string
 from django.contrib.gis.shortcuts import render_to_text
 from django.http.response import HttpResponse
@@ -44,12 +44,10 @@ class ArticulosView(ListView):
             
             if "guardar" in request.POST:
                               
-                form = ArticuloForm(request.POST, request.FILES)
-                    
+                form = ArticuloForm(request.POST)
             
                 if form.is_valid():
-                    form.save()  
-                    
+                    form.save()   
                 else:
                     return render(request, 'listArticulos.html')
 
@@ -65,7 +63,7 @@ class ArticulosView(ListView):
             articulo = Articulo.objects.get(id = id)
             
             if request.method == 'POST':
-                form = ArticuloForm(request.POST, request.FILES, instance=articulo)               
+                form = ArticuloForm(request.POST, instance=articulo)               
                 if form.is_valid():  
                     form.save()
          
