@@ -1,11 +1,21 @@
 from django import template
+from django.core.context_processors import request
+from django.contrib.auth.models import User, Group
 
 
 register = template.Library()
 
 
 @register.inclusion_tag('menu.html')
-def menu():
+def menu(user):
+    
+#     print(user.get_group_permissions())
+    
+    
+#     group = Group.objects.all( user = user)
+# 
+#     print (group)
+    
     
     menu = []
     
@@ -57,5 +67,5 @@ def menu():
     
     
     
-    return {'menu': menu}
+    return {'menu': menu, 'user': user}
  

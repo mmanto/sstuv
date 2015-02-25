@@ -22,7 +22,8 @@ from django.conf.global_settings import DATE_FORMAT
 # import the logging library
 import logging
 # Get an instance of a logger
-logger = logging.getLogger('sstuv') 
+logger = logging.getLogger('sstuvInfo')
+loggerError = logging.getLogger('sstuvError') 
 
 
 class LoginView(ListView):
@@ -83,7 +84,7 @@ class ExpedientesView(ListView):
  
     def loadBusquedaExpediente(request):
         logger.info('busqueda de expedientes en logger info')
-        logger.error('busqueda de expedientes en logger error')
+        loggerError.error('busqueda de expedientes en logger error')
         return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
 

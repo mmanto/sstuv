@@ -143,23 +143,34 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'fileInfo': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': './log/debug.log',
+            'filename': PROJECT_ROOT + '/sstuv/log/info.log',
+            'formatter': 'verbose'
+        },
+        'fileError': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': PROJECT_ROOT + '/sstuv/log/error.log',
             'formatter': 'verbose'
         },
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers':['fileInfo'],
             'propagate': True,
             'level':'INFO',
         },
-        'sstuv': {
-            'handlers': ['file'],
+        'sstuvInfo': {
+            'handlers': ['fileInfo'],
             'propagate': True,
             'level': 'INFO',
+        },
+        'sstuvError': {
+            'handlers': ['fileError'],
+            'propagate': True,
+            'level': 'ERROR',
         },
     }
 }
