@@ -67,5 +67,5 @@ def menu(user):
     
     
     
-    return {'menu': menu}
+    return {'menu': menu, 'user': user}
  
