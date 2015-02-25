@@ -26,6 +26,10 @@
 
 
 		</li> {% endfor %}
+		<li>         
+			{% firstof user.get_short_name user.get_username %}   	
+	    	<a href="{% url 'logout_view' %}" id="logout">Cerrar sesion</a>
+		</li>
 
 	</ul>
 

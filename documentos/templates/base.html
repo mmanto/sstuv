@@ -9,7 +9,6 @@
 {% load i18n %}
 {% load staticfiles %}
 {% block style_base %}
-    <link href="{% static "css/base.css" %}" rel="stylesheet">
     <link href="{% static "css/login.css" %}" rel="stylesheet">
     <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
 <!--     <link href="{% static "css/remito.css" %}" rel="stylesheet"> -->
@@ -19,7 +18,6 @@
 {% endblock %}
 
 {% block script_base %}
- <script src="{% static 'js/bootstrap.min.js' %}"></script>
  <script src="{% static 'js/jquery.js' %}" ></script>
  <script src="{% static 'js/jquery-ui.js' %}" ></script>
  <script src="{% static 'js/validation.js' %}" ></script>
@@ -37,24 +35,7 @@
         <div id="branding">
         {% block branding %}{% endblock %}
         </div>
-        {% if user.is_active and user.is_staff %}
-        <div id="user-tools">
-            {% block welcome-msg %}
-                {% trans 'Welcome,' %}
-                <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-            {% endblock %}
-            {% block userlinks %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
-                {% endif %}
-                {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
-                {% endif %}
-                <a href="{% url 'logout_view' %}">{% trans 'Log out' %}</a>
-            {% endblock %}
-        </div>
-        {% endif %}
+
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->

@@ -56,7 +56,7 @@ $(function() {
 		$("#pase_popup").dialog("close");
 	});
 
-	// Cargar selección de combo en hidden input
+	// Cargar selección de combo en hidden input en cualquier select
 	$("select[id^='select']").select().change(function() {
 
 		var origen = $(this).attr('id').substring(6);
@@ -96,7 +96,5 @@ $(function() {
 
 	});
 
-	
-	
-	
+
 });
