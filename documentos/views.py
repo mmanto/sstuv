@@ -27,7 +27,7 @@ loggerError = logging.getLogger('sstuvError')
 
 
 class LoginView(ListView):
-    
+        
     
     def login(request, template_name='registration/login.html'):
        
@@ -275,9 +275,12 @@ class PasesView(ListView):
     
     
     def getPases(request):
-    
         
-        pases = PasesView.paginador(request, Pase.objects.all())
+        user = request.user
+       
+        departamento=Departamento.objects.get(nombre = user.groups.first())
+        
+        pases = PasesView.paginador(request, Pase.objects.filter(estado = Estado.PENDIENTE.value , departamento_destino = departamento).all())
 
         estados=[]
         
