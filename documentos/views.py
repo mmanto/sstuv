@@ -300,14 +300,19 @@ class PasesView(ListView):
                        
         pase.fecha =  datetime.strptime( fecha, "%m/%d/%Y" )
 
-        pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
+        if((request.POST.get('expediente_tipo') == 'Expediente')):
+            pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
+        else:
+            pase.expediente = ExpedienteLey.objects.get( id = int (request.POST.get('expediente_id')))
         
         pase.estado=Estado.PENDIENTE.value
       
         pase.save()
       
-        return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio)
-
+        if(request.POST.get('expediente_tipo') == 'Expediente'):
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,0,0)
+        else:  
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,pase.expediente.partido.id, pase.expediente.region)
             
          #TODO   
     def removePase(request):
