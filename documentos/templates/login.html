@@ -1,5 +1,5 @@
 
-{% extends "base_site.html" %}
+{% extends "base.html" %}
 <!-- {% load i18n admin_static %} -->
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css"  />{% endblock %}
@@ -11,6 +11,16 @@
 {% block content_title %}{% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
+
+
+{% load i18n  %}
+{% block title %}{{ title }} | {{ site_title|default:_('Sistema de Expedientes') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-login">	
+	<div class="center">SIG</div>	
+</h1>
+{% endblock %}
 
 {% block content %}
 {% if form.errors and not form.non_field_errors %}
@@ -32,7 +42,7 @@
   <div class="form-row">
     {{ form.username.errors }}
     <label for="id_username" class="required">{{ form.username.label }}:</label> {{ form.username }}
-  </div>
+  </div> 
   <div class="form-row">
     {{ form.password.errors }}
     <label for="id_password" class="required">{% trans 'Password:' %}</label> {{ form.password }}
@@ -40,7 +50,7 @@
   </div>
   {% url 'admin_password_reset' as password_reset_url %}
   {% if password_reset_url %}
-  <div class="password-reset-link">
+  <div class="password-reset-link center">
     <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
   </div>
   {% endif %}
