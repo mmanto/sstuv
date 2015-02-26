@@ -14,10 +14,16 @@ urlpatterns = patterns('',
                         url(r'^expedientes/editar/$', ExpedientesView.updateExpediente),
                         url(r'^expedientes/importarExpedienteLey/$', ExpedientesView.importarExpedientesLey),
                         url(r'^expedientes/importarExpediente/$', ExpedientesView.importarExpedientes),    
+                        
+                        
+                        url(r'^pases/$',PasesView.getPases ),
                         url(r'^pase/guardar/$', PasesView.savePase),
+                        url(r'^pases/aceptar/(.*)/$', PasesView.aceptarPase),
 
                             
                         url(r'^expedientes/imprimirremito/(\d+)/(\d+)/$',PaseReport.generar ),
+                        
+
 
                       )
         

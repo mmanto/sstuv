@@ -1,0 +1,93 @@
+{% extends "base_site.html" %} {% block content %}
+<h2>Pases</h2>
+
+
+
+
+<div class="datagrid" >
+<table style="width:100%">
+  <tr>
+    <th>Fecha</th>
+    <th>Origen</th>
+ 	<th>Destino</th>
+	<th>Estado</th>
+	<th>Estado Nuevo</th>
+  </tr>
+  
+  
+  
+  <tbody>
+  	{% for pase in pases %}
+
+	<tr>
+		    
+	    <td>{{pase.fecha  | date:"SHORT_DATE_FORMAT"}}</td>		
+			
+	    <td>{{pase.departamento_origen.nombre}}</td>		
+			
+		<td>{{pase.departamento_destino.nombre}}</td>	
+			
+		<td>{{pase.estado}}</td>	
+		
+		<td>
+			<a href="/sig/pases/aceptar/{{pase.id}}">Aceptar</a>
+			
+		</td>
+	</tr>
+		
+	{% endfor %}
+	</tbody>
+
+
+	<tfoot>
+
+	<td colspan="5">
+		<div id="paging">
+			<ul>
+				{% if pases.has_previous %}
+					<li>
+						<a href="/sig/pases/?page={{pases.previous_page_number }}">previous</a>
+					</li>
+				{% endif %}
+				
+				<span class="current">
+					<li>
+						Page {{ pases.number }} of {{ pases.paginator.num_pages }}.
+					</li>
+				</span>
+				
+				{% if pases.has_next %}
+					<li>
+						<a href="/sig/pases/?page={{pases.next_page_number }}">next</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	
+
+<tfoot>
+
+
+</table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

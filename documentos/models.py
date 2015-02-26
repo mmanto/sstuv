@@ -1,5 +1,7 @@
 from django.db import models
 from comun.models import Partido, Departamento
+from enum import Enum 
+
 
 class Expediente(models.Model):
 	
@@ -32,5 +34,13 @@ class Pase(models.Model):
 	
 	fecha = models.DateTimeField('fecha de movimiento')
 	
+	estado= models.CharField(max_length='50')
+	
 	def __str__(self):
 		return '%s' % self.departamento_origen.nombre
+	
+	
+class Estado(Enum):
+	ACEPTADO='Aceptado'
+	RECHAZADO='Rechazado'
+	PENDIENTE='Pendiente'
