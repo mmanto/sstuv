@@ -190,7 +190,12 @@
 			<ul>
 				{% if pases.has_previous %}
 					<li>
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.previous_page_number }}">previous</a>
+					{% if tipo == 'ExpedienteLey'%}
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.previous_page_number }}">previous</a>
+					{% else %}
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.previous_page_number }}">previous</a>
+					{% endif %}
+					
 					</li>
 				{% endif %}
 				
@@ -202,7 +207,14 @@
 				
 				{% if pases.has_next %}
 					<li>
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/?page={{pases.next_page_number }}">next</a>
+						{% if tipo == 'ExpedienteLey'%}
+							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
+						{% else %}
+							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.next_page_number }}">next</a>
+						{% endif %}
+					
+					
+					
 					</li>
 				{% endif %}
 			</ul>
