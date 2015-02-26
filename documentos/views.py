@@ -276,18 +276,21 @@ class PasesView(ListView):
     
     def getPases(request):
         
+        pases=[]
         user = request.user
-       
-        departamento=Departamento.objects.get(nombre = user.groups.first())
-        
-        pases = PasesView.paginador(request, Pase.objects.filter(estado = Estado.PENDIENTE.value , departamento_destino = departamento).all())
+        try :
+            departamento=Departamento.objects.get(nombre = user.groups.first())
+            
+            pases = PasesView.paginador(request, Pase.objects.filter(estado = Estado.PENDIENTE.value , departamento_destino = departamento).all())
+        except Error:
+            logger.info('Error al recuperar los pases con el usuuario' + user)    
 
-        estados=[]
+#         estados=[]
+#         
+#         for estado in Estado:
+#             estados.append(estado.value)
         
-        for estado in Estado:
-            estados.append(estado.value)
-        
-        return render(request, 'pases.html', {'pases': pases, 'estados' : estados },context_instance=RequestContext(request))
+        return render(request, 'pases.html', {'pases': pases},context_instance=RequestContext(request))
  
     
     #Se persiste un Pase    
