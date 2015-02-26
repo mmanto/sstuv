@@ -13,7 +13,7 @@
 </form>
 
 
-<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/" method="get">
+<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/" method="get">
         <input type="submit" value="Nuevo {{tipo}}">
         
 </form>
@@ -40,7 +40,12 @@
 
 		<tr>
 		    <td>
-	      	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }} </a>
+		     	{% if tipo == 'ExpedienteLey'%}
+		          	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/{{ expediente.partido.id}}/{{ expediente.region}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }}-{{expediente.partido.nombre}}-{{expediente.region}} </a>
+		    	{% else%}
+		    		  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/0/0/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }} </a>
+		    	{% endif %}	
+		    
 		    </td>
 		    
 		    <td>{{ expediente.caracteristica }}</td>		
@@ -76,7 +81,12 @@
 			<ul>
 				{% if expedientes.has_previous %}
 					<li>
-						<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
+						{% if tipo == 'ExpedienteLey'%}
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&page={{expedientes.previous_page_number }}">previous</a>
+						{% else %}
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=0&page={{expedientes.previous_page_number }}">previous</a>
+						{% endif %} 
+					
 					</li>
 				{% endif %}
 				
@@ -88,7 +98,12 @@
 				
 				{% if expedientes.has_next %}
 					<li>
-						<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&page={{expedientes.next_page_number }}">next</a>
+						{% if tipo == 'ExpedienteLey'%}
+							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&page={{expedientes.next_page_number }}">next</a>
+						{% else %}
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=&page={{expedientes.next_page_number }}">next</a>
+						{% endif %}
+					
 					</li>
 				{% endif %}
 			</ul>

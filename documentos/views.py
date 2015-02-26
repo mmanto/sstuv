@@ -52,11 +52,12 @@ class ExpedientesView(ListView):
 #         self.logger = logging.getLogger('documentos.views.ExpedientesView')
         
     
-    def showExpediente(request, tipo, organismo, numero, anio):
+    def showExpediente(request, tipo, organismo, numero, anio, partidoid, region):
     
         organismo=int(organismo)
         numero= int(numero)
         anio=int(anio)
+        
             
         partidos =  Partido.objects.all()
        
@@ -65,7 +66,12 @@ class ExpedientesView(ListView):
         if(numero != 0):  #Expediente editar
             
             if(tipo == 'ExpedienteLey'):
-                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio)
+                
+                partidoid=int(partidoid)
+                
+                partido= Partido.objects.get(id=partidoid)
+                    
+                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio, partido= partido, region=region)
             else:
                 expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio)
 
@@ -109,6 +115,7 @@ class ExpedientesView(ListView):
              
                 try:
                     if(tipo == 'ExpedienteLey'):
+                                          
                        if(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio ).exists()):         
                             expedientes.append(ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio))
                     else:    
@@ -293,14 +300,19 @@ class PasesView(ListView):
                        
         pase.fecha =  datetime.strptime( fecha, "%m/%d/%Y" )
 
-        pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
+        if((request.POST.get('expediente_tipo') == 'Expediente')):
+            pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
+        else:
+            pase.expediente = ExpedienteLey.objects.get( id = int (request.POST.get('expediente_id')))
         
         pase.estado=Estado.PENDIENTE.value
       
         pase.save()
       
-        return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio)
-
+        if(request.POST.get('expediente_tipo') == 'Expediente'):
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,0,0)
+        else:  
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,pase.expediente.partido.id, pase.expediente.region)
             
          #TODO   
     def removePase(request):
