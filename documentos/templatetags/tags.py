@@ -9,13 +9,12 @@ register = template.Library()
 @register.inclusion_tag('menu.html')
 def menu(user):
     
-#     print(user.get_group_permissions())
+
+    print(user)
+    print(user.groups.all())
+
     
-    
-#     group = Group.objects.all( user = user)
-# 
-#     print (group)
-    
+      
     
     menu = []
     
@@ -23,6 +22,7 @@ def menu(user):
            
            [{ 'nombreSistema' : 'Expedientes', 'target' : '/sig/expedientes/'}, 
             {'nombreSistema' : 'Expedientes Ley',  'target' : '/sig/expedientesLey/'},
+            {'nombreSistema' : 'Pases',  'target' : '/sig/pases/'},
             
            ]
            }

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from documentos.models import ExpedienteLey, Expediente, Pase
+from documentos.models import ExpedienteLey, Expediente, Pase, Estado
 from django.core.context_processors import request
 from documentos.forms import ExpedienteLeyForm, ExpedienteForm, PaseForm
 from comun.models import Partido, Departamento
@@ -267,6 +267,19 @@ class ExpedientesView(ListView):
 class PasesView(ListView):
     
     
+    def getPases(request):
+    
+        
+        pases = PasesView.paginador(request, Pase.objects.all())
+
+        estados=[]
+        
+        for estado in Estado:
+            estados.append(estado.value)
+        
+        return render(request, 'pases.html', {'pases': pases, 'estados' : estados },context_instance=RequestContext(request))
+ 
+    
     #Se persiste un Pase    
     def savePase(request):
                  
@@ -281,6 +294,8 @@ class PasesView(ListView):
         pase.fecha =  datetime.strptime( fecha, "%m/%d/%Y" )
 
         pase.expediente = Expediente.objects.get( id = int (request.POST.get('expediente_id')))
+        
+        pase.estado=Estado.PENDIENTE.value
       
         pase.save()
       
@@ -292,8 +307,30 @@ class PasesView(ListView):
 
         return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
 
+    def aceptarPase(request, idPase):
+        
+        pase=Pase.objects.get(id=idPase)
+        pase.estado=Estado.ACEPTADO.value
+        pase.save()
+        
+        return PasesView.getPases(request)
+
+        
+
             
-            
+    def paginador(request, object):
+        paginator = Paginator(object, 5) # Show 25 contacts per page
+        page = request.GET.get('page')
+        try:
+            object = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            object = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            object = paginator.page(paginator.num_pages)   
+        return object
+        
             
             
             
