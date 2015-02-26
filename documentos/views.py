@@ -52,11 +52,12 @@ class ExpedientesView(ListView):
 #         self.logger = logging.getLogger('documentos.views.ExpedientesView')
         
     
-    def showExpediente(request, tipo, organismo, numero, anio):
+    def showExpediente(request, tipo, organismo, numero, anio, partidoid, region):
     
         organismo=int(organismo)
         numero= int(numero)
         anio=int(anio)
+        
             
         partidos =  Partido.objects.all()
        
@@ -65,7 +66,12 @@ class ExpedientesView(ListView):
         if(numero != 0):  #Expediente editar
             
             if(tipo == 'ExpedienteLey'):
-                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio)
+                
+                partidoid=int(partidoid)
+                
+                partido= Partido.objects.get(id=partidoid)
+                    
+                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio, partido= partido, region=region)
             else:
                 expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio)
 
@@ -109,6 +115,7 @@ class ExpedientesView(ListView):
              
                 try:
                     if(tipo == 'ExpedienteLey'):
+                                          
                        if(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio ).exists()):         
                             expedientes.append(ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio))
                     else:    
