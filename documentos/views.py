@@ -117,10 +117,10 @@ class ExpedientesView(ListView):
                     if(tipo == 'ExpedienteLey'):
                                           
                        if(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio ).exists()):         
-                            expedientes.append(ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio))
+                            expedientes=(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio).all())
                     else:    
                          if(Expediente.objects.filter(organismo=organismo, numero=numero, anio=anio).exists()):         
-                            expedientes.append(Expediente.objects.get(organismo=organismo, numero=numero, anio=anio))
+                            expedientes=(Expediente.objects.filter(organismo=organismo, numero=numero, anio=anio).all())
                 except:         
                     expedientes= []
          
@@ -337,7 +337,7 @@ class PasesView(ListView):
 
             
     def paginador(request, object):
-        paginator = Paginator(object, 5) # Show 25 contacts per page
+        paginator = Paginator(object, 25) # Show 25 contacts per page
         page = request.GET.get('page')
         try:
             object = paginator.page(page)
