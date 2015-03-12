@@ -19,12 +19,11 @@ from django.http.response import HttpResponse
 from documentos import models    
 from datetime import datetime
 from django.conf.global_settings import DATE_FORMAT   
-# import the logging library
 import logging
-# Get an instance of a logger
 logger = logging.getLogger('sstuvInfo')
-loggerError = logging.getLogger('sstuvError') 
-
+loggerError = logging.getLogger('sstuvError')
+from django.db.models import Q 
+from django.db import connection
 
 class LoginView(ListView):
     
@@ -46,7 +45,9 @@ class LoginView(ListView):
     
     
 class ExpedientesView(ListView):
+        
     paginate_by = 10
+    search_fields = ( 'organismo', 'numero', 'anio' )
     
 #     def __init__(self):
 #         self.logger = logging.getLogger('documentos.views.ExpedientesView')
@@ -58,10 +59,21 @@ class ExpedientesView(ListView):
         numero= int(numero)
         anio=int(anio)
         
+        try :
+            user = request.user
+
+            departamento_origen=Departamento.objects.get(nombre = user.groups.first())
+        
+            print(user.groups.first()) 
+            print(departamento_origen.nombre)
+        
+        except Error:
+             logger.info('Error al recuperar los pases con el usuuario' + user)    
+
             
         partidos =  Partido.objects.all()
        
-        departamentos=Departamento.objects.all()
+        departamentos=Departamento.objects.all().order_by("nombre")
         
         if(numero != 0):  #Expediente editar
             
@@ -81,7 +93,7 @@ class ExpedientesView(ListView):
 
 
 
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio}, context_instance=RequestContext(request) )
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request) )
       
         else: # Expediente nuevo
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
@@ -97,32 +109,33 @@ class ExpedientesView(ListView):
     def loadBusquedaExpedienteLey(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
-    def showResultados(request, tipo):
-        
+    def showResultados( request, tipo ):
         
         expedientes= []
-        
+
         organismo=int(request.GET['organismo'])
         numero=int(request.GET['numero'])
         anio=int(request.GET['anio'])
         
-        if numero == 0  :
-            if(tipo == 'ExpedienteLey'):
-                expedientes = ExpedienteLey.objects.all()
-            else:    
-                expedientes = Expediente.objects.all()
-        else :
-             
-                try:
-                    if(tipo == 'ExpedienteLey'):
-                                          
-                       if(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio ).exists()):         
-                            expedientes=(ExpedienteLey.objects.filter(organismo=organismo, numero=numero, anio=anio).all())
-                    else:    
-                         if(Expediente.objects.filter(organismo=organismo, numero=numero, anio=anio).exists()):         
-                            expedientes=(Expediente.objects.filter(organismo=organismo, numero=numero, anio=anio).all())
-                except:         
-                    expedientes= []
+        filter_dict = {}
+        
+        if (organismo > 0):
+            filter_dict['organismo'] = int(request.GET['organismo'])
+        if (numero > 0):
+            filter_dict['numero'] = int(request.GET['numero'])
+        if (anio > 0):
+            filter_dict['anio'] = int(request.GET['anio'])
+            
+        if( len(filter_dict) > 0 ):
+            if ( tipo == 'Expediente' ):
+                expedientes=(Expediente.objects.filter( **filter_dict ) )
+            elif ( tipo == 'ExpedienteLey '):
+                expedientes=(ExpedienteLey.objects.filter( **filter_dict ) )
+        else:
+            if ( tipo == 'Expediente' ):
+                expedientes=(Expediente.objects.all() )
+            elif ( tipo == 'ExpedienteLey '):
+                expedientes=(ExpedienteLey.objects.all() )
          
         paginator = Paginator(expedientes, 10) # Show 25 contacts per page
         page = request.GET.get('page')
