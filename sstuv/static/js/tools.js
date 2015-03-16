@@ -78,15 +78,18 @@ $(function() {
 
 			var origen = $(this).attr('id');
 
-			var objetivo = "#" + origen + "-error";
-
-			if ($(this).val() == "") {
-				error = true;
-				$(objetivo).removeClass('error_hide');
-				$(objetivo).addClass('error_show');
-			} else {
-				$(objetivo).removeClass('error_show');
-				$(objetivo).addClass('error_hide');
+			if( origen != 'inputconsolidacion' & origen != 'checkconsolidacion'){
+			
+				var objetivo = "#" + origen + "-error";
+	
+				if ($(this).val() == "") {
+					error = true;
+					$(objetivo).removeClass('error_hide');
+					$(objetivo).addClass('error_show');
+				} else {
+					$(objetivo).removeClass('error_show');
+					$(objetivo).addClass('error_hide');
+				}
 			}
 		});
 
@@ -94,6 +97,19 @@ $(function() {
 			$("#form-expediente").submit();
 		}
 
+	});
+
+	// Cargar selección del checkbox de consolidación
+	$("[id^='check']").change(function() {
+
+		var origen = $(this).attr('id').substring(5);
+
+		if($("[id^='check']").is(':checked')){		
+			var objetivo = "#input" + origen;
+			$((objetivo)).val('TRUE');
+
+		}
+		
 	});
 
 
