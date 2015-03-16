@@ -1,6 +1,7 @@
 from django.db import models
 from comun.models import Partido, Departamento
 from enum import Enum 
+from django.template.defaultfilters import default
 
 
 class Expediente(models.Model):
@@ -14,6 +15,9 @@ class Expediente(models.Model):
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
 	
+	consolidacion=models.BooleanField(default = False)
+
+	
 	def __str__(self):
 		return self.numero
 		
@@ -22,6 +26,7 @@ class ExpedienteLey(Expediente):
 	partido = models.ForeignKey(Partido)
 	
 	region = models.CharField(max_length=200)
+	
 	
 	
 class Pase(models.Model):
