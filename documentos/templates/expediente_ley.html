@@ -43,7 +43,8 @@
 <div>
 	<label>Número</label> 
 	<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
-	 {% if accion == 'editar' %}
+	{% if accion == 'editar' %}
+	   
 	 	readonly
 	 {% endif %} >
 	<label>-</label> 
@@ -68,14 +69,11 @@
 </div>
 
 
-
 <div>
 	<label>Fecha</label> 
 	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
 	</input>		
 	<span id="datepicker-error" class="error_hide">Campo requerido</span>
-	
- 
 </div>
 
 <div>
@@ -93,17 +91,37 @@
 
 {% if tipo == 'ExpedienteLey'%}
 
+	<div>
+		<input id="inputconsolidacion" name= "consolidacion"  type="hidden">
+		<label>Consolidación</label> 
+		<input id="checkconsolidacion"  value="{{expediente.consolidacion}}" type="checkbox" 
+			{% if expediente.consolidacion  %}
+					checked="yes"
+			{% endif %}	
+			{% if accion == 'editar' %}
+					readonly
+			{% endif %}		
+		>
+	
+	
+	
+	
+	
+	</div>
+
 
 	<div>
 		<label>Partido</label> 
 	
 		<input id="inputpartido" name= "partido"  type="hidden">
 		
+		{% if accion == 'nuevo' %}
+	
 		<select id="selectpartido" >
 	
 			{% for partido in partidos%}
 		
-				{% if partido.numero == expediente.partido.numero %}
+				{% if partido.codigo == expediente.partido.codigo %}
 					  <option value="{{partido.codigo}}" selected="true" >{{partido.nombre}}</option>
 				{% else %}  
 					  <option value="{{partido.codigo}}">{{partido.nombre}}</option>
@@ -111,9 +129,18 @@
 			 
 			{% endfor %}
 		</select>
+	  {% endif %}
+		
+		
+	   {% if accion == 'editar' %}
+		<input  value="{{expediente.partido.nombre}}"  readonly>
+		
+		
+	  {% endif %}
+		
 		
 		<span id="inputpartido-error" class="error_hide">Campo requerido</span>
-		
+			
 	
 	</div>
 	
@@ -121,7 +148,9 @@
 
 	<div>
 	<label>Región</label> 
-	<input id="region" name="region" value="{{expediente.region}}" >
+	<input id="region" name="region" value="{{expediente.region}}"  {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %}>
 	<span id="region-error" class="error_hide">Campo requerido</span>
 	
 
