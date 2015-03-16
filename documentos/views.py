@@ -26,7 +26,7 @@ from django.db.models import Q
 from django.db import connection
 
 class LoginView(ListView):
-    
+        
     
     def login(request, template_name='registration/login.html'):
        
@@ -61,10 +61,10 @@ class ExpedientesView(ListView):
         
         try :
             user = request.user
+            print(user.groups.first()) 
 
             departamento_origen=Departamento.objects.get(nombre = user.groups.first())
         
-            print(user.groups.first()) 
             print(departamento_origen.nombre)
         
         except Error:
@@ -129,13 +129,15 @@ class ExpedientesView(ListView):
         if( len(filter_dict) > 0 ):
             if ( tipo == 'Expediente' ):
                 expedientes=(Expediente.objects.filter( **filter_dict ) )
-            elif ( tipo == 'ExpedienteLey '):
+            elif ( tipo == 'ExpedienteLey'):
                 expedientes=(ExpedienteLey.objects.filter( **filter_dict ) )
         else:
             if ( tipo == 'Expediente' ):
                 expedientes=(Expediente.objects.all() )
-            elif ( tipo == 'ExpedienteLey '):
+            elif ( tipo == 'ExpedienteLey'):
                 expedientes=(ExpedienteLey.objects.all() )
+        
+        print(expedientes)
          
         paginator = Paginator(expedientes, 10) # Show 25 contacts per page
         page = request.GET.get('page')
@@ -155,13 +157,15 @@ class ExpedientesView(ListView):
         valido=False
         tipo= request.POST.get('tipo','')
         
+        
+        
         if request.method == 'POST':
        
             if(tipo == 'Expediente'):
                 form = ExpedienteForm(request.POST)
             else:
                 form = ExpedienteLeyForm(request.POST)
-                form.model.partido = Departamento.objects.get( codigo = int (request.POST.get('partido')))
+#                 form.model.partido = Partido.objects.get( codigo = int (request.POST.get('partido')))
     
             errores=[]    
             if form.is_valid():
@@ -170,6 +174,10 @@ class ExpedientesView(ListView):
                 if(Expediente.objects.filter(organismo = request.POST.get('organismo') ,numero = request.POST.get('numero'), anio =  request.POST.get('anio')).exists()):
                     errores.append('El número de expediente ya existe.')
                 else:
+                    
+                    
+                    print (request.POST.get('consoliacion'))
+                    
                     form.save()
                     valido=True   
         
@@ -193,26 +201,32 @@ class ExpedientesView(ListView):
 
     def updateExpediente(request):
     
-            tipo= request.POST.get('tipo','')
-            numero = request.POST.get('numero','')
+        tipo= request.POST.get('tipo','')
+        organismo=int(request.POST.get('organismo'))
+        numero=int(request.POST.get('numero'))
+        anio=int(request.POST.get('anio'))
+        
             
         
-            if request.method == 'POST':
+        if request.method == 'POST':
                 form=''
                 if(tipo == 'Expediente'):
                     
-                    expediente = Expediente.objects.get(numero = numero)
+                    expediente = Expediente.objects.get(organismo=organismo, numero = numero, anio = anio)
                     
                     form = ExpedienteForm(request.POST, instance=expediente)
                 else:
-                    form = ExpedienteLeyForm(request.POST)
+                    
+                    expediente = ExpedienteLey.objects.get(organismo=organismo, numero = numero, anio = anio)
+            
+                    form = ExpedienteLeyForm(request.POST, instance=expediente)
                     
                 if form.is_valid():  
                      form.save()   
                 else:
                     return render(request, 'expediente_ley.html',{'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
-            return render(request, 'expedienteley_list.html',{'tipo' : tipo})
+        return render(request, 'expedienteley_list.html',{'tipo' : tipo})
         
     def importarExpedientesLey(self):
         sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
