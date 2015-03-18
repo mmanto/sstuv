@@ -53,20 +53,17 @@ class ExpedientesView(ListView):
 #         self.logger = logging.getLogger('documentos.views.ExpedientesView')
         
     
-    def showExpediente(request, tipo, organismo, numero, anio, partidoid, region):
+    def showExpediente(request, tipo, organismo, numero, anio, partidoid, region, alcance):
     
         organismo=int(organismo)
         numero= int(numero)
         anio=int(anio)
+        alcance = int(alcance)
         
         try :
             user = request.user
-            print(user.groups.first()) 
-
             departamento_origen=Departamento.objects.get(nombre = user.groups.first())
-        
-            print(departamento_origen.nombre)
-        
+                         
         except Error:
              logger.info('Error al recuperar los pases con el usuuario' + user)    
 
@@ -83,9 +80,9 @@ class ExpedientesView(ListView):
                 
                 partido= Partido.objects.get(id=partidoid)
                     
-                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio, partido= partido, region=region)
+                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio, partido= partido, region=region, alcance=alcance)
             else:
-                expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio)
+                expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio, alcance=alcance)
 
 #             pases = expediente.pase_set.all()
         
@@ -116,8 +113,11 @@ class ExpedientesView(ListView):
         organismo=int(request.GET['organismo'])
         numero=int(request.GET['numero'])
         anio=int(request.GET['anio'])
+        alcance=int(request.GET['alcance'])
         
         filter_dict = {}
+        
+        filter_dict['alcance'] = alcance
         
         if (organismo > 0):
             filter_dict['organismo'] = int(request.GET['organismo'])
@@ -128,18 +128,17 @@ class ExpedientesView(ListView):
         if(( tipo == 'ExpedienteLey')): 
             consolidacion=    bool(request.GET['consolidacion'])
             filter_dict['consolidacion'] = consolidacion
-            print(consolidacion)              
-            
+                 
         if( len(filter_dict) > 0 ):
             if ( tipo == 'Expediente' ):
                 expedientes=(Expediente.objects.filter( **filter_dict ) )
             elif ( tipo == 'ExpedienteLey'):
                 expedientes=(ExpedienteLey.objects.filter( **filter_dict ) )
-        else:
-            if ( tipo == 'Expediente' ):
-                expedientes=(Expediente.objects.all() )
-            elif ( tipo == 'ExpedienteLey'):
-                expedientes=(ExpedienteLey.objects.all() )
+#         else:
+#             if ( tipo == 'Expediente' ):
+#                 expedientes=(Expediente.objects.all() )
+#             elif ( tipo == 'ExpedienteLey'):
+#                 expedientes=(ExpedienteLey.objects.all() )
   
         paginator = Paginator(expedientes, 10) # Show 25 contacts per page
         page = request.GET.get('page')
@@ -153,9 +152,9 @@ class ExpedientesView(ListView):
             expedientes = paginator.page(paginator.num_pages)           
         
         if ( tipo == 'Expediente' ):
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio }, context_instance=RequestContext(request))
-        else:   
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'consolidacionFiltro': consolidacion }, context_instance=RequestContext(request))
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance}, context_instance=RequestContext(request))
+        else: 
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'consolidacionFiltro': request.GET['consolidacion'], 'alcanceFiltro': alcance }, context_instance=RequestContext(request))
     
     def saveExpediente(request):
         
@@ -381,8 +380,6 @@ class PasesView(ListView):
             object = paginator.page(paginator.num_pages)   
         return object
         
-            
-            
             
             
     

@@ -78,7 +78,11 @@
 
 <div>
 	<label>Alcance</label> 
-	<input id="alcance" name="alcance" value="{{expediente.alcance}}">
+	<input id="alcance" name="alcance" value="{{expediente.alcance}}" type="number" 
+	 {% if accion == 'editar' %}
+	 	readonly
+	 {% endif %}
+	>
 	<span id="alcance-error" class="error_hide">Campo requerido</span>
 </div>
 

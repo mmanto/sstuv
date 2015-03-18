@@ -104,11 +104,9 @@ $(function() {
 
 		var origen = $(this).attr('id').substring(5);
 		var objetivo = "#input" + origen;
+		$((objetivo)).val('');
 		if($("[id^='check']").is(':checked')){		
-			
 			$((objetivo)).val('TRUE');
-		}else{
-			$((objetivo)).val('FALSE');
 		}
 		
 	});

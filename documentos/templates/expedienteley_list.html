@@ -6,15 +6,18 @@
 
 
 <form action="/sig/expedientes/buscar/{{tipo}}" method="get">
-		<input type="text" id="organismo" name="organismo" value="0" type="number" >
-		<input type="text" id="numero" name="numero" value="0" type="number" >
-		<input type="text" id="anio" name="anio" value="0" type="number" >
+		<input id="organismo" name="organismo" value="0" type="number" >
+		<input id="numero" name="numero" value="0" type="number" >
+		<input  id="anio" name="anio" value="0" type="number" >
+		<input  id="alcance" name="alcance" value="0" type="number" >
+		
 		
 		{% if tipo == 'ExpedienteLey'%}
-			<input id="inputconsolidacion" name= "consolidacion"  type="hidden">
-			<label>Consolidación</label> 
-			<input id="checkconsolidacion" type="checkbox"	>
 		
+				<input id="inputconsolidacion" name= "consolidacion" type="hidden"  >
+			
+			<label>Consolidación</label> 
+			<input id="checkconsolidacion" type="checkbox">
 		{% endif %}
 		
 		
@@ -22,7 +25,7 @@
 </form>
 
 
-<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/" method="get">
+<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/0/" method="get">
         <input type="submit" value="Nuevo {{tipo}}">
         
 </form>
@@ -51,9 +54,9 @@
 		<tr>
 		    <td>
 		     	{% if tipo == 'ExpedienteLey'%}
-		          	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/{{ expediente.partido.id}}/{{ expediente.region}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }}-{{expediente.partido.nombre}}-{{expediente.region}} </a>
+		          	  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/{{ expediente.partido.id}}/{{ expediente.region}}/{{expediente.alcance}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }}-{{expediente.partido.nombre}}-{{expediente.region}}-{{expediente.alcance}} </a>
 		    	{% else%}
-		    		  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/0/0/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }} </a>
+		    		  <a href="/sig/expediente/inspeccionar/{{tipo}}/{{ expediente.organismo}}/{{ expediente.numero }}/{{ expediente.anio}}/0/0/{{expediente.alcance}}/" >{{ expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio }}-{{expediente.alcance}}</a>
 		    	{% endif %}	
 		    
 		    </td>
@@ -99,11 +102,10 @@
 				{% if expedientes.has_previous %}
 					<li>
 						{% if tipo == 'ExpedienteLey'%}
-								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
 						{% else %}
-								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=0&page={{expedientes.previous_page_number }}">previous</a>
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=0&alcance={{alcanceFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
 						{% endif %} 
-					
 					</li>
 				{% endif %}
 				
@@ -116,9 +118,11 @@
 				{% if expedientes.has_next %}
 					<li>
 						{% if tipo == 'ExpedienteLey'%}
-							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&page={{expedientes.next_page_number }}">next</a>
+							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&page={{expedientes.next_page_number }}">next</a>
 						{% else %}
-								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=&page={{expedientes.next_page_number }}">next</a>
+							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=&alcance={{alcanceFiltro}}&page={{expedientes.next_page_number}}">next</a>
+							
+							
 						{% endif %}
 					
 					</li>
