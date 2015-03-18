@@ -9,6 +9,15 @@
 		<input type="text" id="organismo" name="organismo" value="0" type="number" >
 		<input type="text" id="numero" name="numero" value="0" type="number" >
 		<input type="text" id="anio" name="anio" value="0" type="number" >
+		
+		{% if tipo == 'ExpedienteLey'%}
+			<input id="inputconsolidacion" name= "consolidacion"  type="hidden">
+			<label>Consolidación</label> 
+			<input id="checkconsolidacion" type="checkbox"	>
+		
+		{% endif %}
+		
+		
         <input type="submit" value="Buscar">
 </form>
 
@@ -90,7 +99,7 @@
 				{% if expedientes.has_previous %}
 					<li>
 						{% if tipo == 'ExpedienteLey'%}
-								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&page={{expedientes.previous_page_number }}">previous</a>
+								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
 						{% else %}
 								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=0&page={{expedientes.previous_page_number }}">previous</a>
 						{% endif %} 
@@ -107,7 +116,7 @@
 				{% if expedientes.has_next %}
 					<li>
 						{% if tipo == 'ExpedienteLey'%}
-							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&page={{expedientes.next_page_number }}">next</a>
+							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&page={{expedientes.next_page_number }}">next</a>
 						{% else %}
 								<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=&page={{expedientes.next_page_number }}">next</a>
 						{% endif %}

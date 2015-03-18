@@ -125,6 +125,10 @@ class ExpedientesView(ListView):
             filter_dict['numero'] = int(request.GET['numero'])
         if (anio > 0):
             filter_dict['anio'] = int(request.GET['anio'])
+        if(( tipo == 'ExpedienteLey')): 
+            consolidacion=    bool(request.GET['consolidacion'])
+            filter_dict['consolidacion'] = consolidacion
+            print(consolidacion)              
             
         if( len(filter_dict) > 0 ):
             if ( tipo == 'Expediente' ):
@@ -136,9 +140,7 @@ class ExpedientesView(ListView):
                 expedientes=(Expediente.objects.all() )
             elif ( tipo == 'ExpedienteLey'):
                 expedientes=(ExpedienteLey.objects.all() )
-        
-        print(expedientes)
-         
+  
         paginator = Paginator(expedientes, 10) # Show 25 contacts per page
         page = request.GET.get('page')
         try:
@@ -150,7 +152,10 @@ class ExpedientesView(ListView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             expedientes = paginator.page(paginator.num_pages)           
         
-        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio }, context_instance=RequestContext(request))
+        if ( tipo == 'Expediente' ):
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio }, context_instance=RequestContext(request))
+        else:   
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'consolidacionFiltro': consolidacion }, context_instance=RequestContext(request))
     
     def saveExpediente(request):
         

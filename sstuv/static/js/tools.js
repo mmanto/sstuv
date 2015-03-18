@@ -103,11 +103,12 @@ $(function() {
 	$("[id^='check']").change(function() {
 
 		var origen = $(this).attr('id').substring(5);
-
+		var objetivo = "#input" + origen;
 		if($("[id^='check']").is(':checked')){		
-			var objetivo = "#input" + origen;
+			
 			$((objetivo)).val('TRUE');
-
+		}else{
+			$((objetivo)).val('FALSE');
 		}
 		
 	});
