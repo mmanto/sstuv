@@ -199,8 +199,11 @@ class ExpedientesView(ListView):
             expediente.fecha = datetime.strptime( request.POST.get('fecha'), "%m/%d/%Y")   #datetime.strptime( fecha, "%M/%d/%Y" )
             expediente.alcance=request.POST.get('alcance')
             expediente.cuerpo=request.POST.get('cuerpo')
+            
+            departamentos =  departamentos=Departamento.objects.all().order_by("nombre")
+
                   
-            return render(request, 'expediente_ley.html', {'tipo' : tipo,'expediente': expediente ,'form':form ,'accion' : 'nuevo', "errores":errores}, context_instance=RequestContext(request) )
+            return render(request, 'expediente_ley.html', {'tipo' : tipo,'expediente': expediente ,'form':form ,'accion' : 'nuevo', 'departamentos':departamentos ,"errores":errores}, context_instance=RequestContext(request) )
 
 
     def updateExpediente(request):
