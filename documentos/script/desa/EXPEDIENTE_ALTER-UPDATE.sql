@@ -13,6 +13,9 @@ ALTER TABLE documentos_expediente ALTER COLUMN consolidacion SET DEFAULT false;
 /*Se popula la comuna organismo*/
 ALTER TABLE documentos_expediente ALTER COLUMN organismo TYPE integer USING (trim(caracteristica)::integer);
 
+/*Se setean en false todas las rows */
+UPDATE documentos_expediente
+SET consolidacion=false
 
 /* Se popula la columna consolidación*/
 UPDATE documentos_expediente
