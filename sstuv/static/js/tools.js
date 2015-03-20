@@ -1,11 +1,39 @@
 $(function() {
 
+	//regional es
+	$.datepicker.regional['es'] = {
+			 closeText: 'Cerrar',
+			 prevText: '<Ant',
+			 nextText: 'Sig>',
+			 currentText: 'Hoy',
+			 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			 monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+			 dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+			 dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+			 dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+			 weekHeader: 'Sm',
+			 dateFormat: 'dd/mm/yy',
+			 firstDay: 1,
+			 isRTL: false,
+			 showMonthAfterYear: false,
+			 yearSuffix: ''
+			 };
+	
+	//Se seta como default el idioma español
+	$.datepicker.setDefaults($.datepicker.regional['es']);
+	
 	// Date picker
 	$("[id^='datepicker']").datepicker(
 			{
 				regional: "es",
 				changeYear : true,
 				showButtonPanel : true,
+				dateFormat : 'dd/mm/yy',
+					
+				
+				
+				
+				
 
 				beforeShow : function(e, t) {
 					$("#ui-datepicker-div").removeClass("hide-calendar");
@@ -21,6 +49,8 @@ $(function() {
 				changeYear : true,
 				showButtonPanel : true,
 				dateFormat : 'yy',
+				regional: "es",
+
 
 				beforeShow : function(e, t) {
 					$(this).datepicker("hide");
