@@ -40,87 +40,114 @@
 
 <div id="validate-div">
 
-<div>
-	<label>Número</label> 
-	<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
-	{% if accion == 'editar' %}
-	   
-	 	readonly
-	 {% endif %} >
-	<label>-</label> 
-	<input id="numero" name="numero" value="{{expediente.numero}}"  
-	 {% if accion == 'editar' %}
-	 	readonly
-	 {% endif %} >
-	 <label>-</label> 
-	<input name="anio" value="{{expediente.anio}}"  type="text"
-	 {% if accion == 'editar' %}
-	 	readonly
-	 {% else%} 
-	 	id="aniopicker" 	
-	 {% endif %} >
+
+ <table>
+
+
+	<tr>	
+	 <td>
+	 	<label>Organismo</label>
+	 </td>
+	 <td> 
+		<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
+		{% if accion == 'editar' %} 	readonly   {% endif %} >
+	 </td>
+	 <td>
+	 		<label id="numero-error" class="error_hide">Campo requerido</span>
+	 </td>
+	</tr> 
 	 
-	 <label id="numero-error" class="error_hide">Campo requerido</span>
-</div>
-<div>
-	<label>Características</label> 
-	<input id="caracteristica" name="caracteristica" value="{{expediente.caracteristica}}" >
-	<span id="caracteristica-error" class="error_hide">Campo requerido</span>
-</div>
+	 
+	 <tr>
+		<td>
+			<label>Número</label>
+		</td> 
+		<td>
+			<input id="numero" name="numero" value="{{expediente.numero}}"  
+	 		{% if accion == 'editar' %}  readonly   {% endif %} >
+	 	</td>
+	 	<td>
+	 		<label id="numero-error" class="error_hide">Campo requerido</span>
+	 	</td>
+	 </tr>	
+	 	
+	 
+	 <tr>
+	 	<td>	
+	 		<label>Año</label>
+	 	</td>
+	 	<td>
+			<input name="anio" value="{{expediente.anio}}"  type="text"
+	 		{% if accion == 'editar' %}   readonly   
+	 		{% else%}   	id="aniopicker" 	
+	 		{% endif %} >
+	 	</td>
+	 	<td>
+	 		<label id="numero-error" class="error_hide">Campo requerido</span>
+	 	</td>
+	 </tr>
+	 
+	 
+
+<tr>
+	 <td> <label>Características</label> </td> 
+	 <td> <input id="caracteristica" name="caracteristica" value="{{expediente.caracteristica}}" > </td>
+	 <td> <span id="caracteristica-error" class="error_hide">Campo requerido</span> </td>
+</tr>
 
 
-<div>
-	<label>Fecha</label> 
-	<input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
-	</input>		
-	<span id="datepicker-error" class="error_hide">Campo requerido</span>
-</div>
+<tr>
+	<td><label>Fecha</label></td> 
+	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	</input> </td>		
+	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
+</tr>
 
-<div>
-	<label>Alcance</label> 
-	<input id="alcance" name="alcance" value="{{expediente.alcance}}" type="number" 
+<tr>
+	<td><label>Alcance</label></td> 
+	<td><input id="alcance" name="alcance" value="{{expediente.alcance}}" type="number" 
 	 {% if accion == 'editar' %}
 	 	readonly
 	 {% endif %}
-	>
-	<span id="alcance-error" class="error_hide">Campo requerido</span>
-</div>
+	> </td>
+	<td><span id="alcance-error" class="error_hide">Campo requerido</span> </td>
+</tr>
 
-<div>
-	<label>Cuerpo</label> 
-	<input id="cuerpo" name="cuerpo" value="{{expediente.cuerpo}}" >
-	<span id="cuerpo-error" class="error_hide">Campo requerido</span>
-</div>
+<tr>
+	<td><label>Cuerpo</label></td> 
+	<td><input id="cuerpo" name="cuerpo" value="{{expediente.cuerpo}}" > </td>
+	<td><span id="cuerpo-error" class="error_hide">Campo requerido</span> </td>
+</tr>
 
 
 {% if tipo == 'ExpedienteLey'%}
 
-	<div>
-		<input id="inputconsolidacion" name= "consolidacion"  type="hidden">
-		<label>Consolidación</label> 
-		<input id="checkconsolidacion"  value="{{expediente.consolidacion}}" type="checkbox" 
+	<tr>
+		<td>
+			<input id="inputconsolidacion" name= "consolidacion"  type="hidden"> 
+			<label>Consolidación</label> 
+		</td> 
+		<td><input id="checkconsolidacion"  value="{{expediente.consolidacion}}" type="checkbox" 
 			{% if expediente.consolidacion  %}
 					checked="yes"
 			{% endif %}	
 			{% if accion == 'editar' %}
 					readonly
 			{% endif %}		
-		>
+		></td>
 	
-	
-	
-	
-	
-	</div>
+	</tr>
 
 
-	<div>
-		<label>Partido</label> 
-	
-		<input id="inputpartido" name= "partido"  type="hidden">
+	<tr>
+		<td>
+			<label>Partido</label>  
+			 <input id="inputpartido" name= "partido"  type="hidden">
+	    </td>
 		
 		{% if accion == 'nuevo' %}
 	
+		<td>
 		<select id="selectpartido" >
 	
 			{% for partido in partidos%}
@@ -133,35 +160,34 @@
 			 
 			{% endfor %}
 		</select>
+	  </td>
 	  {% endif %}
 		
 		
 	   {% if accion == 'editar' %}
-		<input  value="{{expediente.partido.nombre}}"  readonly>
-		
-		
+	   <td>
+			<input  value="{{expediente.partido.nombre}}"  readonly>
+	   </td>
 	  {% endif %}
 		
-		
-		<span id="inputpartido-error" class="error_hide">Campo requerido</span>
-			
+      <span id="inputpartido-error" class="error_hide">Campo requerido</span>
+	</tr>
 	
-	</div>
-	
+	<tr>
+		<td> <label>Región</label> </td> 
+		<td> <input id="region" name="region" value="{{expediente.region}}" 
+			 {% if accion == 'editar' %} 	readonly 	 {% endif %}> </td>
+		<td> <span id="region-error" class="error_hide">Campo requerido</span> </td>
+	</tr>
 
 
-	<div>
-	<label>Región</label> 
-	<input id="region" name="region" value="{{expediente.region}}"  {% if accion == 'editar' %}
-	 	readonly
-	 {% endif %}>
-	<span id="region-error" class="error_hide">Campo requerido</span>
-	
+
+
 
 </div>
 {% endif %}
 
-
+</table>
 
 </div>
 
