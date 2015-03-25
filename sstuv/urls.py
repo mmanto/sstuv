@@ -7,6 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from documentos import documentos_sites
 from comun import comun_sites
 from publicador import publicador_sites
+from procesos import procesos_sites
 from django.conf.urls.static import static
 
 urlpatterns = patterns('',
@@ -24,6 +25,11 @@ urlpatterns = patterns('',
                    #Pase 
                                     
                   url(r'^sig/', include(publicador_sites))  ,     
+                  
+                  
+                  #Procesos                                     
+                  url(r'^sig/', include(procesos_sites))  ,
+                  
  
 ) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
