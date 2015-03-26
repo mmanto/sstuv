@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}> -->
+<html>
+<head>
+
+<title>{% block title %}{% endblock %}</title>
+
+</head>
+{% load i18n %}
+{% load staticfiles %}
+{% block style_base %}
+    <link href="{% static "css/login.css" %}" rel="stylesheet">
+    <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
+<!--     <link href="{% static "css/remito.css" %}" rel="stylesheet"> -->
+    <link href="{% static "css/jquery-ui/ui-lightness/jquery-ui.css" %}" rel="stylesheet">
+    
+    {% block extra_style %}{% endblock %}
+{% endblock %}
+
+{% block script_base %}
+ <script src="{% static 'js/jquery.js' %}" ></script>
+ <script src="{% static 'js/jquery-ui.js' %}" ></script>
+ <script src="{% static 'js/validation.js' %}" ></script>
+ <script src="{% static 'js/tools.js' %}" ></script>
+{% endblock %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+<!-- Container -->
+<div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        {% block branding %}{% endblock %}
+        </div>
+
+        {% block nav-global %}{% endblock %}
+    </div>
+    <!-- END Header -->
+    
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+
+    
+    
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+    {% endblock %}
+    {% endif %}
+
+    {% block messages %}
+        {% if messages %}
+        <ul class="messagelist">{% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+        {% endfor %}</ul>
+        {% endif %}
+    {% endblock messages %}
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content %}
+        {% block object-tools %}{% endblock %}
+        {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    {% block footer %}<div id="footer"></div>{% endblock %}
+</div>
+<!-- END Container -->
+
+
+
+</body>
+</html>
