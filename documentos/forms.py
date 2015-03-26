@@ -1,7 +1,5 @@
 from documentos.models import Expediente, ExpedienteLey, Pase
 from django.forms.models import ModelForm
-from django.forms import forms
-from django.forms import DateInput, DateField
 
 class ExpedienteForm(ModelForm):
 

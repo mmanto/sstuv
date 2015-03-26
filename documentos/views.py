@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from documentos.models import ExpedienteLey, Expediente, Pase, Estado
-from django.core.context_processors import request
 from documentos.forms import ExpedienteLeyForm, ExpedienteForm, PaseForm
 from comun.models import Partido, Departamento
 from django.contrib.auth.decorators import login_required
@@ -25,24 +24,24 @@ loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
 
-class LoginView(ListView):
-        
-    
-    def login(request, template_name='registration/login.html'):
-       
-        return render(request, 'login.html')
-        
-    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
-    def home(request, template_name='registration/login.html'):
-        return HttpResponseRedirect('/sig/expedientes/')
-                    
-    def logout(request):
-        template_name = 'auth/login_out.html'
-        return logout_then_login(request,login_url='/sig/auth/login')
-        
-    def get_queryset(self):
-        return ExpedienteLey.objects.all()
-    
+# class LoginView(ListView):
+#         
+#     
+#     def login(request, template_name='registration/login.html'):
+#        
+#         return render(request, 'login.html')
+#         
+#     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
+#     def home(request, template_name='registration/login.html'):
+#         return HttpResponseRedirect('/sig/expedientes/')
+#                     
+#     def logout(request):
+#         template_name = 'auth/login_out.html'
+#         return logout_then_login(request,login_url='/sig/auth/login')
+#         
+#     def get_queryset(self):
+#         return ExpedienteLey.objects.all()
+#     
     
 class ExpedientesView(ListView):
         
