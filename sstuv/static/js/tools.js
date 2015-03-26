@@ -1,5 +1,7 @@
 $(function() {
 
+	
+	
 	//regional es
 	$.datepicker.regional['es'] = {
 			 closeText: 'Cerrar',
@@ -29,13 +31,7 @@ $(function() {
 				changeYear : true,
 				showButtonPanel : true,
 				dateFormat : 'dd/mm/yy',
-					
-				
-				
-				
-				
-
-				beforeShow : function(e, t) {
+					beforeShow : function(e, t) {
 					$("#ui-datepicker-div").removeClass("hide-calendar");
 					$("#ui-datepicker-div").removeClass('YearDatePicker');
 					$("#ui-datepicker-div").removeClass('HideTodayButton');
@@ -67,6 +63,9 @@ $(function() {
 				}
 			});
 
+
+	
+	
 	//Pop up para el alta de pases
 	$("#pase_popup").dialog({
 		autoOpen : false,
@@ -77,7 +76,11 @@ $(function() {
 	//Evento para abrir el pop up de pases
 	$("#popup").click(function() {
 
-		$("#pase_popup").dialog("open");
+		//Setea la fecha ene l pase
+		$('#datepic').datepicker().datepicker('setDate', new Date());
+		
+		//Abre el pop up
+		$("#pase_popup").dialog("open");		
 	});
 
 	//Evento para cerror el pop up de pases

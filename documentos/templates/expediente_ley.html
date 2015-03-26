@@ -310,15 +310,11 @@
 	
 		<div>
 			<label>Fecha</label> 
-			<input id="datepicker2" name="fecha" value="{{pase.fecha | date:'DATE_FORMAT'}}" type="text"  >
-			
-		
-			
-			
+			<input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly>
 		</div>
 		
 		<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
-		<input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name" size=70>
+		<input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name"  size=70 readonly>
 		
 <!-- 		<div> -->
 <!-- 			<label>Departamento origen</label>   -->
