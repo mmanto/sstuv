@@ -89,7 +89,11 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django_extensions',
     'wkhtmltopdf', 
-    'comun', 'documentos', 'publicador', 'procesos'
+    'comun', 
+    'documentos', 
+    'publicador', 
+    'procesos',
+    'secur'
 )
 
 MIDDLEWARE_CLASSES = (
