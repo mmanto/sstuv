@@ -14,8 +14,14 @@ class Expediente(models.Model):
 	fecha = models.DateField('Fecha')
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
+	extracto = models.CharField(max_length=5000)
+	cant_fojas= models.IntegerField(default = 0)
+	observacion=models.CharField(max_length=10000)
 	
 	consolidacion=models.BooleanField(default = False)
+
+	
+
 
 	
 	def __str__(self):
