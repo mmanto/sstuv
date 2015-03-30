@@ -44,10 +44,15 @@
 </form>
 
 
-<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/0/" method="get">
-	<input type="submit" value="Nuevo {{tipo}}">
+{% for grupo in user.groups.all  %}
+	{% if grupo.name == 'Mesa de Entrada' %}
+	<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/0/" method="get">
+		<input type="submit" value="Nuevo {{tipo}}">
 
-</form>
+	</form>
+	{% endif %}
+{% endfor %}
+
 
 <div class="datagrid">
 	<table style="width: 100%">
