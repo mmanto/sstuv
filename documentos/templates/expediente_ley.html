@@ -234,6 +234,7 @@
     <th>Fecha</th>
     <th>Origen</th>
  	<th>Destino</th>
+ 	<th>Estado</th>
 	<th>Remito</th>
   </tr>
   
@@ -250,6 +251,7 @@
 			
 		<td>{{pase.departamento_destino.nombre}}</td>	
 			
+		<td>{{pase.estado}}</td>	
 		<td>
 			<a href="/sig/expedientes/imprimirremito/{{expediente.id}}/{{pase.id}}" target="_blank">Impirmir remito</a>
 			
