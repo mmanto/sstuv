@@ -37,6 +37,8 @@ class ExpedienteLey(Expediente):
 	
 class Pase(models.Model):
 	
+	numero = models.IntegerField()
+	
 	expediente = models.ForeignKey(Expediente, related_name="pase_set")
 	
 	departamento_origen = models.ForeignKey(Departamento, related_name='origen')

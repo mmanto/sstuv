@@ -330,6 +330,8 @@ class PasesView(ListView):
     def savePase(request):
                  
         pase = Pase()
+          
+        pase.numero=(request.POST.get('numero'))
            
         pase.departamento_origen = Departamento.objects.get( codigo = int (request.POST.get('departamento_origen')))
          

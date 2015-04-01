@@ -225,8 +225,9 @@
 <h2>Pases</h2>
 
 
-<button id="popup">Nuevo Pase</button>
-
+{% if accion == 'editar' %}
+	<button id="popup">Nuevo Pase</button>
+{% endif %}
 
 <div class="datagrid" >
 <table style="width:100%">
@@ -324,21 +325,38 @@
 		<form  action="/sig/pase/guardar/" method="post">
 	
 		{% csrf_token %}
+	
+		<table>
 		
-	
-	
+		<tr>
+		
+		
+		<td> 	<label>Número de remito</label>   </td> 
+		<td>	<input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
+		
+		
+		</tr>
+				
+		
 		<input name="expediente_id" value="{{expediente.id}}" type="hidden">
 		<input name="expediente_tipo" value="{{tipo}}" type="hidden">
 		
+		
+		
 	
-		<div>
-			<label>Fecha</label> 
-			<input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly>
-		</div>
+		<tr>
+			<td> <label>Fecha</label>  </td> 
+			<td>  <input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly> </td>
+		</tr>
 		
-		<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
-		<input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name"  size=70 readonly>
 		
+		
+		<tr>
+			<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
+			
+			<td> <label>Concepto origen</label>  </td> 
+			<td> <input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name"  size=70 readonly> </td>
+		</tr>
 <!-- 		<div> -->
 <!-- 			<label>Departamento origen</label>   -->
 			
@@ -353,23 +371,30 @@
 <!-- 		</div> -->
 			
 		
-		<input id="inputdestino" name= "departamento_destino" type="hidden">	
 			
-		<div>
-			<label>Departamento destino</label> 
+		<tr>
+			<input id="inputdestino" name= "departamento_destino" type="hidden">	
 			
-			<select id="selectdestino"> 	
-				<option value="0">Ingrese un departamento</option>
-				{% for departamento	in departamentos%} 
-					<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
-				{% endfor %}
-			</select>
-		</div>
+		
+			<td> <label>Concepto destino</label> <td> 
 			
+			 
+				<select id="selectdestino"> 	
+					<option value="0">Ingrese un concepto</option>
+						{% for departamento	in departamentos %} 
+							<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
+						{% endfor %}
+				</select> 
 			
-		<input type="submit" value="Guardar">
-		<input id="close_popup" type="button"  value="Cancelar">
+		</tr>
 			
+		<tr>	
+			<td> <input type="submit" value="Guardar"> </td>
+			<td>  <input id="close_popup" type="button"  value="Cancelar"> </td>
+		
+		</tr>
+		
+		</table>	
 		
 		
 	</form>	
