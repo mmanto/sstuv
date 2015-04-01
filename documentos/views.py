@@ -24,24 +24,7 @@ loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
 
-# class LoginView(ListView):
-#         
-#     
-#     def login(request, template_name='registration/login.html'):
-#        
-#         return render(request, 'login.html')
-#         
-#     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
-#     def home(request, template_name='registration/login.html'):
-#         return HttpResponseRedirect('/sig/expedientes/')
-#                     
-#     def logout(request):
-#         template_name = 'auth/login_out.html'
-#         return logout_then_login(request,login_url='/sig/auth/login')
-#         
-#     def get_queryset(self):
-#         return ExpedienteLey.objects.all()
-#     
+
     
 class ExpedientesView(ListView):
         
@@ -68,8 +51,11 @@ class ExpedientesView(ListView):
 
             
         partidos =  Partido.objects.all()
-       
-        departamentos=Departamento.objects.all().order_by("nombre")
+
+        departamentosInternos = Departamento.objects.filter(codigo__gt = 999, codigo__lt = 6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt = 13, codigo__lt = 72).all().order_by("nombre")
+
+        print(departamentosExternos)
         
         if(numero != 0):  #Expediente editar
             
@@ -83,16 +69,13 @@ class ExpedientesView(ListView):
             else:
                 expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio, alcance=alcance)
 
-#             pases = expediente.pase_set.all()
-        
+      
             pases = ExpedientesView.paginador(request, expediente.pase_set.all())
 
-
-
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request) )
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request) )
       
         else: # Expediente nuevo
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentos':departamentos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'nuevo'},context_instance=RequestContext(request))
         
     
  
@@ -199,10 +182,14 @@ class ExpedientesView(ListView):
             expediente.alcance=request.POST.get('alcance')
             expediente.cuerpo=request.POST.get('cuerpo')
             
-            departamentos =  departamentos=Departamento.objects.all().order_by("nombre")
-
+            departamentosInternos = Departamento.objects.filter(codigo > 999, codigo < 6001).order_by("nombre")
+            departamentosExternos = Departamento.objects.filter(codigo > 13 and codigo < 72).all().order_by("nombre")
+             
+            print('departamentos') 
+            print(departamentosExternos)
+            print (departamentosInternos) 
                   
-            return render(request, 'expediente_ley.html', {'tipo' : tipo,'expediente': expediente ,'form':form ,'accion' : 'nuevo', 'departamentos':departamentos ,"errores":errores}, context_instance=RequestContext(request) )
+            return render(request, 'expediente_ley.html', {'tipo' : tipo,'expediente': expediente ,'form':form ,'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos ,"errores":errores}, context_instance=RequestContext(request) )
 
 
     def updateExpediente(request):
@@ -351,9 +338,9 @@ class PasesView(ListView):
         pase.save()
       
         if(request.POST.get('expediente_tipo') == 'Expediente'):
-            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,0,0)
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,0,0, pase.expediente.alcance)
         else:  
-            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,pase.expediente.partido.id, pase.expediente.region)
+            return ExpedientesView.showExpediente(request, request.POST.get('expediente_tipo'), pase.expediente.organismo, pase.expediente.numero, pase.expediente.anio,pase.expediente.partido.id, pase.expediente.region, pase.expediente.alcance)
             
          #TODO   
     def removePase(request):

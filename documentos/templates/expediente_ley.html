@@ -326,65 +326,64 @@
 	
 		{% csrf_token %}
 	
-		<table>
-		
-		<tr>
-		
-		
-		<td> 	<label>Número de remito</label>   </td> 
-		<td>	<input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
-		
-		
-		</tr>
-				
-		
+	
 		<input name="expediente_id" value="{{expediente.id}}" type="hidden">
 		<input name="expediente_tipo" value="{{tipo}}" type="hidden">
-		
+		<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
+		<input id="inputdestino" name= "departamento_destino" type="hidden">
 		
 		
 	
+		<table>
+		
+		<tr>
+			<td> <label>Número de remito</label>   </td>
+			<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
+		</tr>
+				
 		<tr>
 			<td> <label>Fecha</label>  </td> 
-			<td>  <input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly> </td>
+			<td> <input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly> </td>
 		</tr>
 		
-		
-		
 		<tr>
-			<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
-			
 			<td> <label>Concepto origen</label>  </td> 
 			<td> <input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name"  size=70 readonly> </td>
 		</tr>
-<!-- 		<div> -->
-<!-- 			<label>Departamento origen</label>   -->
-			
-<!-- 			<select id="selectorigen" >  -->
-<!-- 				<option value="0">Ingrese un departamento</option> -->
-				
-					
-<!-- 				{% for departamento	in departamentos%}  -->
-<!-- 					<option value="{{departamento.codigo}}">{{departamento.nombre}}</option> -->
-<!-- 				{% endfor %} -->
-<!-- 			</select> -->
-<!-- 		</div> -->
-			
-		
 			
 		<tr>
-			<input id="inputdestino" name= "departamento_destino" type="hidden">	
+			<td> <label>Concepto destino</label>
 			
-		
-			<td> <label>Concepto destino</label> <td> 
+			</td>
+			 
+			
+			<td>
+			
+			
+				<label>Interno <input type="radio" name="radio" id="cheDep" value= "Interno" checked/> </label>  
+				<label>         Externo <input type="radio" name="radio" id="cheDep1" value= "Externo" /> </label>
+					
+				</br> 
 			
 			 
+			<div id="panelInterno"> 
 				<select id="selectdestino"> 	
 					<option value="0">Ingrese un concepto</option>
-						{% for departamento	in departamentos %} 
+						{% for departamento	in departamentosInternos %} 
 							<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
 						{% endfor %}
 				</select> 
+			</div>
+			
+			<div id="panelExterno">
+				<select id="selectdestino"> 	
+					<option value="0">Ingrese un concepto</option>
+						{% for departamento	in departamentosExternos %} 
+							<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
+						{% endfor %}
+				</select> 
+			</div>
+			</td>
 			
 		</tr>
 			

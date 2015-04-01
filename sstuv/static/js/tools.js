@@ -79,6 +79,10 @@ $(function() {
 		//Setea la fecha ene l pase
 		$('#datepic').datepicker().datepicker('setDate', new Date());
 		
+		//
+		$(('#panelExterno')).hide();
+
+		
 		//Abre el pop up
 		$("#pase_popup").dialog("open");		
 	});
@@ -144,5 +148,19 @@ $(function() {
 		
 	});
 
+	
+	// Muesra el chequ box de para departamentos externos
+	$('#cheDep').click(function() {
 
+		$(('#panelInterno')).show();
+		$(('#panelExterno')).hide();
+	});
+	
+	// Muesra el chequ box de para departamentos internos
+	$('#cheDep1').click(function() {
+
+			$(('#panelExterno')).show();
+			$(('#panelInterno')).hide();
+	});
+	
 });
