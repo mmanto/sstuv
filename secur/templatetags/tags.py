@@ -2,8 +2,8 @@ from django import template
 from django.core.context_processors import request
 from django.contrib.auth.models import User, Group
 
-
 register = template.Library()
+
 
 
 @register.inclusion_tag('menu.html')
@@ -13,10 +13,10 @@ def menu(user):
     print(user)
     print(user.groups.all())
 
-    
       
     
     menu = []
+    
     
     mesaDeEntrada={ 'nombreDireccion' : 'Mesa de Entrada', 'subsistemas':
            
@@ -27,39 +27,84 @@ def menu(user):
            ]
            }
     
-    
-    dir1= { 'nombreDireccion' : 'Dirección Provincial de Infrastructura Urbana y Territorial', 'subsistemas':
+    regularizacion= { 'nombreDireccion' : 'Regularización', 'subsistemas':
            
-           [{ 'nombreSistema' : 'Sub1', 'target' : ''}, 
-            {'nombreSistema' : 'Sub2',  'target' : ''},
-            {'nombreSistema' : 'Sub3', 'target' : ''},
+           [{ 'nombreSistema' : 'Barrios', 'target' : ''}, 
+            {'nombreSistema' : 'Encuadre Legal',  'target' : ''},
+            {'nombreSistema' : 'Informe Urbanístico',  'target' : ''},
+            {'nombreSistema' : 'Planos',  'target' : ''},
+            {'nombreSistema' : 'Censo',  'target' : ''},
+            {'nombreSistema' : 'Doc. Adjudicación',  'target' : ''},
+                     
            ]
            }
     
     
-    dir2= { 'nombreDireccion' : 'Dirección Provincial de Coordinación de Programas Habitacionales', 'subsistemas':
+    familiaPropietaria= { 'nombreDireccion' : 'Familia Propietaria', 'subsistemas':
            
-           [{ 'nombreSistema' : 'Manejo saraza', 'target' : ''}, 
+           [{ 'nombreSistema' : 'Tierras Afectadas', 'target' : ''}, 
+            {'nombreSistema' : 'Informe Técnico Urbanístico',  'target' : ''},
+            {'nombreSistema' : 'Planos', 'target' : ''},
+            {'nombreSistema' : 'Censos', 'target' : ''},
+            {'nombreSistema' : 'Doc. Adjudicación', 'target' : ''},
+           ]
+           }
+    
+    
+    dir2= { 'nombreDireccion' : 'Ley 24374', 'subsistemas':
+           
+           [{ 'nombreSistema' : 'Inmuebles', 'target' : ''}, 
+            { 'nombreSistema' : 'Regularización', 'target' : ''},
+            { 'nombreSistema' : 'Consolidación', 'target' : ''},
+            { 'nombreSistema' : 'Gestión Actas', 'target' : ''},
             
             ]
            }
    
-    dir3= { 'nombreDireccion' : 'Dirección Provincial de Tierras', 'subsistemas':
+    dir3= { 'nombreDireccion' : 'Escrituración', 'subsistemas':
            
            [
-            { 'nombreSistema' : 'Manejo saraza', 'target' : ''}, 
+            { 'nombreSistema' : '', 'target' : ''}, 
            
            ]
            }
    
     dir4= { 'nombreDireccion' : 'Dirección Provincial de Escritura Social', 'subsistemas':
            
-           [{ 'nombreSistema' : 'Manejo saraza', 'target' : ''}, 
+           [{ 'nombreSistema' : 'Pagos', 'target' : ''},
+            { 'nombreSistema' : 'Registro Único Beneficiarios', 'target' : ''}, 
             
             ]
            }
     
-    menu.append(mesaDeEntrada)
+    dir4= { 'nombreDireccion' : 'Urbanismo', 'subsistemas':
+           
+           [{ 'nombreSistema' : 'Municipios', 'target' : ''},
+            { 'nombreSistema' : 'Planificación', 'target' : ''}, 
+            { 'nombreSistema' : 'Informe Urbanístico DPIUT', 'target' : ''},
+            { 'nombreSistema' : 'Pre-Factibilidad Urban&iacute;stica', 'target' : ''},
+            { 'nombreSistema' : 'Ord. Territorial DL 8.912/77', 'target' : ''},
+            ]
+           }
+    
+    dir4= { 'nombreDireccion' : 'Mapa', 'subsistemas':
+           
+           [{ 'nombreSistema' : 'Barrios Regularización', 'target' : ''},
+            { 'nombreSistema' : 'Encuadre Legal', 'target' : ''}, 
+            { 'nombreSistema' : 'Tierra Familia Propietaria', 'target' : ''},
+            { 'nombreSistema' : 'Informes urbanísticos', 'target' : ''},
+            { 'nombreSistema' : 'Planos', 'target' : ''},
+            { 'nombreSistema' : 'Conflictos Habitacionales', 'target' : ''},
+            { 'nombreSistema' : 'Prosede', 'target' : ''},
+            { 'nombreSistema' : 'inmuebles Ley 24374', 'target' : ''},
+            ]
+           }
+    
+    if( user.is_authenticated()):
+        
+        menu.append(mesaDeEntrada)
+        menu.append(regularizacion)
+        
 #     menu.append(dir1)
 #     menu.append(dir2)
 #     menu.append(dir3)
@@ -68,4 +113,15 @@ def menu(user):
     
     
     return {'menu': menu, 'user': user}
+
+
+
+def validateRol(user, rol):
+    
+    groups  = user.groups.all
+    
+    for group in groups:
+        if(rol == group):
+            return true
+    return false    
  
