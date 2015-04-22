@@ -93,9 +93,7 @@ INSTALLED_APPS = (
     'documentos', 
     'publicador', 
     'procesos',
-    'secur',
-    'regularizacion',
-    'rest_framework',
+    'secur'
 )
 
 MIDDLEWARE_CLASSES = (
