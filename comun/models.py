@@ -19,3 +19,11 @@ class Departamento(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+class Barrio(models.Model):
+    codigo= models.IntegerField(default=0)
+
+    nombre = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.nombre
