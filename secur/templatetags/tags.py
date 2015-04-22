@@ -17,7 +17,7 @@ def menu(user):
     
     menu = []
     
-#    SIG 
+    
     mesaDeEntrada={ 'nombreDireccion' : 'Mesa de Entrada', 'subsistemas':
            
            [{ 'nombreSistema' : 'Expedientes', 'target' : '/sig/expedientes/'}, 
@@ -29,13 +29,12 @@ def menu(user):
     
     regularizacion= { 'nombreDireccion' : 'Regularización', 'subsistemas':
            
-           [
-#             { 'nombreSistema' : 'Barrios', 'target' : ''}, 
-#             {'nombreSistema' : 'Encuadre Legal',  'target' : ''},
-#             {'nombreSistema' : 'Informe Urbanístico',  'target' : ''},
-#             {'nombreSistema' : 'Planos',  'target' : ''},
-            {'nombreSistema' : 'Censo',  'target' : '/proc/regularizacion/censo/nuevo/'},
-#             {'nombreSistema' : 'Doc. Adjudicación',  'target' : ''},
+           [{ 'nombreSistema' : 'Barrios', 'target' : ''}, 
+            {'nombreSistema' : 'Encuadre Legal',  'target' : ''},
+            {'nombreSistema' : 'Informe Urbanístico',  'target' : ''},
+            {'nombreSistema' : 'Planos',  'target' : ''},
+            {'nombreSistema' : 'Censo',  'target' : ''},
+            {'nombreSistema' : 'Doc. Adjudicación',  'target' : ''},
                      
            ]
            }
@@ -78,7 +77,7 @@ def menu(user):
             ]
            }
     
-    dir5= { 'nombreDireccion' : 'Urbanismo', 'subsistemas':
+    dir4= { 'nombreDireccion' : 'Urbanismo', 'subsistemas':
            
            [{ 'nombreSistema' : 'Municipios', 'target' : ''},
             { 'nombreSistema' : 'Planificación', 'target' : ''}, 
@@ -88,7 +87,7 @@ def menu(user):
             ]
            }
     
-    dir6= { 'nombreDireccion' : 'Mapa', 'subsistemas':
+    dir4= { 'nombreDireccion' : 'Mapa', 'subsistemas':
            
            [{ 'nombreSistema' : 'Barrios Regularización', 'target' : ''},
             { 'nombreSistema' : 'Encuadre Legal', 'target' : ''}, 

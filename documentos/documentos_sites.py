@@ -2,17 +2,6 @@ from django.conf.urls import *
 
 from documentos.views import ExpedientesView, PasesView
 from documentos.report import PaseReport
-from documentos.rest import ExpedienteViewSet
-from documentos import rest
-
-from rest_framework.routers import DefaultRouter
-
-
-
-router = DefaultRouter()
-router.register(r'exped', ExpedienteViewSet,  base_name='exped')
-# router.register(r'exped/$', rest.list)
-
 
 
 urlpatterns = patterns('',
@@ -34,10 +23,7 @@ urlpatterns = patterns('',
                             
                         url(r'^expedientes/imprimirremito/(\d+)/(\d+)/$',PaseReport.generar ),
                         
-#                          url(r'^exped/$', rest.get),
-                        url(r'^', include(router.urls)),
-#                         url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-                        
+
 
                       )
         
