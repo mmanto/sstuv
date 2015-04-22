@@ -24,6 +24,9 @@ loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
 
+
+
+
 class ExpedientesView(ListView):
         
     paginate_by = 10
@@ -371,6 +374,4 @@ class PasesView(ListView):
             object = paginator.page(paginator.num_pages)   
         return object
         
-            
-            
     
