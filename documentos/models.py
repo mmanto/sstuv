@@ -12,6 +12,7 @@ class Expediente(models.Model):
 	
 	caracteristica = models.CharField(max_length=200)
 	fecha = models.DateField('Fecha')
+	fechaInicio=models.DateField('FechaInicio')
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
 	extracto = models.CharField(max_length=5000)
