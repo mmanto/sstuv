@@ -18,7 +18,7 @@ def menu(user):
     menu = []
     
     
-    mesaDeEntrada={ 'nombreDireccion' : 'Mesa de Entrada', 'subsistemas':
+    mesaDeEntrada={ 'nombreDireccion' : 'Admin. Expedientes', 'subsistemas':
            
            [{ 'nombreSistema' : 'Expedientes', 'target' : '/sig/expedientes/'}, 
             {'nombreSistema' : 'Expedientes Ley',  'target' : '/sig/expedientesLey/'},
@@ -103,7 +103,7 @@ def menu(user):
     if( user.is_authenticated()):
         
         menu.append(mesaDeEntrada)
-        menu.append(regularizacion)
+#         menu.append(regularizacion)
         
 #     menu.append(dir1)
 #     menu.append(dir2)
