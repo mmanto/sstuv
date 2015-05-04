@@ -39,7 +39,9 @@ $(function() {
 			});
 
 
-	// Año Picker
+	/*
+	 *  Año Picker
+	 */
 	$("#aniopicker").datepicker(
 			{
 				changeYear : true,
@@ -63,10 +65,18 @@ $(function() {
 				}
 			});
 
-
+	/*
+	 * Popup que muestra mensaje de éxito al dar de alta un expediente.  
+	 */
+	$("#alta_expediente_success").dialog({
+		autoOpen : false,
+		height : 200,
+		width : 300
+	});
 	
-	
-	//Pop up para el alta de pases
+	/*
+	 * Pop up para el alta de pases
+	 */
 	$("#pase_popup").dialog({
 		autoOpen : false,
 		height : 600,
@@ -87,13 +97,17 @@ $(function() {
 		$("#pase_popup").dialog("open");		
 	});
 
-	//Evento para cerror el pop up de pases
+	/*
+	 * Evento para cerror el pop up de pases
+	 */
 	$("#close_popup").click(function() {
 
 		$("#pase_popup").dialog("close");
 	});
 
-	// Cargar selección de combo en hidden input en cualquier select
+	/*
+	 * Cargar selección de combo en hidden input en cualquier select
+	 */ 
 	$("select[id^='select']").select().change(function() {
 
 		var origen = $(this).attr('id').substring(6);
@@ -103,7 +117,9 @@ $(function() {
 		$((objetivo)).val($(this).val());
 	});
 
-	// Validaciones para expediente
+	/*
+	 *  Validaciones para expediente
+	 */
 	$("#form-expediente-button").click(function(event) {
 
 		var error = false;
@@ -132,11 +148,74 @@ $(function() {
 
 		if (!error) {
 			$("#form-expediente").submit();
+
+			//popup de éxito
+			$("#alta_expediente_success").dialog("open");
+			
+		}
+
+	});
+	
+	// Validaciones para salir de expediente
+	$("#form-expediente-button-exit").click(function(event) {
+		
+		$("#continueInId").attr("value", "expedienteList");
+		
+		var div = document.getElementById('validate-div');
+		var inputs = div.getElementsByTagName("input");
+
+		var totalInputs = 0;
+		var totalInputsVacio = 0; 
+		
+		$(inputs).each(function() {
+
+			var origen = $(this).attr('id');
+
+			if( origen != 'inputconsolidacion' & origen != 'checkconsolidacion'){
+				totalInputs = totalInputs + 1;	
+				if ($(this).val() == "") {
+					totalInputsVacio = totalInputsVacio + 1;
+				} 
+			}
+		});
+		
+		if (totalInputs == totalInputsVacio){
+			$("#form-expediente").submit();
+		}else{
+			
+			var error = false;
+	
+			$(inputs).each(function() {
+	
+				var origen = $(this).attr('id');
+	
+				if( origen != 'inputconsolidacion' & origen != 'checkconsolidacion'){
+				
+					var objetivo = "#" + origen + "-error";
+		
+					if ($(this).val() == "") {
+						error = true;
+						$(objetivo).removeClass('error_hide');
+						$(objetivo).addClass('error_show');
+					} else {
+						$(objetivo).removeClass('error_show');
+						$(objetivo).addClass('error_hide');
+					}
+				}
+			});
+
+			if (!error) {
+				$("#saveId").attr("value", "saveExpediente");
+				$("#form-expediente").submit();
+							
+			}
 		}
 
 	});
 
-	// Cargar selección del checkbox de consolidación
+	/*
+	 * Cargar selección del checkbox de consolidación
+	 */ 
 	$("[id^='check']").change(function() {
 
 		var origen = $(this).attr('id').substring(5);
@@ -149,14 +228,18 @@ $(function() {
 	});
 
 	
-	// Muesra el chequ box de para departamentos externos
+	/*
+	 * Muestra el chequ box de para departamentos externos
+	 */ 
 	$('#cheDep').click(function() {
 
 		$(('#panelInterno')).show();
 		$(('#panelExterno')).hide();
 	});
 	
-	// Muesra el chequ box de para departamentos internos
+	/*
+	 * Muestra el chequ box de para departamentos internos
+	 */ 
 	$('#cheDep1').click(function() {
 
 			$(('#panelExterno')).show();
@@ -164,3 +247,4 @@ $(function() {
 	});
 	
 });
+
