@@ -28,6 +28,7 @@ ALTER TABLE documentos_expediente ADD COLUMN extracto character(5000);
 ALTER TABLE documentos_expediente ADD COLUMN cant_fojas integer;
 ALTER TABLE documentos_expediente ADD COLUMN observacion character(10000);
 ALTER TABLE documentos_expediente ADD COLUMN "fechaInicio" date;
+ALTER TABLE documentos_expediente ADD COLUMN "usuarioAlta" character(200);
 
 
 
