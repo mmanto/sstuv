@@ -47,6 +47,8 @@ class ExpedientesView(ListView):
 
             
         partidos = Partido.objects.all()
+        print("partidos")
+        print(partidos)
 
         departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
         departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
@@ -138,10 +140,13 @@ class ExpedientesView(ListView):
     # 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def saveExpediente(request):
-        
+    
+        continueIn = request.POST.get('continueIn', '')
+        saveData = request.POST.get('saveData', '')
         valido = False
         tipo = request.POST.get('tipo', '')
         if request.method == 'POST':
+            
             if(tipo == 'Expediente'):
                 form = ExpedienteForm(request.POST)
             else:
@@ -149,20 +154,36 @@ class ExpedientesView(ListView):
    
             errores = []    
 
-            if form.is_valid():
-                # Validación para que no se repita el número de expediente. TODO: refactor
-                if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
-                    errores.append('El número de expediente ya existe.')
+            if (continueIn == "expediente"):                
+                if form.is_valid():
+                    print("entro en form valido")
+                    # Validación para que no se repita el número de expediente. TODO: refactor
+                    if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
+                        errores.append('El número de expediente ya existe.')
+                    else:                        
+    #                     print (request.POST.get('consolidacion'))
+                        print("salva el form")
+                        form.save()
+                        valido = True 
+            else:
+                if (saveData == "saveExpediente" and form.is_valid()):
+                    print("entro en form valido")
+                    # Validación para que no se repita el número de expediente. TODO: refactor
+                    if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
+                        errores.append('El número de expediente ya existe.')
+                    else:                        
+    #                     print (request.POST.get('consolidacion'))
+                        print("salva el form")
+                        form.save()
+                        valido = True 
                 else:
-                    
-                    
-                    print (request.POST.get('consoliacion'))
-                    
-                    form.save()
-                    valido = True   
+                    valido = True;
         
-        if(valido):  # Exito       
-            return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+        if(valido):  # Exito 
+            if (continueIn == 'expediente'):  
+                return ExpedientesView.showExpediente(request, tipo, 0, 0, 0, 0, 0, 0)
+            else:
+                return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
         else:  # Error
             
             errores.append(form._errors)
@@ -175,7 +196,7 @@ class ExpedientesView(ListView):
             expediente.fecha = datetime.strptime(request.POST.get('fecha'), "%m/%d/%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
             expediente.alcance = request.POST.get('alcance')
             expediente.cuerpo = request.POST.get('cuerpo')
-            
+            print("entro por el else invalido")
             departamentosInternos = Departamento.objects.filter(codigo > 999, codigo < 6001).order_by("nombre")
             departamentosExternos = Departamento.objects.filter(codigo > 13 and codigo < 72).all().order_by("nombre")
              
