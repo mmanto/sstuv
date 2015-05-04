@@ -1,7 +1,6 @@
 ﻿{% extends "base_site.html" %} {% block content %}
 <h2>Expedientes</h2>
 
-
 {% if accion == 'nuevo' %}
 <form id="form-expediente"  action="/sig/expedientes/guardar/" method="post" novalidate="novalidate"> 
 {% endif %}
@@ -11,6 +10,9 @@
 {% endif %}
 
 
+<div id="alta_expediente_success" title="Exito">
+    <p>El expediente se ha guardado correctamente</p>
+</div>
 
 {% csrf_token %}
 
@@ -37,6 +39,8 @@
 
 
 <input name="tipo" value="{{tipo}}" type="hidden">
+<input id="continueInId" name="continueIn" value="expediente" type="hidden">
+<input id="saveId" name="saveData" value="notSaveExpediente" type="hidden">
 
 <div id="validate-div">
 
@@ -213,7 +217,7 @@
 </div>
 
 <input id="form-expediente-button" type="button" value="Guardar">
-
+<input id="form-expediente-button-exit" type="button" value="Salir">
 
 </form>
 
