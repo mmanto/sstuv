@@ -2,7 +2,9 @@ $(function() {
 
 	
 	
-	//regional es
+	/*
+	 * Se setea el regional en el timepicker
+	 */
 	$.datepicker.regional['es'] = {
 			 closeText: 'Cerrar',
 			 prevText: '<Ant',
@@ -21,11 +23,33 @@ $(function() {
 			 yearSuffix: ''
 			 };
 	
-	//Se seta como default el idioma español
+	/*
+	 * Se seta como default el idioma español
+	 */
 	$.datepicker.setDefaults($.datepicker.regional['es']);
 	
-	// Date picker
+	/* 
+	 * Date picker
+	 * 
+	 */
 	$("[id^='datepicker']").datepicker(
+			{
+				regional: "es",
+				changeYear : true,
+				showButtonPanel : true,
+				dateFormat : 'dd/mm/yy',
+					beforeShow : function(e, t) {
+					$("#ui-datepicker-div").removeClass("hide-calendar");
+					$("#ui-datepicker-div").removeClass('YearDatePicker');
+					$("#ui-datepicker-div").removeClass('HideTodayButton');
+				}, 
+			});
+	
+	/* 
+	 * Date picker
+	 * 
+	 */
+	$("[id^='datepicker1']").datepicker(
 			{
 				regional: "es",
 				changeYear : true,
@@ -83,7 +107,10 @@ $(function() {
 		width : 800
 	});
 
-	//Evento para abrir el pop up de pases
+	/*
+	 * Evento para abrir el pop up de pases
+	 * 
+	 */
 	$("#popup").click(function() {
 
 		//Setea la fecha ene l pase

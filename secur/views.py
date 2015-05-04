@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.views.generic import ListView
 from django.core.context_processors import request
-from django.http.response import HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.template import RequestContext 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
