@@ -162,6 +162,7 @@ class ExpedientesView(ListView):
                         errores.append('El número de expediente ya existe.')
                     else:                        
                         exp =  form.save()
+                        #Auditoria
                         exp.usuarioAlta=request.user.username
                         exp.save()
                         valido = True 
