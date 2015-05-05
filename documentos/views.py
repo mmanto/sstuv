@@ -116,9 +116,9 @@ class ExpedientesView(ListView):
                  
         if(len(filter_dict) > 0):
             if (tipo == 'Expediente'):
-                expedientes = (Expediente.objects.filter(**filter_dict))
+                expedientes = ( Expediente.objects.filter(**filter_dict).distinct() )
             elif (tipo == 'ExpedienteLey'):
-                expedientes = (ExpedienteLey.objects.filter(**filter_dict))
+                expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
   
         paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
         page = request.GET.get('page')
