@@ -161,9 +161,9 @@ class ExpedientesView(ListView):
                     if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
                         errores.append('El número de expediente ya existe.')
                     else:                        
-    #                     print (request.POST.get('consolidacion'))
-                        print("salva el form")
-                        form.save()
+                        exp =  form.save()
+                        exp.usuarioAlta=request.user.username
+                        exp.save()
                         valido = True 
             else:
                 if (saveData == "saveExpediente" and form.is_valid()):
@@ -173,7 +173,8 @@ class ExpedientesView(ListView):
                         errores.append('El número de expediente ya existe.')
                     else:                        
     #                     print (request.POST.get('consolidacion'))
-                        print("salva el form")
+                        print(request.user.name)
+#                         form.usuarioAlta=request.user.name
                         form.save()
                         valido = True 
                 else:
@@ -193,13 +194,15 @@ class ExpedientesView(ListView):
             expediente.numero = request.POST.get('numero')
             expediente.anio = request.POST.get('anio')
             expediente.caracteristica = request.POST.get('caracteristica')
-            expediente.fecha = datetime.strptime(request.POST.get('fecha'), "%m/%d/%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
+            expediente.fecha = datetime.strptime(request.POST.get('fecha'), "%d/%m/%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
             expediente.alcance = request.POST.get('alcance')
             expediente.cuerpo = request.POST.get('cuerpo')
             print("entro por el else invalido")
-            departamentosInternos = Departamento.objects.filter(codigo > 999, codigo < 6001).order_by("nombre")
-            departamentosExternos = Departamento.objects.filter(codigo > 13 and codigo < 72).all().order_by("nombre")
-             
+            departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+            departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+
+           
+           
             print('departamentos') 
             print(departamentosExternos)
             print (departamentosInternos) 

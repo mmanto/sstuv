@@ -21,7 +21,7 @@ class Expediente(models.Model):
 	
 	consolidacion=models.BooleanField(default = False)
 
-	
+	usuarioAlta=models.CharField(max_length=200)
 
 
 	

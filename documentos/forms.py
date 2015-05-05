@@ -5,7 +5,7 @@ class ExpedienteForm(ModelForm):
 
     class Meta:
        model = Expediente
-       
+       exclude = ['usuarioAlta']
 
     
 class ExpedienteLeyForm(ExpedienteForm):
