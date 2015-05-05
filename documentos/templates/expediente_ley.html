@@ -413,7 +413,24 @@
 
 
 
+<div id="confirmationExit_popup">
 
+	<h2>Exiten campos con datos</h2>
+	<h2>¿Esta seguro que desea salir sin guardar los cambios?</h2>
+
+	<form  action="/sig/expedientes/salir/" method="post">	
+		{% csrf_token %}
+		<input name="exp_tipo" value="{{tipo}}" type="hidden">
+		<table>
+			<tr>	
+				<td> <input type="submit" value="Continuar"> </td>
+				<td>  <input id="closeExitPopup_popup" type="button"  value="Cancelar"> </td>
+			</tr>
+		</table>	
+
+	</form>	
+
+</div>
 
 
 
