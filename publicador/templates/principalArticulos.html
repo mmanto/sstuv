@@ -1,0 +1,36 @@
+{% extends "principal.html" %} 
+{% load staticfiles %}
+
+{% block contenidoInferiorIzquierda %}
+<div class="divNotaCompleta">
+	<div class="notaCompleta">
+		<div class="divTituloIndividual">
+			{{ articulo.titulo }}
+		</div>
+		<br>
+		<div class="divContenidoIndividual">
+			{{articulo.contenido|linebreaksbr }}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block contenidoInferiorDerecha %}
+	<div class="columnaImagenes" id="imagenesArticulo">
+		{% for imagen in articulo.imagenes.all  %}
+			<img id="{{imagen.id}}" index="{{forloop.counter0}}" class="imagenArticuloColumna" src="{{MEDIA_URL}}{{imagen.imagen}}"/>
+			<br>
+		{% endfor %}
+	</div>
+	<div id="dialog" title="{{articulo.titulo}}">
+		<div 	class="fotorama centrado" id="fotorama"  
+				data-fit="scaledown" 
+				data-height="530">
+				{% for imagen in articulo.imagenes.all %}
+					<img id="{{MEDIA_URL}}{{imagen.imagen}}" class="imagenesDialogo" src="{{MEDIA_URL}}{{imagen.imagen}}" alt="SSTUV" />
+				{% endfor %}
+		</div>
+	</div>
+	
+{% endblock %} 
+

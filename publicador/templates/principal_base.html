@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+
+</head>
+{% load i18n %}
+{% load staticfiles %}
+<script src="{% static 'js/jquery.js' %}" ></script>
+<script src="{% static 'js/jquery-ui.js' %}" ></script>
+<script src="{% static 'js/fotorama-4.6.3/fotorama.js' %}"></script>
+<script language="javascript">
+$(document).ready(function(){
+	$("#dialog").dialog({ 
+		autoOpen: false,
+		width: 900,
+		height: 600,
+	});
+	$(".imagenArticuloColumna").click(function(){
+		$("#dialog").dialog("open");		
+		$fotoramaDiv = $("#fotorama").fotorama();
+		fotorama = $fotoramaDiv.data('fotorama');
+		fotorama.show($(this).attr("index"));	
+	});
+	
+	$("#fotoramaPrincipal .fotorama__stage").click(function(){
+		$fotoramaDiv = $("#fotoramaPrincipal").fotorama();
+		fotorama = $fotoramaDiv.data('fotorama');
+		window.location.href = "/sig/publicador/aArticuloDesdeImagen/"+fotorama.activeFrame.id;
+	});
+	
+	$("#fotoramaPrincipal").fotorama({
+		maxwidth: 500,
+		maxheight: 300,
+		fit: 'cover',
+		loop: true,
+		autoplay: 3000,
+		click: false
+	});	
+	
+	
+	var tot = $(".divResumenContenido").size();
+	for (var i = 0; i < tot; i++){
+		var containerHeight = $("#divResumenContenido"+i).outerHeight();
+		var $text = $("#divResumenContenido"+ i + " p");
+			
+		while ( $text.outerHeight() > containerHeight ) {
+			$text.text(function (index, text) {
+				return text.replace(/\W*\s(\S)*$/, '...');
+			});
+		}
+	}
+	
+			 
+
+	
+	
+});
+
+
+
+</script>
+
+{% block style_base %}
+    <link href="{% static "css/publicador.css" %}" rel="stylesheet">
+    <link href="{% static "css/sstuv.css" %}" rel="stylesheet">
+    <link href="{% static "js/fotorama-4.6.3/fotorama.css" %}" rel="stylesheet"/>
+    <link href="{% static "css/jquery-ui/smoothness/jquery-ui.css" %}" rel="stylesheet"/>
+{% block extra_style %}{% endblock %}
+{% endblock %}
+
+{% block script_base %}
+{% endblock %}
+
+<body>
+	
+	<div class="fondoIzquierda">
+	</div>
+	<div class="fondoDerecha">
+	</div>
+	<div class="mask">
+		<div class="header">
+			
+				<img class="imgHeader" src="/site_media/static/img/cabecera_sola1.png" alt="SSTUV" />
+			
+				<div class="divMenu">
+					{% block nav-global %}
+						{% load tags %}
+						{% block side_block %}
+							{% menu user %}
+						{% endblock %}
+					{% endblock %}
+				</div>
+			
+		</div> 
+		<div class="centro">
+			{% block centro %}{% endblock %}
+		</div>
+		<div class="footer">
+		     <img class="imgFooter" src="/site_media/static/img/pie1.png" alt="SSTUV" />
+		     <a href="https://www.facebook.com/SSTUyV?fref=ts"  target="_blank">
+		     	<img class="imgFooter" src="/site_media/static/img/pie2.png" alt="SSTUV" />
+		     </a>
+		     <a href="https://twitter.com/SSTUyV"  target="_blank">
+		     	<img class="imgFooter" src="/site_media/static/img/pie3.png" alt="SSTUV" />
+		     </a>
+		</div>    
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "base_publicador.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+{% block script_base %}
+ <script src="{% static 'js/jquery.js' %}" ></script>
+ <script src="{% static 'js/jquery-ui.js' %}" ></script>
+ <script src="{% static 'js/tools.js' %}" ></script>
+ <script src="{% static 'js/jQuery-File-Upload-9.9.3/js/jquery.fileupload.js' %}"></script>
+ <script type="text/javascript">
+ 
+ $(document).ready(function(){		
+ 		$('#imagen').change(function(){
+ 			readURL(this);
+ 			$('#guardarImagen').css({display: "block" });
+ 		});	
+
+ 		
+ })
+ 
+function readURL(input){	
+	if(input.files && input.files[0]) {
+		var reader = new FileReader();
+		
+		reader.onload= function(e){ 
+			$('#preview').attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);		
+	} 
+}
+ 
+ </script>
+ 
+ 
+{% endblock %}
+<h2>Cargar Imagenes</h2>
+<a href="/sig/publicador/inicio/">Volver al listado</a>
+<a href="/sig/publicador/editar/{{ articulo.id }}">Volver al articulo</a>
+
+<br>
+<br>
+
+<form action="/sig/publicador/guardarImagen/" method="post" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+<div>
+	Titulo:  
+	<spam class="tituloArticulo">{{ articulo.titulo }}</spam>
+</div>
+<br>
+<div>	 
+	<input type="hidden" name="id" value="{{articulo.id}}" >
+</div>
+
+<ul id="listaHorizontal">
+{% for imagen in articulo.imagenes.all %}
+	<li id="imagenHorizontal">
+			<img name="img" id="img" width='100' src="{{MEDIA_URL}}{{imagen.imagen}}"/>
+			<a class="linkSinSubrayado" href="/sig/publicador/eliminarImagen/{{ imagen.id }}/{{ articulo.id }}">
+				<img name="imgEliminar" id="imgEliminar" width='100' src="{{STATIC_URL}}img/eliminar.png"/>
+			</a>
+	</li>		
+{% endfor %}
+</ul>
+
+<br>
+
+<div class="seleccionarImagen">
+	<input type="file" id="imagen" name="imagen"></input>
+</div>
+<br>
+<div>
+	<img name="preview" id="preview" width='100'/>
+</div>
+<br>
+<div id="guardarImagen">
+<input type="submit" name="guardar" id="guardar" value="Cargar Imagen">
+</div>
+</form>
+
+
+{% endblock %}
