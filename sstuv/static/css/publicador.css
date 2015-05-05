@@ -1,0 +1,290 @@
+div {
+//	border: 1px solid  #AFFFFF;
+} 
+* {
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif !important;
+	font-size: 12px;
+	text-align: justify;
+}
+body {
+	margin: 0px;
+	
+}
+body a {
+	color: #fff;
+	text-decoration: none; 
+	
+}
+.mask{   
+	margin: 0px auto;
+	width: 796px;
+	height: auto;
+	position: absolute;
+	left: 50%;
+//	top: 50%;
+	transform: translate(-50%);
+	-webkit-transform: translate(-50%);
+	
+	background-color: #ffffff;
+	
+}
+//.header, .footer{
+//	width: 100%;
+//	height: auto;	
+//}
+
+.header{
+	padding-bottom: 15px;
+	height: 153px !important;
+}
+
+.footer{
+	padding-top: 5%;
+}
+.imgHeader{
+	float: left; 
+	width: 100%;
+	height: auto;
+	padding: 0px;
+}
+
+.imgFooter{
+	float: left; 
+	//width: 100%;
+	//height: auto;
+	padding: 0px;
+}
+
+.centro{
+	padding-right: 3%;
+	padding-left: 3%;
+	height: 100%;
+}
+.centroSuperior{
+	height: 300px;
+}
+.centroInferior{
+	height: 450px;
+}
+//.imgHeader, .imgFooter, #contenidoCarousel, #contenidoLey {
+//	max-width: 100%;
+//}
+.articulos, .inferiorDerecha, .art {
+	float: left;
+}
+.centroSuperiorIzquierda {
+	position: relative;
+	float: left;
+	width: 505px !important;
+	height: 100% !important;
+}
+.centroSuperiorDerecha  {
+	position: relative;
+	float: right;
+	width: 200px;
+	height: 100%;
+}
+
+.miniaturaArticulos {
+	float: left;
+	width: 69%;
+	height: 100%;
+	overflow-y:scroll;
+}
+
+.centrado {
+	max-height: 100%;
+	max-width: 100%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+}
+
+.centroInferiorDerecha {
+	position: relative;
+	float: right;
+	width: 30%;
+	height: 100%;
+}
+.articulos {
+	width: 58%;
+	padding: 2%;
+}
+  
+.art {
+	width: 90%;
+	height: 130px;
+	padding: 3%;
+//	padding-left: 3%;
+//	padding-top: 3%;
+//	padding-bottom: 3%;
+	background-color: #E9E9E9;
+	border: 2px solid  #FFF;
+	
+//	border-right: 1px solid  #000000;
+//	border-radius: 15px;
+//	border-shadow: 10px 10px 10px 10px #888888;
+}
+.linkNota {
+	color: #000000 !important;
+}
+
+.divTitulo {
+	font: bold 12px;
+	color: #FF6600;
+	height: 20%;
+}
+.divImagen {
+	float: left;
+	width: 30%;
+	
+//	max-height: 100%;
+//	max-width: 100%;
+//	position: absolute;
+//	left: 50%;
+//	top: 50%;
+//	transform: translate(-1%, 50%);
+//	-webkit-transform: translate(-50%, -50%);
+	
+	
+}
+.divResumenContenido {
+	float: left;
+	width: 65%;
+	height: 95px;
+	overflow: hidden;
+//	white-space: nowrap;
+//	text-overflow: ellipsis;
+}
+
+.imagenArticulo {
+	max-height: 90%;
+	max-width: 90%;
+	position: relative;
+//	left: 0%;
+//	top: 50%;
+//	transform: translate(-50%, -50%);
+//	-webkit-transform: translate(-50%, -50%);
+	
+}
+.divTitulo, .divResumenContenido {
+	text-align: justify;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	font-size: 13px;
+}
+.imagenArticuloColumna {
+	width: 100%;
+}
+.divTituloIndividual {
+	text-align: justify;
+	font-weight: bold;
+	color: #f6a828;
+	font-family: Arial;
+	font-size: 13px;
+}
+
+.columnaImagenes {
+	width: 100%;
+	max-height: 100%;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+.divNotaCompleta {
+	float: left;
+	width: 69%;
+	height: 100%;
+}
+.notaCompleta {
+	padding-right: 10%;
+	padding-left: 10%;
+	
+	width: 80%;
+	height: 90%;
+	
+}
+.divisionCentral{
+	width: 100%;
+	height: 50px;
+}
+
+.fondoIzquierda{
+	width: 600px;
+	height: 1000px;
+	position: fixed;
+	float:left;
+	left:0px;
+	z-index: 0;
+	background-image: url('/site_media/static/img/min_izquierdoG.jpg');
+	
+}
+.fondoDerecha{
+	width: 600px;
+	height: 1000px;
+	position: fixed;
+	float:right;
+	right:0px;
+	z-index: 0;
+	background-image: url('/site_media/static/img/min_derechoG.jpg');
+}
+
+.divImgEncabezado {
+	position: relative;
+}
+
+
+.ui-dialog-title {
+	font-size: 13px;
+}
+
+.contenidoNota{
+	text-align: justify !important;
+	outline: none !important;
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+////carousel
+//.imagenCarousel {
+//	max-height: 100% !important;
+//	max-width: 100% !important;
+//}
+//.bx-wrapper {
+//	max-height: 100% !important;
+//	max-width: 100% !important;
+//}
+
+//.bx-wrapper img {
+//	max-height: 300px !important;
+//}
+
+.divMenu{
+	float: left;
+	width: 796px !important;
+	max-height: 38px !important;
+	background-image: url('/site_media/static/img/fondo_para_menu.png') !important;
+}
+
+ul#menu {
+	background-color: transparent !important;
+	padding-top: 13px !important;	
+}
+.fotorama__caption {
+	color: #FFF !important;	
+}
+.fotorama__caption__wrap {
+	background-color: rgba(86, 86, 86, 0.7) !important;
+	width: 100% !important;
+}
+.divContenidoIndividual{
+	overflow-y:scroll;
+	max-height: 100%;
+	padding-right: 15px;
+	
+}
+.fotoYResumen {
+	width: 100%;
+	height: 100px;
+}

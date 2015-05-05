@@ -1,0 +1,240 @@
+[05/May/2015 17:18:48] ERROR [django.request:231] Internal Server Error: /sig/expedientes/buscar/Expediente/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/sstuv/documentos/views.py", line 135, in showResultados
+    return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios}, context_instance=RequestContext(request))
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/shortcuts.py", line 25, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader.py", line 178, in render_to_string
+    return t.render(context_instance)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/defaulttags.py", line 162, in render
+    len_values = len(values)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/paginator.py", line 117, in __len__
+    return len(self.object_list)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 122, in __len__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+[05/May/2015 17:18:49] ERROR [django.request:231] Internal Server Error: /sig/expedientes/buscar/Expediente/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/sstuv/documentos/views.py", line 135, in showResultados
+    return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios}, context_instance=RequestContext(request))
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/shortcuts.py", line 25, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader.py", line 178, in render_to_string
+    return t.render(context_instance)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/defaulttags.py", line 162, in render
+    len_values = len(values)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/paginator.py", line 117, in __len__
+    return len(self.object_list)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 122, in __len__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+[05/May/2015 17:33:33] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:34:16] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:34:34] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:35:01] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:36:08] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:38:38] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:40:12] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:40:17] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:40:34] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:57:45] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 17:58:22] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 17:58:26] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:01:53] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:01:54] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:02:24] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:02:42] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:02:52] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:12:09] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:50] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:51] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:51] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:21:14] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:28:53] ERROR [django.request:231] Internal Server Error: /sig/publicador/principal/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column publicador_articulo.imagen does not exist
+LINE 1: ...ntenido", "publicador_articulo"."fecha_creacion", "publicado...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/sstuv/publicador/views.py", line 115, in principal
+    articulo = Articulo.objects.first()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/manager.py", line 92, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 510, in first
+    return qs[0]
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 177, in __getitem__
+    return list(qs)[0]
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 141, in __iter__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column publicador_articulo.imagen does not exist
+LINE 1: ...ntenido", "publicador_articulo"."fecha_creacion", "publicado...
+                                                             ^
+
+[05/May/2015 18:58:38] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 19:11:05] WARNING [django.request:143] Not Found: /sig/auth/logout
+[05/May/2015 19:22:27] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:23:28] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 19:23:36] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:28:18] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:28:24] WARNING [django.request:143] Not Found: /sig/publicador/

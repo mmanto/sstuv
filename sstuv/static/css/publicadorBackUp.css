@@ -1,0 +1,110 @@
+.mask{   
+   position: relative;
+   overflow: hidden;
+   margin: 0px auto;
+   width: 801px;
+}
+.header{
+   float: left;
+   width: 100%;
+}
+.colleft{
+   position: float;
+   width: 100%;
+   right: 37%;
+   height: 50px;
+}
+.col1{
+   position: relative;
+   float: left;
+   width: 65%;
+}
+.col2{
+   position: float;
+   float: left;
+   width: 35%;
+}
+.colleft2{
+   position: relative;
+   width: 100%;
+   right: 37%;
+}
+.col21{
+   position: relative;
+   overflow: hidden;
+   float: left;
+   width: 35%;
+   left: 101%;
+}
+.col22{
+   position: relative;
+   overflow: hidden;
+   float: left;
+   width: 61%;
+   left: 3%;
+}
+.footer{
+   float: left;
+   width: 100%;
+}
+body {
+   padding: 0px;
+   margin: 0px;
+   font-size: 90%;
+}
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+
+.recuadroArticulos{
+	width: 400px;
+	height: 400px;
+}
+.recuadro {
+	width: 100%;
+	height: 100%;
+}
+.divRecuadro {
+	width: 100%;
+	height: 100%;
+}
+.divTitulo {
+	font-weight: bold;
+	color: #f6a828;
+	height: 20%;
+}
+.divImagen {
+	height: 40%;
+}
+.divResumenContenido {
+	height: 40%;
+}
+
+
+
+
+.divTitulo, .divResumenContenido {
+	text-align: justify;
+}
+.imagenArticulo {
+	width: 50%;
+	
+}
+
+
+
+
+
+table{
+	width: 100%;
+	height: 100%;
+}
+td{
+	width: 50%;
+}
+tr{
+	height: 50%;
+}
+
