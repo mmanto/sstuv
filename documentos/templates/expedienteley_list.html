@@ -1,6 +1,10 @@
 {% extends "base_site.html" %} {% block content %}
-<h2>{{tipo}}</h2>
 
+{% if tipo == 'ExpedienteLey'%}
+	<h2>Expediente Ley</h2>
+{% else %}
+	<h2>{{tipo}}</h2>
+{% endif%}
 
 
 <form action="/sig/expedientes/buscar/{{tipo}}" method="get">
@@ -58,7 +62,12 @@
 {% for grupo in user.groups.all  %}
 	{% if grupo.name == 'Mesa de Entrada' %}
 	<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/0/" method="get">
-		<input type="submit" value="Nuevo {{tipo}}">
+		{%  if tipo == 'ExpedienteLey' %}
+			<input type="submit" value="Nuevo Expediente Ley">
+		{% else %}
+			<input type="submit" value="Nuevo {{tipo}}">
+		{% endif %}
+		
 
 	</form>
 	{% endif %}
