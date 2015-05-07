@@ -23,6 +23,7 @@ logger = logging.getLogger('sstuvInfo')
 loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
+from datetime import date
 
 class ExpedientesView(ListView):
         
@@ -69,8 +70,13 @@ class ExpedientesView(ListView):
 
       
             pases = ExpedientesView.paginador(request, expediente.pase_set.all())
-
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request))
+            pase_id_actual = expediente.pase_set.last().id
+            print (pase_id_actual)
+            pase_id_actual = pase_id_actual + 1
+            proximo_pase_id = pase_id_actual  
+            proximo_pase_id = str(proximo_pase_id) + str(date.today().year)
+            
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen, 'proximo_pase_id':  proximo_pase_id  }, context_instance=RequestContext(request))
       
         else:  # Expediente nuevo
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'nuevo'}, context_instance=RequestContext(request))

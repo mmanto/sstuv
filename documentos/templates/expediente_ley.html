@@ -351,7 +351,11 @@
 		
 		<tr>
 			<td> <label>Número de remito</label>   </td>
-			<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
+			{% if departamento_origen.id = 83 %}
+				<td> <input id="numero" name="numero" value="{{proximo_pase_id}}-2015 " type="text" disabled="true" >  </td>
+			{% else %}
+				<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
+			{% endif %}
 		</tr>
 				
 		<tr>
