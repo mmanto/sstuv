@@ -1,4 +1,4 @@
-
+<!--Componente para buscar expedientes mediatne web service    -->
 
 <form action="" method="get">
 
@@ -17,33 +17,13 @@
 
 		<tr>
 			<td><label>Año</label></td>
-			<td><input id="anio" name="anio type="number">	</td>
+			<td><input id="anio" name="anio" type="number">	</td>
 		</tr>
 
 		<tr>
 			<td><label>Alcance</label></td>
 			<td><input id="alcance" name="alcance" value="{{alcanceFiltro}}" type="number">		</td> 
 		</tr>
-		
-		{% if tipo == 'ExpedienteLey'%}
-		<tr>
-			 
-			<td> <label>Consolidación</label> </td>
-			<td> 
-				<input id="checkconsolidacion" type="checkbox">
-				<input id="inputconsolidacion" 	name="consolidacion" type="hidden">
-			 </td>
-		</tr>
-		{% endif %}
-		
-		<td> <label>Concepto</label> </td>
-			<td> 
-				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  
-				 checked /> </label>  
-				<label>Todos <input type="radio" name="radio" id="cheDep1" value= "todos" 
-				{% if expPropiosFiltro == 'todos'%} checked  {%endif%}/> </label>
-					
-		</td>
 		
 		
 	</table>
@@ -56,6 +36,7 @@
 
 <div class="datagrid">
 	<table id="tabla" style="width: 100%">
+		
 		<thead>
 			<tr>
 				<th>Número</th>
@@ -84,7 +65,7 @@
 	
 	
 	
-	<script>
+<script>
 	 $(document).ready(function () {
 
 	        $('#buscarExpedientes').click(
@@ -95,6 +76,8 @@
 	            	var numero=$('#numero').val()
 	            	var anio=$('#anio').val()
 	            	
+					$('#tabla tr').slice(1).remove();
+	            	
 	            	$.ajax(
 	                {
 	                    type: "GET",
@@ -103,16 +86,15 @@
 	                    dataType: "json",
 	                    success: function (data) {
 
-	                        //alert('success');
+	                    	
+	                    	//Iterera el json y lo acomoda en la tabla
 	                         $.each(data, function (i, item) {
-	                            
-	                            	                            
-		                         var tr = $('<tr>').append(
+	                             var tr = $('<tr>').append(
 		                        		 $('<td>').text(item.numero),
 		                                 $('<td>').text(item.organismo),
 		                                 $('<td>').text(item.anio)
-		                             ); //.appendTo('#records_table');
-		                         
+		                             ); 
+		            
 		                          $('#tabla').append(tr);    
 		                       });
  	                    },
