@@ -99,7 +99,7 @@ $(function() {
 	});
 	
 	/*
-	 * Pop up para el alta de pases
+	 * SEteo del dialog para el pop up para el alta de pases
 	 */
 	$("#pase_popup").dialog({
 		autoOpen : false,
@@ -261,6 +261,42 @@ $(function() {
 			$(('#panelExterno')).show();
 			$(('#panelInterno')).hide();
 	});
+	
+	
+	
+	/*
+	 * SEteo del dialog para el pop up para el alta de pases
+	 */
+	$("#expediente_popup").dialog({
+		autoOpen : false,
+		height : 600,
+		width : 800
+	});
+
+	/*
+	 * Evento para abrir el pop up de pases
+	 * 
+	 */
+	$("#expediente_popup_button").click(function() {
+
+		//Abre el pop up
+		$("#expediente_popup").dialog("open");		
+	});
+
+	/*
+	 * Evento para cerror el pop up de pases
+	 */
+//	$("#close_expediente_popup").click(function() {
+//
+//		$("#expediente_popup").dialog("close");
+//	});
+
+	
+	
+	
+	
+	
+	
 	
 });
 
