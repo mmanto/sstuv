@@ -66,7 +66,7 @@ $(function() {
 	/*
 	 *  Año Picker
 	 */
-	$("#aniopicker").datepicker(
+	$("#fecha_iniciopicker").datepicker(
 			{
 				changeYear : true,
 				showButtonPanel : true,

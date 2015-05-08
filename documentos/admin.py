@@ -6,18 +6,18 @@ class PaseInLine(admin.TabularInline):
 	extra = 0
 	
 class ExpedienteAdmin(admin.ModelAdmin):
-	search_fields = ['caracteristica','partido__nombre', 'region', 'numero', 'fecha', 'alcance', 'cuerpo']
+	search_fields = ['caracteristica','partido__nombre', 'region', 'numero', 'fecha_inicio', 'alcance', 'cuerpo']
 	fieldsets = [
 	(None, {'fields': ['caracteristica']}),
 	(None, {'fields': ['partido']}),
 	(None, {'fields': ['region']}),
 	(None, {'fields': ['numero']}),
-        (None, {'fields': ['fecha']}),
+        (None, {'fields': ['fecha_inicio']}),
 	(None, {'fields': ['alcance']}),
 	(None, {'fields': ['cuerpo']})
 	]	
 	inlines = [PaseInLine]
-	list_display = ('caracteristica', 'partido', 'region', 'numero', 'fecha' ,'alcance',  'cuerpo')
+	list_display = ('caracteristica', 'partido', 'region', 'numero', 'fecha_inicio' ,'alcance',  'cuerpo')
     
     
     
@@ -25,12 +25,12 @@ class ExpAdmin(admin.ModelAdmin):
   fildsets= [
 	(None, {'fields': ['caracteristica']}),
 	(None, {'fields': ['numero']}),
-        (None, {'fields': ['fecha']}),
+        (None, {'fields': ['fecha_inicio']}),
 	(None, {'fields': ['alcance']}),
 	(None, {'fields': ['cuerpo']})
     ]
   
-  list_display = ('caracteristica', 'numero', 'fecha' ,'alcance',  'cuerpo')
+  list_display = ('caracteristica', 'numero', 'fecha_inicio' ,'alcance',  'cuerpo')
     
     
 admin.site.register(Expediente, ExpAdmin)

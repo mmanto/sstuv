@@ -17,7 +17,7 @@
 
 		<tr>
 			<td><label>Año</label></td>
-			<td><input id="anio" name="anio type="number">	</td>
+			<td><input id="fecha_inicio" name="fecha_inicio type="number">	</td>
 		</tr>
 
 		<tr>
@@ -93,12 +93,12 @@
 	
 	            	var organismo=$('#organismo').val()
 	            	var numero=$('#numero').val()
-	            	var anio=$('#anio').val()
+	            	var fecha_inicio=$('#fecha_inicio').val()
 	            	
 	            	$.ajax(
 	                {
 	                    type: "GET",
-	                    url: 'http://localhost:8000/sig/exped/?organismo=' + organismo + '&numero=' + numero + '&anio=' + anio,
+	                    url: 'http://localhost:8000/sig/exped/?organismo=' + organismo + '&numero=' + numero + '&fecha_inicio=' + fecha_inicio,
 	                    contentType: "application/json; charset=utf-8",
 	                    dataType: "json",
 	                    success: function (data) {
@@ -110,7 +110,7 @@
 		                         var tr = $('<tr>').append(
 		                        		 $('<td>').text(item.numero),
 		                                 $('<td>').text(item.organismo),
-		                                 $('<td>').text(item.anio)
+		                                 $('<td>').text(item.fecha_inicio)
 		                             ); //.appendTo('#records_table');
 		                         
 		                          $('#tabla').append(tr);    
