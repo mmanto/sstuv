@@ -14,7 +14,7 @@ class ExpedienteViewSet(ModelViewSet):
     queryset = Expediente.objects.all()
  
  
-  #http://localhost:8000/sig/exped/
+     #http://localhost:8000/sig/exped/
     def list(self,request):
         print("entro la get")
 #         serializer_class = ExpedienteSerializer(queryset, many=True)  
@@ -22,13 +22,11 @@ class ExpedienteViewSet(ModelViewSet):
     
         filter_dict = {}
    
-        print (request.GET['organismo'])
-     
+#         print (request.GET['organismo'])
+#      
         organismo = ExpedienteViewSet.toInt(request.GET['organismo'])
         numero = ExpedienteViewSet.toInt(self.request.GET['numero'])
         anio = ExpedienteViewSet.toInt(self.request.GET['anio'])
-#         buscarExpPropios=(self.request.GET['radio'],0)
-#         filter_dict['alcance'] = alcance = self.toInt(self.request.GET['alcance'])
           
         if (organismo > 0):
             filter_dict['organismo'] = organismo
