@@ -233,16 +233,15 @@ class ExpedientesView(ListView):
                     return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
         return render(request, 'expedienteley_list.html', {'tipo' : tipo})
-    
-    
+
+
     #Exit of the expediente
     # 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def exitExpediente(request):
         tipo = request.POST.get('exp_tipo', '')
         return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
-    
-      
+     
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def importarExpedientesLey(self):
         sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
