@@ -29,7 +29,7 @@ urlpatterns = patterns('',
                   
                   
                   #Procesos                                     
-                  url(r'^sig/', include(procesos_sites))  ,
+                  url(r'^proc/', include(procesos_sites))  ,
                   
  
 ) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

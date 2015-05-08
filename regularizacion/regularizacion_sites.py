@@ -8,6 +8,6 @@ urlpatterns = patterns('',
                   #Censo
                   url(r'^censo/nuevo/$', CensoView.nuevo),
                   
-                  url(r'^censo/nuevo/$', CensoView.guardar),
+                  #url(r'^censo/nuevo/$', CensoView.guardar),
 
                     )

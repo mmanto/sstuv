@@ -2,7 +2,14 @@ from django.conf.urls import *
 
 from documentos.views import ExpedientesView, PasesView
 from documentos.report import PaseReport
+from rest_framework.routers import DefaultRouter
+from documentos.rest import ExpedienteViewSet
+from documentos import rest
 
+
+router = DefaultRouter()
+router.register(r'exped', ExpedienteViewSet,  base_name='exped')
+# router.register(r'exped/$', rest.list)
 
 urlpatterns = patterns('',
                         url(r'^expedientesLey/$', ExpedientesView.loadBusquedaExpedienteLey),
@@ -24,6 +31,9 @@ urlpatterns = patterns('',
                             
                         url(r'^expedientes/imprimirremito/(\d+)/(\d+)/$',PaseReport.generar ),
                         
+
+                        #Web services
+                        url(r'^', include(router.urls)),
 
 
                       )
