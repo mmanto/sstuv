@@ -23,7 +23,7 @@ from django.db import connection
 
 from django.views.generic import ListView
 from documentos.models import Expediente
-from comun.models import Partido, Departamento, Barrio
+from comun.models import Partido, Departamento 
 
 
 

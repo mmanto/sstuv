@@ -12,4 +12,4 @@ class Censo(models.Model):
 #     expropiación
 #     profACargo    
     partido = models.ForeignKey(Partido)
-    barrio = models.ForeignKey(Barrio)
+#    barrio = models.ForeignKey(Barrio)
