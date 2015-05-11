@@ -97,11 +97,7 @@
 		                        		 $('<td>').text(item.numero),
 		                                 $('<td>').text(item.anio),
  		                                 $('<td>').append(" <button type= 'button' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
- 	                             
-	                         
-	                             			
-	                             		
-	                             ); 
+ 	                             ); 
 		            
 		                          $('#tabla').append(tr);
 		                          i++;
@@ -109,21 +105,21 @@
  	                    },
 	                    error: function (msg, url, line) {               }
 	                });
-	            	
-	            	
-	            	
-	            	
 	        });
-	    
 	    });
 	 
 	/*
 	* Action para los botones seleccionar.
+	*
+	*-Carga la key del expediente en el tag de expediente
+	*-Cierra el dialog
  	*  		
 	*/
      $( document ).on( 'click', '.sel', function () {
     	 
-    	   alert( $(this).val() );
+	   	$('#expedienteId').val($(this).val());
+    	$("#expediente_popup").dialog("close");
+    	   
      })
 	
 </script>

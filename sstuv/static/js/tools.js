@@ -183,7 +183,9 @@ $(function() {
 
 	});
 	
-	// Validaciones para salir de expediente
+	/* 
+	 *   Validaciones para salir de expediente
+	 */ 
 	$("#form-expediente-button-exit").click(function(event) {
 		
 		$("#continueInId").attr("value", "expedienteList");
@@ -276,7 +278,12 @@ $(function() {
 	
 	
 	/*
-	 * SEteo del dialog para el pop up para el alta de pases
+	 * 	Pop up para busqueda de expedientes
+	 * 
+	 */
+	
+	/*
+	 * Seteo del dialogo
 	 */
 	$("#expediente_popup").dialog({
 		autoOpen : false,
@@ -285,23 +292,17 @@ $(function() {
 	});
 
 	/*
-	 * Evento para abrir el pop up de pases
+	 * Accion para abrir el dialogo
 	 * 
 	 */
 	$("#expediente_popup_button").click(function() {
-
-		//Abre el pop up
 		$("#expediente_popup").dialog("open");		
 	});
-
+	
 	/*
-	 * Evento para cerror el pop up de pases
+	 * 
+	 *  Fin pop up para busqueda de expediente
 	 */
-//	$("#close_expediente_popup").click(function() {
-//
-//		$("#expediente_popup").dialog("close");
-//	});
-
 	
 	
 	
