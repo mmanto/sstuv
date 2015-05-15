@@ -1,5 +1,5 @@
 ﻿{% extends "base_site.html" %} {% block content %}
-<h2>Expedientes Ley</h2>
+<h2>Expedientes</h2>
 
 {% if accion == 'nuevo' %}
 <form id="form-expediente"  action="/sig/expedientes/guardar/" method="post" novalidate="novalidate"> 
@@ -78,12 +78,12 @@
 	 
 	 <tr>
 	 	<td>	
-	 		<label>Fecha de inicio</label>
+	 		<label>Año</label>
 	 	</td>
 	 	<td>
-			<input name="fecha_inicio" value="{{expediente.fecha_inicio | date:'Y'}}"  type="text"
+			<input name="anio" value="{{expediente.anio}}"  type="text"
 	 		{% if accion == 'editar' %}   readonly   
-	 		{% else%}   	id="fecha_iniciopicker" 	
+	 		{% else%}   	id="aniopicker" 	
 	 		{% endif %} >
 	 	</td>
 	 	<td>
@@ -100,17 +100,17 @@
 </tr>
 
 
-<!-- <tr> -->
-<!-- 	<td><label>Fecha de alta</label></td>  -->
-<!-- 	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  > -->
-<!-- 	</input> </td>		 -->
-<!-- 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td> -->
-<!-- </tr> -->
+<tr>
+	<td><label>Fecha de alta</label></td> 
+	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	</input> </td>		
+	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
+</tr>
 
 
 <tr>
-	<td><label>Fecha de alta</label></td> 
-	<td><input id="datepicker1" name="fecha_alta" value="{{expediente.fecha_alta | date:'DATE_FORMAT'}}" type="text"  >
+	<td><label>Fecha de inicio</label></td> 
+	<td><input id="datepicker1" name="fechaInicio" value="{{expediente.fechaInicio | date:'DATE_FORMAT'}}" type="text"  >
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
@@ -287,9 +287,9 @@
 				{% if pases.has_previous %}
 					<li>
 					{% if tipo == 'ExpedienteLey'%}
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{fecha_inicioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.previous_page_number }}">previous</a>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.previous_page_number }}">previous</a>
 					{% else %}
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{fecha_inicioFiltro}}/0/0?page={{pases.previous_page_number }}">previous</a>
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.previous_page_number }}">previous</a>
 					{% endif %}
 					
 					</li>
@@ -304,9 +304,9 @@
 				{% if pases.has_next %}
 					<li>
 						{% if tipo == 'ExpedienteLey'%}
-							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{fecha_inicioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
+							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
 						{% else %}
-							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{fecha_inicioFiltro}}/0/0?page={{pases.next_page_number }}">next</a>
+							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.next_page_number }}">next</a>
 						{% endif %}
 					
 					
@@ -351,11 +351,7 @@
 		
 		<tr>
 			<td> <label>Número de remito</label>   </td>
-			{% if departamento_origen.id = 83 %}
-				<td> <input id="numero" name="numero" value="{{proximo_pase_id}}-2015 " type="text" disabled="true" >  </td>
-			{% else %}
-				<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
-			{% endif %}
+			<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
 		</tr>
 				
 		<tr>

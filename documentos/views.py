@@ -373,9 +373,9 @@ class PasesView(ListView):
          
         pase.departamento_destino = Departamento.objects.get(codigo=int (request.POST.get('departamento_destino')))
                
-        fecha = (request.POST.get('fecha_alta'))
-                       
-        pase.fecha = datetime.strptime(fecha, "%m/%d/%Y")
+        fecha = (request.POST.get('fecha'))
+                      
+        pase.fecha = datetime.datetime.strptime(fecha, "%d/%m/%Y")
 
         if((request.POST.get('expediente_tipo') == 'Expediente')):
             pase.expediente = Expediente.objects.get(id=int (request.POST.get('expediente_id')))
