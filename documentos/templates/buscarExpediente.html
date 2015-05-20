@@ -96,7 +96,7 @@
 	                            		 $('<td>').text(item.organismo),
 		                        		 $('<td>').text(item.numero),
 		                                 $('<td>').text(item.anio),
- 		                                 $('<td>').append(" <button type= 'button' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
+ 		                                 $('<td>').append(" <button type= 'button' id='selExpediente' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
  	                             ); 
 		            
 		                          $('#tabla').append(tr);
@@ -115,12 +115,12 @@
 	*-Cierra el dialog
  	*  		
 	*/
-     $( document ).on( 'click', '.sel', function () {
+  $( document ).on( 'click', '#selExpediente', function () {
     	 
 	   	$('#expedienteId').val($(this).val());
     	$("#expediente_popup").dialog("close");
     	   
-     })
+     }) 
 	
 </script>
 	
