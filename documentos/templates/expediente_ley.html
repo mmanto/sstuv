@@ -102,18 +102,19 @@
 
 <tr>
 	<td><label>Fecha de alta</label></td> 
-	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	<td><input id="datepicker" name="fecha_alta" value="{{expediente.fecha_alta | date:'DATE_FORMAT'}}" type="text"  >
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
 
-
+<!-- 
 <tr>
-	<td><label>Fecha de inicio</label></td> 
-	<td><input id="datepicker1" name="fechaInicio" value="{{expediente.fechaInicio | date:'DATE_FORMAT'}}" type="text"  >
+	<td><label>fecha_alta de inicio</label></td> 
+	<td><input id="datepicker1" name="fecha_altaInicio" value="{{expediente.fecha_altaInicio | date:'DATE_FORMAT'}}" type="text"  >
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
+ -->
 
 
 <tr>
@@ -245,7 +246,7 @@
 <div class="datagrid" >
 <table style="width:100%">
   <tr>
-    <th>Fecha</th>
+    <th>fecha_alta</th>
     <th>Origen</th>
  	<th>Destino</th>
  	<th>Estado</th>
