@@ -1,0 +1,112 @@
+<!--Componente para buscar Barrio mediatne web service    -->
+
+<form action="" method="get">
+
+
+	<table>
+		
+		<tr>
+			<td><label>Número</label></td>
+			<td><input id="numero" name="numero" type="number">
+			</td>
+		</tr>
+
+				
+		
+	</table>
+
+	 <button id="buscarBarrio" type="button">Buscar</button>
+</form>
+
+
+
+
+<div class="datagrid">
+	<table id="tabla" style="width: 100%">
+		
+		<thead>
+			<tr>
+				<th>Organismo</th>
+				<th>Número</th>
+				<th>Año</th>
+				<th>Seleccionar</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			
+
+			
+		</tbody>
+
+
+		<tfoot>
+
+			
+		<tfoot>
+	</table>
+	
+
+	
+	
+	
+<script>
+	 $(document).ready(function () {
+		 
+			/*
+			* Click del button buscar
+			*/
+	        $('#buscarBarrio').click(
+	        	function () {
+	            	jQuery.support.cors = true;
+	
+	            	var organismo=$('#organismo').val()
+	            	var numero=$('#numero').val()
+	            	var anio=$('#anio').val()
+	            	
+					$('#tabla tr').slice(1).remove();
+	            	
+	            	$.ajax(
+	                {
+	                    type: "GET",
+	                    url: 'http://localhost:8000/sig/comun/?organismo=' + organismo + '&numero=' + numero + '&anio=' + anio,
+	                    contentType: "application/json; charset=utf-8",
+	                    dataType: "json",
+	                    success: function (data) {
+
+	                    	
+	                    	//Iterera el json y lo acomoda en la tabla
+	                         $.each(data, function (i, item) {
+	                        	 var i=1;
+	                        	 var expedienteId= item.organismo + '-' + item.numero + '-'  +item.anio
+	                             var tr = $('<tr>').append(
+	                            		 $('<td>').text(item.organismo),
+		                        		 $('<td>').text(item.numero),
+		                                 $('<td>').text(item.anio),
+ 		                                 $('<td>').append(" <button type= 'button' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
+ 	                             ); 
+		            
+		                          $('#tabla').append(tr);
+		                          i++;
+		                       });
+ 	                    },
+	                    error: function (msg, url, line) {               }
+	                });
+	        });
+	    });
+	 
+	/*
+	* Action para los botones seleccionar.
+	*
+	*-Carga la key del expediente en el tag de expediente
+	*-Cierra el dialog
+ 	*  		
+	*/
+     $( document ).on( 'click', '.sel', function () {
+    	 
+	   	$('#barrioiId').val($(this).val());
+    	$("#barrio_popup").dialog("close");
+    	   
+     })
+	
+</script>
