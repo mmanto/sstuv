@@ -306,7 +306,60 @@ $(function() {
 	
 	
 	
+	/*
+	 * 	Pop up para busqueda de Barrio
+	 * 
+	 */
 	
+	/*
+	 * Seteo del dialogo
+	 */
+	$("#barrio_popup").dialog({
+		autoOpen : false,
+		height : 600,
+		width : 800
+	});
+
+	/*
+	 * Accion para abrir el dialogo
+	 * 
+	 */
+	$("#barrio_popup_button").click(function() {
+		$("#barrio_popup").dialog("open");		
+	});
+	
+	/*
+	 * 
+	 *  Fin pop up para busqueda de barrio
+	 */
+	
+	
+	/*
+	 * 	Pop up para busqueda de partido
+	 * 
+	 */
+	
+	/*
+	 * Seteo del dialogo
+	 */
+	$("#partido_popup").dialog({
+		autoOpen : false,
+		height : 600,
+		width : 800
+	});
+
+	/*
+	 * Accion para abrir el dialogo
+	 * 
+	 */
+	$("#partido_popup_button").click(function() {
+		$("#partido_popup").dialog("open");		
+	});
+	
+	/*
+	 * 
+	 *  Fin pop up para busqueda de partido
+	 */
 	
 	
 	
