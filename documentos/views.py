@@ -16,13 +16,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.utils import ConnectionDoesNotExist
 from django.http.response import HttpResponse
 from documentos import models    
-from datetime import datetime
+import datetime
 from django.conf.global_settings import DATE_FORMAT   
 import logging
 logger = logging.getLogger('sstuvInfo')
 loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
+from datetime import date
+
+
 
 class ExpedientesView(ListView):
         
@@ -69,8 +72,18 @@ class ExpedientesView(ListView):
 
       
             pases = ExpedientesView.paginador(request, expediente.pase_set.all())
-
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request))
+            if len(pases) > 0:
+                pase_id_actual = expediente.pase_set.last().id
+                print (pase_id_actual)
+            else:
+                pase_id_actual = 0                                
+                  
+                                     
+            pase_id_actual = pase_id_actual + 1
+            proximo_pase_id = pase_id_actual  
+            proximo_pase_id = str(proximo_pase_id) + str(datetime.date.today().year)
+            
+            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen, 'proximo_pase_id':  proximo_pase_id  }, context_instance=RequestContext(request))
       
         else:  # Expediente nuevo
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'nuevo'}, context_instance=RequestContext(request))
@@ -116,9 +129,9 @@ class ExpedientesView(ListView):
                  
         if(len(filter_dict) > 0):
             if (tipo == 'Expediente'):
-                expedientes = (Expediente.objects.filter(**filter_dict))
+                expedientes = ( Expediente.objects.filter(**filter_dict).distinct() )
             elif (tipo == 'ExpedienteLey'):
-                expedientes = (ExpedienteLey.objects.filter(**filter_dict))
+                expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
   
         paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
         page = request.GET.get('page')
@@ -160,11 +173,14 @@ class ExpedientesView(ListView):
                     # Validación para que no se repita el número de expediente. TODO: refactor
                     if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
                         errores.append('El número de expediente ya existe.')
-                    else:                        
+                    else:
+                        #Auditoria                        
                         exp =  form.save()
-                        #Auditoria
                         exp.usuarioAlta=request.user.username
-                        exp.save()
+                        exp =  form.save()
+                        depto_origen = Departamento.objects.get( codigo = 1150 )
+                        depto_destino = Departamento.objects.get( codigo = 1150 )
+                        guardar_pase( depto_origen, depto_destino, exp )
                         valido = True 
             else:
                 if (saveData == "saveExpediente" and form.is_valid()):
@@ -176,7 +192,10 @@ class ExpedientesView(ListView):
     #                     print (request.POST.get('consolidacion'))
                         print(request.user.name)
 #                         form.usuarioAlta=request.user.name
-                        form.save()
+                        
+                        expediente_instance = form.save()
+                        depto_mesa_entrada = Departamento.objects.get( codigo = 1150 )
+                        guardar_pase( depto_mesa_entrada, depto_mesa_entrada, expediente_instance )
                         valido = True 
                 else:
                     valido = True;
@@ -193,16 +212,17 @@ class ExpedientesView(ListView):
             expediente = Expediente()
             expediente.organismo = request.POST.get('organismo')
             expediente.numero = request.POST.get('numero')
-            expediente.anio = request.POST.get('anio')
+            expediente.fecha_alta = request.POST.get('fecha_alta')
             expediente.caracteristica = request.POST.get('caracteristica')
-            expediente.fecha = datetime.strptime(request.POST.get('fecha'), "%d/%m/%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
+            print(request.POST.get('anio'))
+            expediente.anio = datetime.datetime.strptime(request.POST.get('anio'), "%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
             expediente.alcance = request.POST.get('alcance')
             expediente.cuerpo = request.POST.get('cuerpo')
             print("entro por el else invalido")
             departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
             departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
 
-           
+            
            
             print('departamentos') 
             print(departamentosExternos)
@@ -210,6 +230,7 @@ class ExpedientesView(ListView):
                   
             return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente , 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
 
+                
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def updateExpediente(request):
     
@@ -233,10 +254,19 @@ class ExpedientesView(ListView):
                     return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
         return render(request, 'expedienteley_list.html', {'tipo' : tipo})
-        
+    
+    
+    #Exit of the expediente
+    # 
+    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
+    def exitExpediente(request):
+        tipo = request.POST.get('exp_tipo', '')
+        return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+   
+      
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def importarExpedientesLey(self):
-        sql = """SELECT id, partido_id, alcance, cuerpo, extracto, fecha_inicio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
+        sql = """SELECT id, partido_id, alcance, cuerpo, extracto, anio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """
         mensaje = ''
     
         try:
@@ -245,7 +275,7 @@ class ExpedientesView(ListView):
             # sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
             cursor.execute(sql)
             for row in cursor.fetchall():
-                expedientesLey = models.ExpedienteLey(id=row[0], partido_id=row[1], alcance=row[2], cuerpo=row[3], extracto=row[4], fecha_inicio=row[5], tipo_expediente=row[6], barrio_id=row[7], numero=row[8], fechas=row[9])
+                expedientesLey = models.ExpedienteLey(id=row[0], partido_id=row[1], alcance=row[2], cuerpo=row[3], extracto=row[4], anio=row[5], tipo_expediente=row[6], barrio_id=row[7], numero=row[8], fechas=row[9])
                 expedientesLey.save()
             mensaje = 'Importación realizada con éxito'
         except ConnectionDoesNotExist:
@@ -269,7 +299,7 @@ class ExpedientesView(ListView):
             # # it's important selecting the id field, so that we can keep the publisher - book relationship
             # sql = """SELECT id, codigo, nombre, codcatas FROM partido"""
             # extracto,  tipo_expediente, tipo_expediente_id, barrio_id, fechas
-            cursor.execute("""SELECT id, numero, fecha_inicio, cuerpo FROM expediente where cuerpo = '' """)
+            cursor.execute("""SELECT id, numero, anio, cuerpo FROM expediente where cuerpo = '' """)
             for row in cursor.fetchall():
                 # caracteristica=row[1]
                 # alcance=row[4],
@@ -335,8 +365,6 @@ class PasesView(ListView):
         return render(request, 'pases.html', {'pases': pases}, context_instance=RequestContext(request))
 
 
- 
-    
     # Se persiste un Pase
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def savePase(request):
@@ -350,8 +378,8 @@ class PasesView(ListView):
         pase.departamento_destino = Departamento.objects.get(codigo=int (request.POST.get('departamento_destino')))
                
         fecha = (request.POST.get('fecha'))
-                       
-        pase.fecha = datetime.strptime(fecha, "%m/%d/%Y")
+                      
+        pase.fecha = datetime.datetime.strptime(fecha, "%d/%m/%Y")
 
         if((request.POST.get('expediente_tipo') == 'Expediente')):
             pase.expediente = Expediente.objects.get(id=int (request.POST.get('expediente_id')))
@@ -399,3 +427,17 @@ class PasesView(ListView):
             
             
     
+'''
+Crea y persiste un pase con origen y destino; lo asocia también al
+expediente del parámetro
+'''
+def guardar_pase( origen, destino, expediente ):
+
+    nuevo_pase = Pase()
+    nuevo_pase.departamento_origen = origen 
+    nuevo_pase.departamento_destino = destino
+    now = datetime.datetime.now()
+    nuevo_pase.fecha = now  
+    nuevo_pase.estado = Estado.ACEPTADO.value
+    nuevo_pase.expediente = expediente  
+    nuevo_pase.save()
