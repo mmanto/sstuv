@@ -17,6 +17,10 @@ def menu(user):
     
     menu = []
     
+    pase= { 'nombreDireccion' : 'Pases', 'target' : '/sig/pases/', 'subsistemas':   [       ]
+           }
+    
+    expediente= { 'nombreDireccion' : 'Expedientes', 'target' : '/sig/expedientes/', 'subsistemas':  []         }
     
     mesaDeEntrada={ 'nombreDireccion' : 'Admin. Expedientes', 'subsistemas':
            
@@ -27,13 +31,13 @@ def menu(user):
            ]
            }
     
-    regularizacion= { 'nombreDireccion' : 'Regularización', 'subsistemas':
+    regularizacion= { 'nombreDireccion' : 'Regularización', 'target' : '/sig/expedientes/', 'subsistemas':
            
            [{ 'nombreSistema' : 'Barrios', 'target' : ''}, 
             {'nombreSistema' : 'Encuadre Legal',  'target' : ''},
             {'nombreSistema' : 'Informe Urbanístico',  'target' : ''},
             {'nombreSistema' : 'Planos',  'target' : ''},
-            {'nombreSistema' : 'Censo',  'target' : ''},
+            {'nombreSistema' : 'Censo',  'target' : '/proc/regu/censo/nuevo/'},
             {'nombreSistema' : 'Doc. Adjudicación',  'target' : ''},
                      
            ]
@@ -101,14 +105,13 @@ def menu(user):
            }
     
     if( user.is_authenticated()):
-        
-        menu.append(mesaDeEntrada)
-#         menu.append(regularizacion)
-        
-#     menu.append(dir1)
-#     menu.append(dir2)
-#     menu.append(dir3)
-#     menu.append(dir4)
+            
+          menu.append(expediente)
+          menu.append(pase)  
+#         menu.append(mesaDeEntrada)
+          menu.append(regularizacion)
+         
+            
     
     
     
