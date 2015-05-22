@@ -43,15 +43,16 @@
 		</tr>
 		{% endif %}
 		
-		<td> <label>Concepto</label> </td>
-			<td> 
-				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  
-				 checked /> </label>  
-				<label>Todos <input type="radio" name="radio" id="cheDep1" value= "todos" 
-				{% if expPropiosFiltro == 'todos'%} checked  {%endif%}/> </label>
-					
-		</td>
+		<tr>
 		
+		<td> 
+			<td><label>Concepto</label> </td>
+			<td> 
+				 <label> mesa <input type="radio" name="radio"  value= "propio"  	  checked /> </label> 
+				 <label>Todos <input type="radio" name="radio"  value= "todos"    />  		</label> 
+					
+			</td>
+		</tr>
 		
 	</table>
 
@@ -97,11 +98,11 @@
 			<tr>
 				<td>
 					{% if tipo == 'ExpedienteLey'%} 
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/{{expediente.partido.id}}/{{expediente.region}}/{{expediente.alcance}}/">
+				 		<a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/{{expediente.partido.id}}/{{expediente.region}}/{{expediente.alcance}}/">
 							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.partido.nombre}}-{{expediente.region}}-{{expediente.alcance}}
-						</a>
+						</a> 
 					 {% else%} 
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/0/0/{{expediente.alcance}}/">
+						 <a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/0/0/{{expediente.alcance}}/">
 							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.alcance}}</a> 
 					{% endif %}
 				</td>
@@ -143,10 +144,10 @@
 					<ul>
 					{% if expedientes.has_previous %}
 						<li>
-						{% if tipo == 'ExpedienteLey'%} 
-							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
+ 						{% if tipo == 'ExpedienteLey'%}  
+							<a href="?page={{expedientes.previous_page_number }}">previous</a>
 						{% else %} 
-							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=0&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
+							<a href="?page={{expedientes.previous_page_number }}">previous</a>
 						{% endif %}
 						</li> 
 						{% endif %}
@@ -156,9 +157,9 @@
 						</span> {% if expedientes.has_next %}
 						<li>
 						{% if tipo == 'ExpedienteLey'%} 
-							<a 	href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.next_page_number }}">next</a>
+							<a 	href="?page={{expedientes.next_page_number}}">next</a>
 						{% else %} 
-						 	<a 	href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anioFiltro}}&partidoid=0&region=&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.next_page_number}}">next</a>
+						 	<a 	href="?page={{expedientes.next_page_number}}">next</a>
 						{% endif %}
 
 						</li> 
