@@ -48,8 +48,10 @@
 		<td> 
 			<td><label>Concepto</label> </td>
 			<td> 
-				 <label> mesa <input type="radio" name="radio"  value= "propio"  	  checked /> </label> 
-				 <label>Todos <input type="radio" name="radio"  value= "todos"    />  		</label> 
+				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  
+				 checked /> </label>  
+				<label>Todos <input type="radio" name="radio" id="cheDep1" value= "todos" 
+				{% if expPropiosFiltro == 'todos'%} checked  {%endif%}/> </label>
 					
 			</td>
 		</tr>
