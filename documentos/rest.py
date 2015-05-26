@@ -26,7 +26,7 @@ class ExpedienteViewSet(ModelViewSet):
 #      
         organismo = ExpedienteViewSet.toInt(request.GET['organismo'])
         numero = ExpedienteViewSet.toInt(self.request.GET['numero'])
-        fecha_inicio = ExpedienteViewSet.toInt(self.request.GET['fecha_inicio'])
+        anio = ExpedienteViewSet.toInt(self.request.GET['anio'])
 #         buscarExpPropios=(self.request.GET['radio'],0)
 #         filter_dict['alcance'] = alcance = self.toInt(self.request.GET['alcance'])
           
@@ -34,8 +34,8 @@ class ExpedienteViewSet(ModelViewSet):
             filter_dict['organismo'] = organismo
         if (numero > 0):
             filter_dict['numero'] = numero
-        if (fecha_inicio > 0):
-            filter_dict['fecha_inicio'] = fecha_inicio
+        if (anio > 0):
+            filter_dict['anio'] = anio
 #         if((tipo == 'ExpedienteLey')): 
 #             consolidacion = bool(request.GET['consolidacion'])
 #             filter_dict['consolidacion'] = consolidacion

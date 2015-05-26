@@ -169,7 +169,7 @@ body {
 						<th>Alc.</th>
 						<th>Cuerp.</th>
 						<th>Iniciado por</th>
-						<th>Fecha</th>
+						<th>fecha_alta</th>
 					</tr>
 				</thead>
 
@@ -187,7 +187,7 @@ body {
 
 					<td>{{exp.region}}</td>
 
-					<td>{{exp.organismo}}-{{exp.numero}}-{{exp.fecha_inicio}}</td>
+					<td>{{exp.organismo}}-{{exp.numero}}-{{exp.anio}}</td>
 
 					<td></td>
 
@@ -198,7 +198,7 @@ body {
 					<td></td>
 
 
-					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+					<td>{{exp.fecha_alta | date:"SHORT_DATE_FORMAT"}}</td>
 
 
 				</tr>
@@ -429,7 +429,7 @@ body {
 						<th>Alc.</th>
 						<th>Cuerp.</th>
 						<th>Iniciado por</th>
-						<th>Fecha</th>
+						<th>fecha_alta</th>
 					</tr>
 				</thead>
 
@@ -458,7 +458,7 @@ body {
 					<td></td>
 
 
-					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+					<td>{{exp.fecha_alta | date:"SHORT_DATE_FORMAT"}}</td>
 
 
 				</tr>
