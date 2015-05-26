@@ -196,7 +196,9 @@ $(function() {
 
 	});
 	
-	// Validaciones para salir de expediente
+	/* 
+	 *   Validaciones para salir de expediente
+	 */ 
 	$("#form-expediente-button-exit").click(function(event) {
 		
 		$("#continueInId").attr("value", "expedienteList");
@@ -265,7 +267,12 @@ $(function() {
 	
 	
 	/*
-	 * SEteo del dialog para el pop up para el alta de pases
+	 * 	Pop up para busqueda de expedientes
+	 * 
+	 */
+	
+	/*
+	 * Seteo del dialogo
 	 */
 	$("#expediente_popup").dialog({
 		autoOpen : false,
@@ -274,27 +281,74 @@ $(function() {
 	});
 
 	/*
-	 * Evento para abrir el pop up de pases
+	 * Accion para abrir el dialogo
 	 * 
 	 */
 	$("#expediente_popup_button").click(function() {
-
-		//Abre el pop up
 		$("#expediente_popup").dialog("open");		
+	});
+	
+	/*
+	 * 
+	 *  Fin pop up para busqueda de expediente
+	 */
+	
+	
+	
+	/*
+	 * 	Pop up para busqueda de Barrio
+	 * 
+	 */
+	
+	/*
+	 * Seteo del dialogo
+	 */
+	$("#barrio_popup").dialog({
+		autoOpen : false,
+		height : 600,
+		width : 800
 	});
 
 	/*
-	 * Evento para cerror el pop up de pases
+	 * Accion para abrir el dialogo
+	 * 
 	 */
-//	$("#close_expediente_popup").click(function() {
-//
-//		$("#expediente_popup").dialog("close");
-//	});
+	$("#barrio_popup_button").click(function() {
+		$("#barrio_popup").dialog("open");		
+	});
+	
+	/*
+	 * 
+	 *  Fin pop up para busqueda de barrio
+	 */
+	
+	
+	/*
+	 * 	Pop up para busqueda de partido
+	 * 
+	 */
+	
+	/*
+	 * Seteo del dialogo
+	 */
+	$("#partido_popup").dialog({
+		autoOpen : false,
+		height : 600,
+		width : 800
+	});
 
+	/*
+	 * Accion para abrir el dialogo
+	 * 
+	 */
+	$("#partido_popup_button").click(function() {
+		$("#partido_popup").dialog("open");		
+	});
 	
-	
-	
-	
+	/*
+	 * 
+	 *  Fin pop up para busqueda de partido
+	 */
 	
 	
 	

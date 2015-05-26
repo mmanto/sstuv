@@ -17,16 +17,13 @@ class ExpedienteViewSet(ModelViewSet):
      #http://localhost:8000/sig/exped/
     def list(self,request):
         print("entro la get")
-#         serializer_class = ExpedienteSerializer(queryset, many=True)  
-#         return Response (serializer_class.data)    
-    
-        filter_dict = {}
    
-#         print (request.GET['organismo'])
-#      
+        filter_dict = {}
+
         organismo = ExpedienteViewSet.toInt(request.GET['organismo'])
         numero = ExpedienteViewSet.toInt(self.request.GET['numero'])
         anio = ExpedienteViewSet.toInt(self.request.GET['anio'])
+        fecha_inicio = ExpedienteViewSet.toInt(self.request.GET['fecha_inicio'])
 #         buscarExpPropios=(self.request.GET['radio'],0)
 #         filter_dict['alcance'] = alcance = self.toInt(self.request.GET['alcance'])
           
@@ -34,21 +31,17 @@ class ExpedienteViewSet(ModelViewSet):
             filter_dict['organismo'] = organismo
         if (numero > 0):
             filter_dict['numero'] = numero
-        if (anio > 0):
-            filter_dict['anio'] = anio
-#         if((tipo == 'ExpedienteLey')): 
-#             consolidacion = bool(request.GET['consolidacion'])
-#             filter_dict['consolidacion'] = consolidacion
-#         if(buscarExpPropios == 'propio'):
-#             filter_dict['pase_set__departamento_destino'] = self.request.user.groups.all().first()       
-#             filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
-                   
+        if (fecha_inicio > 0):
+            filter_dict['fecha_inicio'] = fecha_inicio
+
         if(len(filter_dict) > 0):
             queryset =  Expediente.objects.filter(**filter_dict)
         else:    
              queryset = Expediente.objects.all()  
         
         serializer_class = ExpedienteSerializer(queryset, many=True)  
+        
+        print(serializer_class.data)
         
         print("enviando respuesta")
         return Response (serializer_class.data)    
