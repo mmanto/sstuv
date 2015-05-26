@@ -226,6 +226,6 @@ DATABASES = {
 LOGIN_REDIRECT_URL = '/sig/expedientes'
 LOGIN_URL='/admin/login/'
 
-WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
 
 
