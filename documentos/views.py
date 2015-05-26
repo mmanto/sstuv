@@ -23,6 +23,10 @@ logger = logging.getLogger('sstuvInfo')
 loggerError = logging.getLogger('sstuvError')
 from django.db.models import Q 
 from django.db import connection
+from datetime import date
+from django.core import serializers
+
+
 
 
 class ExpedientesView(ListView):
@@ -75,7 +79,12 @@ class ExpedientesView(ListView):
                 print (pase_id_actual)
             else:
                 pase_id_actual = 0                                
+<<<<<<< HEAD
 
+=======
+                  
+                                     
+>>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
             pase_id_actual = pase_id_actual + 1
             proximo_pase_id = pase_id_actual  
             proximo_pase_id = str(proximo_pase_id) + str(datetime.date.today().year)
@@ -99,39 +108,52 @@ class ExpedientesView(ListView):
     def loadBusquedaExpedienteLey(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
+    '''
+    Búsqueda de expedientes.
+    
+    '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def showResultados(request, tipo):
         
         expedientes = []
         filter_dict = {}
-
-        organismo = ExpedientesView.toInt(request.GET['organismo'])
-        numero = ExpedientesView.toInt(request.GET['numero'])
-        anio = ExpedientesView.toInt(request.GET['anio'])
-        buscarExpPropios=(request.GET['radio'])
-        filter_dict['alcance'] = alcance = ExpedientesView.toInt(request.GET['alcance'])
+        page = request.GET.get('page')
+        print (page)
         
-        if (organismo > 0):
-            filter_dict['organismo'] = organismo
-        if (numero > 0):
-            filter_dict['numero'] = numero
-        if (anio > 0):
-            filter_dict['anio'] = anio
-        if((tipo == 'ExpedienteLey')): 
-            consolidacion = bool(request.GET['consolidacion'])
-            filter_dict['consolidacion'] = consolidacion
-        if(buscarExpPropios == 'propio'):
-            filter_dict['pase_set__departamento_destino'] = request.user.groups.all().first()       
-            filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
-                 
+        if( page != None  ):
+            filter_dict=request.session['filtroExpediente']
+        else:    
+           
+            # Se crea el filtro
+            organismo = ExpedientesView.toInt(request.GET['organismo'])
+            numero = ExpedientesView.toInt(request.GET['numero'])
+            anio = ExpedientesView.toInt(request.GET['anio'])
+            buscarExpPropios=(request.GET['radio'])
+            filter_dict['alcance'] = alcance = ExpedientesView.toInt(request.GET['alcance'])
+            
+            if (organismo > 0):     filter_dict['organismo'] = organismo
+            if (numero > 0):        filter_dict['numero'] = numero
+            if (anio > 0):          filter_dict['anio'] = anio
+            if((tipo == 'ExpedienteLey')): 
+                consolidacion = bool(request.GET['consolidacion'])
+                filter_dict['consolidacion'] = consolidacion
+            if(buscarExpPropios == 'propio'):
+                filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
+                filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
+            request.session['filtroExpediente']= filter_dict  
+                     
         if(len(filter_dict) > 0):
             if (tipo == 'Expediente'):
                 expedientes = ( Expediente.objects.filter(**filter_dict).distinct() )
             elif (tipo == 'ExpedienteLey'):
                 expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
+<<<<<<< HEAD
   
+=======
+      
+>>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
         paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
-        page = request.GET.get('page')
+
         try:
             expedientes = paginator.page(page)
         except PageNotAnInteger:
@@ -142,12 +164,14 @@ class ExpedientesView(ListView):
             expedientes = paginator.page(paginator.num_pages)           
         
         if (tipo == 'Expediente'):
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios}, context_instance=RequestContext(request))
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
         else: 
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'consolidacionFiltro': request.GET['consolidacion'], 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios }, context_instance=RequestContext(request))
-
-    #PErsiste el expediente
-    # 
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+    
+    '''    
+          Persiste el expediente
+      
+    ''' 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def saveExpediente(request):
     
@@ -251,15 +275,25 @@ class ExpedientesView(ListView):
                     return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente, 'form':form, 'accion' : 'editar'})
             
         return render(request, 'expedienteley_list.html', {'tipo' : tipo})
+<<<<<<< HEAD
 
 
+=======
+    
+    
+>>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
     #Exit of the expediente
     # 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def exitExpediente(request):
         tipo = request.POST.get('exp_tipo', '')
         return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+<<<<<<< HEAD
      
+=======
+   
+      
+>>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def importarExpedientesLey(self):
         sql = """SELECT id, partido_id, alcance, cuerpo, extracto, anio, tipo_expediente, tipo_expediente_id, barrio_id, numero, fechas FROM expediente where cuerpo <> '' """

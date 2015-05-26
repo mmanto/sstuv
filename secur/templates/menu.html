@@ -5,27 +5,31 @@
 	<ul id="menu">
 
 
-
-
 		{% for m in menu %}
 
-		<li>{{ m.nombreDireccion }}
-
-
-			<ul>
-				{% for submenu in m.subsistemas %}
-
-				<li>  
-					<a href="{{submenu.target}}">{{ submenu.nombreSistema }}</a> 
-			    </li> 
-				{% endfor %}
-
-			</ul>
-
-
-
-
-		</li> {% endfor %}
+			
+			
+			<li> 
+					{% if m.subsistemas  %}
+						
+						{{ m.nombreDireccion }}
+						<ul>
+							{% for submenu in m.subsistemas %}
+				
+								<li>  
+									<a href="{{submenu.target}}">{{ submenu.nombreSistema }}</a> 
+							    </li> 
+							
+							{% endfor %}
+			
+						</ul>
+					{% else %}
+						<a href="{{m.target}}">	{{ m.nombreDireccion }}</a>
+					{% endif%}
+	
+			</li> 
+		{% endfor %}
+		
 		<li>         
 			{% firstof user.get_short_name user.get_username %}   	
 	    	<a href="{% url 'logout_view' %}" id="logout">Cerrar sesion</a>

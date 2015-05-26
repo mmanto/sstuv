@@ -1,0 +1,129 @@
+<!--Componente para buscar Partido mediatne web service    -->
+
+<form action="" method="get">
+
+
+	<table>
+
+		<tr>
+			<td><label>Nomenclador</label></td>
+			<td><input id="nomenclador" name="nomenclador" type="number"></td>
+		</tr>
+
+		<tr>
+			<td><label>Nombre</label></td>
+			<td><input id="nombre" name="nombre" type="number"></td>
+		</tr>
+
+
+
+	</table>
+
+	<button id="buscarPartido" type="button">Buscar</button>
+</form>
+
+
+
+
+<div class="datagrid">
+	<table id="tablaPartidos" style="width: 100%">
+
+		<thead>
+			<tr>
+				<th>Nomenclador</th>
+				<th>Nombre</th>
+				<th>Seleccionar</th>
+				
+			</tr>
+		</thead>
+
+		<tbody>
+
+
+
+		</tbody>
+
+
+		<tfoot>
+		<tfoot>
+	</table>
+
+
+
+
+
+<script>
+
+$(document).ready(function () {
+	 
+	/*
+	* Click del button buscar
+	*/
+    $('#buscarPartido').click(
+    	function () {
+        	jQuery.support.cors = true;
+
+        	
+			$('#tablaPartidos tr').slice(1).remove();
+        	
+        	$.ajax(
+            {
+                type: "GET",
+                url: 'http://localhost:8000/comun/barrio/',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                	
+                	
+                	
+                	//Iterera el json y lo acomoda en la tabla
+                    $.each(data.features, function (i, item) {
+                    	
+                    		var tr; 
+                    	
+                    	 	if(typeof item =='object'){
+                    	
+	                         	tr = $('<tr>').append(
+	                         		
+	                         			$('<td>').text(item.properties.NOMENCLA),
+	                         			$('<td>').text(item.properties.NOMBRE),
+		                                $('<td>').append(" <button type= 'button' id='selBarrio' value= '"+ item.properties.NOMENCLA + "' class='sel'> Seleccionar </button>")
+
+	                         
+	                          	); 
+	                        	console.log(item.properties.DEPARTA);
+	                         
+                    	 	}
+            
+                          $('#tablaPartidos').append(tr);
+                    
+                    });
+                	
+                 },
+                error: function (msg, url, line) {               }
+            });
+    });
+});
+
+
+
+/*
+* Action para los botones seleccionar.
+*
+*-Carga la key del expediente en el tag de expediente
+*-Cierra el dialog
+	*  		
+*/
+$(document).on('click','#selBarrio',function(){	
+	 
+	   	$('#barrioId').val($(this).val());
+		$("#barrio_popup").dialog("close");
+	
+	
+	   
+ })
+
+
+	
+</script>

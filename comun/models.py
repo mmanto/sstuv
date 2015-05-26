@@ -19,3 +19,20 @@ class Departamento(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+#     
+# class Partido():
+#     nomencla= models.CharField()
+#     nombre=models.CharField
+#     cod_depto=models.CharField   
+# class PartidoDTO(models.Model):
+#     objectId:89,
+#         "DEPARTA":"ALMIRANTE BROWN",
+#         "CABECER":"ADROGUE",
+#         "PROVINCIA":"BUENOS AIRES",
+#         "FUENTE":"CATASTRO BUENOS AIRES",
+#         "FEC_ACTUAL":"MAR 2006",
+#         "FUENTE1":"CATASTROS PROVINCIALES",
+#         "COD_DEPTO":"06028",
+#         "NOMBRE":"Almirante Brown",
+#         "NOMENCLA":"003"

@@ -1,35 +1,21 @@
-<!--Componente para buscar expedientes mediatne web service    -->
+<!--Componente para buscar Barrio mediatne web service    -->
 
 <form action="" method="get">
 
 
 	<table>
-		<tr>
-			<td><label>Organismo</label></td>
-			<td><input id="organismo" name="organismo"  type="number"></td>
-		</tr>
-
+		
 		<tr>
 			<td><label>Número</label></td>
 			<td><input id="numero" name="numero" type="number">
 			</td>
 		</tr>
 
-		<tr>
-			<td><label>Año</label></td>
-
-			<td><input id="anio" name="anio type="number">	</td>
-		</tr>
-
-		<tr>
-			<td><label>Alcance</label></td>
-			<td><input id="alcance" name="alcance" value="{{alcanceFiltro}}" type="number">		</td> 
-		</tr>
-		
+				
 		
 	</table>
 
-	 <button id="buscarExpedientes" type="button">Buscar</button>
+	 <button id="buscarBarrio" type="button">Buscar</button>
 </form>
 
 
@@ -70,7 +56,7 @@
 			/*
 			* Click del button buscar
 			*/
-	        $('#buscarExpedientes').click(
+	        $('#buscarBarrio').click(
 	        	function () {
 	            	jQuery.support.cors = true;
 	
@@ -83,7 +69,7 @@
 	            	$.ajax(
 	                {
 	                    type: "GET",
-	                    url: 'http://localhost:8000/sig/exped/?organismo=' + organismo + '&numero=' + numero + '&anio=' + anio,
+	                    url: 'http://localhost:8000/sig/comun/?organismo=' + organismo + '&numero=' + numero + '&anio=' + anio,
 	                    contentType: "application/json; charset=utf-8",
 	                    dataType: "json",
 	                    success: function (data) {
@@ -96,14 +82,8 @@
 	                             var tr = $('<tr>').append(
 	                            		 $('<td>').text(item.organismo),
 		                        		 $('<td>').text(item.numero),
-		                                 $('<td>').text(item.anio)
-		                             ); //.appendTo('#records_table');
-		                         
-		                                 $('<td>').text(item.anio)
-		                             ); 
-		            
 		                                 $('<td>').text(item.anio),
- 		                                 $('<td>').append(" <button type= 'button' id='selExpediente' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
+ 		                                 $('<td>').append(" <button type= 'button' value= '"+ expedienteId + "' class='sel'> Seleccionar </button>")
  	                             ); 
 		            
 		                          $('#tabla').append(tr);
@@ -122,14 +102,11 @@
 	*-Cierra el dialog
  	*  		
 	*/
-  $( document ).on( 'click', '#selExpediente', function () {
+     $( document ).on( 'click', '.sel', function () {
     	 
-	   	$('#expedienteId').val($(this).val());
-    	$("#expediente_popup").dialog("close");
+	   	$('#barrioiId').val($(this).val());
+    	$("#barrio_popup").dialog("close");
     	   
-     }) 
+     })
 	
 </script>
-	
-	
-	
