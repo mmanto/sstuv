@@ -22,11 +22,11 @@ class ExpedienteViewSet(ModelViewSet):
 
         organismo = ExpedienteViewSet.toInt(request.GET['organismo'])
         numero = ExpedienteViewSet.toInt(self.request.GET['numero'])
-<<<<<<< HEAD
+
         anio = ExpedienteViewSet.toInt(self.request.GET['anio'])
-=======
+
         fecha_inicio = ExpedienteViewSet.toInt(self.request.GET['fecha_inicio'])
->>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
+
 #         buscarExpPropios=(self.request.GET['radio'],0)
 #         filter_dict['alcance'] = alcance = self.toInt(self.request.GET['alcance'])
           

@@ -146,17 +146,17 @@
 					<ul>
 					{% if expedientes.has_previous %}
 						<li>
-<<<<<<< HEAD
+
 						{% if tipo == 'ExpedienteLey'%} 
 							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anio}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
 						{% else %} 
 							<a href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anio}}&partidoid=0&region=0&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.previous_page_number }}">previous</a>
-=======
+
  						{% if tipo == 'ExpedienteLey'%}  
 							<a href="?page={{expedientes.previous_page_number }}">previous</a>
 						{% else %} 
 							<a href="?page={{expedientes.previous_page_number }}">previous</a>
->>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
+
 						{% endif %}
 						</li> 
 						{% endif %}
@@ -166,15 +166,15 @@
 						</span> {% if expedientes.has_next %}
 						<li>
 						{% if tipo == 'ExpedienteLey'%} 
-<<<<<<< HEAD
+
 							<a 	href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anio}}&partidoid={{expediente.partido.id}}&region={{expediente.region}}&consolidacion={{consolidacionFiltro}}&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.next_page_number }}">next</a>
 						{% else %} 
 						 	<a 	href="?organismo={{organismoFiltro}}&numero={{numeroFiltro}}&anio={{anio}}&partidoid=0&region=&alcance={{alcanceFiltro}}&radio={{expPropiosFiltro}}&page={{expedientes.next_page_number}}">next</a>
-=======
+
 							<a 	href="?page={{expedientes.next_page_number}}">next</a>
 						{% else %} 
 						 	<a 	href="?page={{expedientes.next_page_number}}">next</a>
->>>>>>> 4a3d32f66284fcb97b193683a227d23bfc12ee8b
+
 						{% endif %}
 
 						</li> 
