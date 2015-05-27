@@ -33,61 +33,41 @@ class ExpedientesView(ListView):
     paginate_by = 10
     search_fields = ('organismo', 'numero', 'anio')
     
-
+    '''
+    Se carga un expediente ya se a nuevo o para visualizar   
+    '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
-    def showExpediente(request, tipo, organismo, numero, anio, partidoid, region, alcance):
-    
-        organismo = int(organismo)
-        numero = int(numero)
-        anio = int(anio)
-        alcance = int(alcance)
-        
-        try :
-            user = request.user
-            departamento_origen = Departamento.objects.get(nombre=user.groups.first())
-                         
-        except Error:
-             logger.info('Error al recuperar los pases con el usuuario' + user)    
-
-            
-        partidos = Partido.objects.all()
-        print("partidos")
-        print(partidos)
+    def showExpediente(request, id):
 
         departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
         departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        partidos = Partido.objects.all()
 
-        print(departamentosExternos)
-        
-        if(numero != 0):  # Expediente editar
-            
-            if(tipo == 'ExpedienteLey'):
-                
-                partidoid = int(partidoid)
-                
-                partido = Partido.objects.get(id=partidoid)
-                    
-                expediente = ExpedienteLey.objects.get(organismo=organismo, numero=numero, anio=anio, partido=partido, region=region, alcance=alcance)
-            else:
-                expediente = Expediente.objects.get(organismo=organismo, numero=numero, anio=anio, alcance=alcance)
 
-      
+        if(id != '0'):  # Expediente editar
+             
+            expediente= Expediente.objects.get(id = id) 
+       
             pases = ExpedientesView.paginador(request, expediente.pase_set.all())
             if len(pases) > 0:
                 pase_id_actual = expediente.pase_set.last().id
                 print (pase_id_actual)
             else:
                 pase_id_actual = 0                                
-                  
-                                     
+    
             pase_id_actual = pase_id_actual + 1
             proximo_pase_id = pase_id_actual  
             proximo_pase_id = str(proximo_pase_id) + str(datetime.date.today().year)
-            
-            return render(request, 'expediente_ley.html', {'expediente': expediente, 'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'editar', 'pases':pases, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'departamento_origen' : departamento_origen, 'proximo_pase_id':  proximo_pase_id  }, context_instance=RequestContext(request))
-      
+             
+            return render(request, 'expediente_ley.html', {'expediente': expediente , 'pases':pases ,  'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'proximo_pase_id':  proximo_pase_id }, context_instance=RequestContext(request))
+       
         else:  # Expediente nuevo
-            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':tipo, 'accion':'nuevo'}, context_instance=RequestContext(request))
+            return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos}, context_instance=RequestContext(request))
+      
+      
+      
+      
+      
         
     
     #
@@ -108,9 +88,10 @@ class ExpedientesView(ListView):
     
     '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
-    def showResultados(request, tipo):
+    def showResultados(request):
         
         expedientes = []
+        expedientesLey = []
         filter_dict = {}
         page = request.GET.get('page')
         print (page)
@@ -129,35 +110,33 @@ class ExpedientesView(ListView):
             if (organismo > 0):     filter_dict['organismo'] = organismo
             if (numero > 0):        filter_dict['numero'] = numero
             if (anio > 0):          filter_dict['anio'] = anio
-            if((tipo == 'ExpedienteLey')): 
-                consolidacion = bool(request.GET['consolidacion'])
-                filter_dict['consolidacion'] = consolidacion
+#             if((tipo == 'ExpedienteLey')): 
+#                 consolidacion = bool(request.GET['consolidacion'])
+#                 filter_dict['consolidacion'] = consolidacion
             if(buscarExpPropios == 'propio'):
                 filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
                 filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
+          
             request.session['filtroExpediente']= filter_dict  
                      
-        if(len(filter_dict) > 0):
-            if (tipo == 'Expediente'):
-                expedientes = ( Expediente.objects.filter(**filter_dict).distinct() )
-            elif (tipo == 'ExpedienteLey'):
-                expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
+     
+        expedientes = (list( Expediente.objects.filter(**filter_dict).distinct() ))
+        expedientesLey = (list( ExpedienteLey.objects.filter(**filter_dict).distinct() ))
+            
+            
+        expedientes.extend(expedientesLey)
       
         paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
 
         try:
             expedientes = paginator.page(page)
         except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
             expedientes = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
             expedientes = paginator.page(paginator.num_pages)           
         
-        if (tipo == 'Expediente'):
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
-        else: 
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, }, context_instance=RequestContext(request))
     
     '''    
           Persiste el expediente

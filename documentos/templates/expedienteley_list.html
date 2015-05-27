@@ -1,13 +1,10 @@
 {% extends "base_site.html" %} {% block content %}
 
-{% if tipo == 'ExpedienteLey'%}
-	<h2>Expediente Ley</h2>
-{% else %}
-	<h2>{{tipo}}</h2>
-{% endif%}
+	<h2>Expediente</h2>
 
 
-<form action="/sig/expedientes/buscar/{{tipo}}" method="get">
+<form action="/sig/expedientes/buscar/" method="get">
+{% csrf_token %}
 
 
 	<table>    
@@ -32,7 +29,6 @@
 			<td><input id="alcance" name="alcance" value="{{alcanceFiltro}}" type="number">		</td> 
 		</tr>
 		
-		{% if tipo == 'ExpedienteLey'%}
 		<tr>
 			 
 			<td> <label>Consolidación</label> </td>
@@ -41,11 +37,10 @@
 				<input id="inputconsolidacion" 	name="consolidacion" type="hidden">
 			 </td>
 		</tr>
-		{% endif %}
 		
 		<tr>
 		
-		<td> 
+		 
 			<td><label>Concepto</label> </td>
 			<td> 
 				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  
@@ -64,15 +59,9 @@
 
 {% for grupo in user.groups.all  %}
 	{% if grupo.name == 'Mesa de Entrada' %}
-	<form action="/sig/expedientes/nuevo/{{tipo}}/0/0/0/0/0/0/" method="get">
-		{%  if tipo == 'ExpedienteLey' %}
-			<input type="submit" value="Nuevo Expediente Ley">
-		{% else %}
-			<input type="submit" value="Nuevo {{tipo}}">
-		{% endif %}
-		
-
-	</form>
+		<form action="/sig/expedientes/nuevo/0/" method="get">
+				<input type="submit" value="Nuevo Expediente Ley">
+		</form>
 	{% endif %}
 {% endfor %}
 
@@ -86,11 +75,9 @@
 				<th>Fecha</th>
 				<th>Alcance</th>
 				<th>Cuerpo</th> 
-				{% if tipo == 'ExpedienteLey'%}
-					<th>Consolidación</th>
-					<th>Partido</th>
-					<th>Región</th> 
-				{% endif %}
+				<th>Consolidación</th>
+				<th>Partido</th>
+				<th>Región</th> 
 			</tr>
 		</thead>
 
@@ -99,18 +86,18 @@
 
 			<tr>
 				<td>
-					{% if tipo == 'ExpedienteLey'%} 
-				 		<a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/{{expediente.partido.id}}/{{expediente.region}}/{{expediente.alcance}}/">
-							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.partido.nombre}}-{{expediente.region}}-{{expediente.alcance}}
-						</a> 
-					 {% else%} 
-						 <a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/0/0/{{expediente.alcance}}/">
-							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.alcance}}</a> 
-					{% endif %}
+			 		<a href="/sig/expediente/inspeccionar/{{expediente.id}}/">
+						{%  if expediente.partido %}
+							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{ expediente.partido.nombre }}-{{expediente.region}}-{{expediente.alcance}}
+						{% else %}
+							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.alcance}}
+						{% endif %}
+						
+						
+					</a> 
 				</td>
 
 				<td>{{ expediente.caracteristica }}</td>
-
 
 				<td>{{expediente.fecha | date:"SHORT_DATE_FORMAT"}}</td>
 
@@ -118,7 +105,6 @@
 
 				<td>{{ expediente.cuerpo }}</td> 
 				
-				{% if tipo == 'ExpedienteLey'%}
 				<td>
 					<input id="consolidacion" name="consolidacion" 	type="checkbox" 
 					{% if expediente.consolidacion  %}
@@ -128,7 +114,7 @@
 				</td>
 				<td>{{ expediente.partido.nombre }}</td>
 				<td>{{ expediente.region }}</td> 
-				{% endif %}
+
 			</tr>
 
 			{% endfor %}
@@ -136,36 +122,25 @@
 
 
 		<tfoot>
-
-			{% if tipo == 'ExpedienteLey'%}
-			<td colspan="8">{% else%}
-			<td colspan="5">{% endif %}
-
+			<td colspan="8">
 
 				<div id="paging">
 					<ul>
-					{% if expedientes.has_previous %}
-						<li>
- 						{% if tipo == 'ExpedienteLey'%}  
-							<a href="?page={{expedientes.previous_page_number }}">previous</a>
-						{% else %} 
-							<a href="?page={{expedientes.previous_page_number }}">previous</a>
-						{% endif %}
-						</li> 
-						{% endif %}
-
+						{% if expedientes.has_previous %}
+							<li>
+								<a href="?page={{expedientes.previous_page_number }}">previous</a>
+							</li> 
+						{% endif %}	
+						
 						<span class="current">
 							<li>Page {{ expedientes.number }} of {{expedientes.paginator.num_pages }}.</li>
-						</span> {% if expedientes.has_next %}
-						<li>
-						{% if tipo == 'ExpedienteLey'%} 
-							<a 	href="?page={{expedientes.next_page_number}}">next</a>
-						{% else %} 
-						 	<a 	href="?page={{expedientes.next_page_number}}">next</a>
+						</span> 
+						
+						{% if expedientes.has_next %}
+							<li>
+								<a 	href="?page={{expedientes.next_page_number}}">next</a>
+							</li> 
 						{% endif %}
-
-						</li> 
-					{% endif %}
 					</ul>
 				</div>
 		<tfoot>

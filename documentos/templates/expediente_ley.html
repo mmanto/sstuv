@@ -1,13 +1,14 @@
 ﻿{% extends "base_site.html" %} {% block content %}
 <h2>Expedientes</h2>
 
-{% if accion == 'nuevo' %}
+{% if expediente.id == 0 %}
 <form id="form-expediente"  action="/sig/expedientes/guardar/" method="post" novalidate="novalidate"> 
 {% endif %}
 
-{% if accion == 'editar' %}
-<form id="form-expediente" action="/sig/expedientes/editar/" method="post" novalidate="novalidate"> 
-{% endif %}
+<!-- {% if expediente.id > 0 %} -->
+<!-- <form id="form-expediente" action="/sig/expedientes/editar/" method="post" novalidate="novalidate">  -->
+<!-- {% endif %} -->
+
 
 
 <div id="alta_expediente_success" title="Exito">
@@ -38,7 +39,6 @@
 	
 
 
-<input name="tipo" value="{{tipo}}" type="hidden">
 <input id="continueInId" name="continueIn" value="expediente" type="hidden">
 <input id="saveId" name="saveData" value="notSaveExpediente" type="hidden">
 
@@ -133,7 +133,6 @@
 </tr>
 
 
-{% if tipo == 'ExpedienteLey'%}
 
 	<tr>
 		<td>
@@ -158,7 +157,7 @@
 			 <input id="inputpartido" name= "partido"  type="hidden">
 	    </td>
 		
-		{% if accion == 'nuevo' %}
+		{% if expediente.id == 0 %}
 	
 		<td>
 		<select id="selectpartido" >
@@ -174,7 +173,13 @@
 			{% endfor %}
 		</select>
 	  </td>
+	  {% else %}
+	  	<td>
+			<input  name= "{{expediente.partido.nombre}}"  >
+	    </td>
 	  {% endif %}
+	  
+	  
 		
 		
 	   {% if accion == 'editar' %}
@@ -192,7 +197,6 @@
 			 {% if accion == 'editar' %} 	readonly 	 {% endif %}> </td>
 		<td> <span id="region-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
-{% endif %}
 
 
 	<tr>
@@ -238,7 +242,7 @@
 <h2>Pases</h2>
 
 
-{% if accion == 'editar' %}
+{% if expediente.id > 0 %}
 	<button id="popup">Nuevo Pase</button>
 {% endif %}
 
@@ -286,11 +290,8 @@
 			<ul>
 				{% if pases.has_previous %}
 					<li>
-					{% if tipo == 'ExpedienteLey'%}
 						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.previous_page_number }}">previous</a>
-					{% else %}
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.previous_page_number }}">previous</a>
-					{% endif %}
+				
 					
 					</li>
 				{% endif %}
@@ -303,14 +304,7 @@
 				
 				{% if pases.has_next %}
 					<li>
-						{% if tipo == 'ExpedienteLey'%}
-							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
-						{% else %}
-							<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/0/0?page={{pases.next_page_number }}">next</a>
-						{% endif %}
-					
-					
-					
+						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
 					</li>
 				{% endif %}
 			</ul>
