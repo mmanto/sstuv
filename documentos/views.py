@@ -97,11 +97,61 @@ class ExpedientesView(ListView):
     def loadBusquedaExpediente(request):
         logger.info('busqueda de expedientes en logger info')
         loggerError.error('busqueda de expedientes en logger error')
-        return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
+        #return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
+        expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : 'Expediente' }, context_instance=RequestContext(request))
     
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpedienteLey(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+
+    
+    
+    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
+    def expedientesPorDepartamento(request, tipo):
+        
+        expedientes = []
+        filter_dict = {}
+        page = request.GET.get('page')
+        print (page)
+        
+        if( page != None  ):
+            filter_dict=request.session['filtroExpediente']
+        else:    
+            '''
+            if((tipo == 'ExpedienteLey')): 
+                consolidacion = bool(request.GET['consolidacion'])
+                filter_dict['consolidacion'] = consolidacion
+            '''
+            filter_dict['alcance'] = 0
+            filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
+            filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
+            request.session['filtroExpediente']= filter_dict  
+                     
+        #if (tipo == 'Expediente'):
+        expedientes = ( Expediente.objects.filter(**filter_dict).distinct().order_by('-id') )
+        #elif (tipo == 'ExpedienteLey'):
+        #    expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
+        #paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
+
+        paginator = Paginator(expedientes, 10)
+        try:
+            expedientes = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            expedientes = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            expedientes = paginator.page(paginator.num_pages)           
+        
+        #if (tipo == 'Expediente'):
+        return expedientes
+
+        #else: 
+        #    return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+    
+    
+    
 
     '''
     Búsqueda de expedientes.
@@ -215,7 +265,9 @@ class ExpedientesView(ListView):
             if (continueIn == 'expediente'):  
                 return ExpedientesView.showExpediente(request, tipo, 0, 0, 0, 0, 0, 0)
             else:
-                return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+                expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
+                #return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : 'Expediente' }, context_instance=RequestContext(request))
+                return render(request, 'expedienteley_list.html', {'expedientes' : expedientes,'tipo' : tipo}, context_instance=RequestContext(request))
         else:  # Error
             
             errores.append(form._errors)
@@ -240,7 +292,7 @@ class ExpedientesView(ListView):
             print (departamentosInternos) 
                   
             return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente , 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
-
+         
                 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def updateExpediente(request):
