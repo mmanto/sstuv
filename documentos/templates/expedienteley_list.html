@@ -59,11 +59,21 @@
 
 {% for grupo in user.groups.all  %}
 	{% if grupo.name == 'Mesa de Entrada' %}
-		<form action="/sig/expedientes/nuevo/0/" method="get">
+		<form action="/sig/expedientes/nuevoExpedienteLey/" method="get">
 				<input type="submit" value="Nuevo Expediente Ley">
 		</form>
 	{% endif %}
 {% endfor %}
+
+{% for grupo in user.groups.all  %}
+	{% if grupo.name == 'Mesa de Entrada' %}
+		<form action="/sig/expedientes/nuevoExpediente/" method="get">
+				<input type="submit" value="Nuevo Expediente ">
+		</form>
+	{% endif %}
+{% endfor %}
+
+
 
 
 <div class="datagrid">

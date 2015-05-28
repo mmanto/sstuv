@@ -34,7 +34,7 @@ class ExpedientesView(ListView):
     search_fields = ('organismo', 'numero', 'anio')
     
     '''
-    Se carga un expediente ya se a nuevo o para visualizar   
+    Controller: carga un expediente ya se para la carga o para visualizarlo.   
     '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def showExpediente(request, id):
@@ -43,10 +43,12 @@ class ExpedientesView(ListView):
         departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
         partidos = Partido.objects.all()
 
-
-        if(id != '0'):  # Expediente editar
+        if(id != '0'):  #Expediente editar
              
-            expediente= Expediente.objects.get(id = id) 
+            if ( ExpedienteLey.objects.filter(id = id).exists()):
+                expediente= ExpedienteLey.objects.get(id=id)
+            else: 
+                expediente= Expediente.objects.get(id=id)
        
             pases = ExpedientesView.paginador(request, expediente.pase_set.all())
             if len(pases) > 0:
@@ -58,33 +60,54 @@ class ExpedientesView(ListView):
             pase_id_actual = pase_id_actual + 1
             proximo_pase_id = pase_id_actual  
             proximo_pase_id = str(proximo_pase_id) + str(datetime.date.today().year)
-             
+
             return render(request, 'expediente_ley.html', {'expediente': expediente , 'pases':pases ,  'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'proximo_pase_id':  proximo_pase_id }, context_instance=RequestContext(request))
        
         else:  # Expediente nuevo
             return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos}, context_instance=RequestContext(request))
       
-      
-      
-      
-      
+    '''
+     Controller: redirect al template para la carga de expediente 
+    ''' 
+    def nuevoExpediente (request):
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        partidos = Partido.objects.all()
+        
+        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':'Expediente'}, context_instance=RequestContext(request))
+
+    
+    
+    '''
+     Controller: redirect al template para la carga de expedienteLey 
+     '''  
+    def nuevoExpedienteLey (request):
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        partidos = Partido.objects.all()
+        
+        return render(request, 'expediente_ley.html', {'partidos': partidos, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo':'ExpedienteLey'}, context_instance=RequestContext(request))
+
         
     
-    #
-    # Se carga la búsqueda
-    #
+    '''
+     Controller: Se carga la búsqueda
+    '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpediente(request):
         logger.info('busqueda de expedientes en logger info')
         loggerError.error('busqueda de expedientes en logger error')
         return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
+    '''
+    Controller: 
+    '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpedienteLey(request):
         return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
 
     '''
-    Búsqueda de expedientes.
+    Controller : Búsqueda de expedientes.
     
     '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
@@ -138,8 +161,8 @@ class ExpedientesView(ListView):
 
         return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, }, context_instance=RequestContext(request))
     
-    '''    
-          Persiste el expediente
+    '''   
+    Controller : Persiste el expediente
       
     ''' 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
@@ -149,23 +172,24 @@ class ExpedientesView(ListView):
         saveData = request.POST.get('saveData', '')
         valido = False
         tipo = request.POST.get('tipo', '')
-        if request.method == 'POST':
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+
+        if (request.method == 'POST'):
             
-            if(tipo == 'Expediente'):
-                form = ExpedienteForm(request.POST)
-            else:
-                form = ExpedienteLeyForm(request.POST)
+            if(tipo == 'Expediente'):        form = ExpedienteForm(request.POST)
+            else:     form = ExpedienteLeyForm(request.POST)
    
             errores = []    
 
-            if (continueIn == "expediente"):                
+            if (continueIn == 'save-continue' or continueIn == 'save-exit'):                
                 if form.is_valid():
-                    print("entro en form valido")
-                    # Validación para que no se repita el número de expediente. TODO: refactor
+                    
+                    # Validación para que no se repita el número de expediente. 
                     if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
                         errores.append('El número de expediente ya existe.')
-                    else:
-                        #Auditoria                        
+                    
+                    else:  # Persiste Expediente y agrega auditoria                        
                         exp =  form.save()
                         exp.usuarioAlta=request.user.username
                         exp =  form.save()
@@ -173,55 +197,44 @@ class ExpedientesView(ListView):
                         depto_destino = Departamento.objects.get( codigo = 1150 )
                         guardar_pase( depto_origen, depto_destino, exp )
                         valido = True 
-            else:
-                if (saveData == "saveExpediente" and form.is_valid()):
-                    print("entro en form valido")
-                    # Validación para que no se repita el número de expediente. TODO: refactor
-                    if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
-                        errores.append('El número de expediente ya existe.')
-                    else:                        
-    #                     print (request.POST.get('consolidacion'))
-                        print(request.user.name)
-#                         form.usuarioAlta=request.user.name
                         
-                        expediente_instance = form.save()
-                        depto_mesa_entrada = Departamento.objects.get( codigo = 1150 )
-                        guardar_pase( depto_mesa_entrada, depto_mesa_entrada, expediente_instance )
-                        valido = True 
-                else:
-                    valido = True;
-        
-        if(valido):  # Exito 
-            if (continueIn == 'expediente'):  
-                return ExpedientesView.showExpediente(request, tipo, 0, 0, 0, 0, 0, 0)
-            else:
-                return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
-        else:  # Error
-            
-            errores.append(form._errors)
-            
-            expediente = Expediente()
-            expediente.organismo = request.POST.get('organismo')
-            expediente.numero = request.POST.get('numero')
-            expediente.fecha_alta = request.POST.get('fecha_alta')
-            expediente.caracteristica = request.POST.get('caracteristica')
-            print(request.POST.get('anio'))
-            expediente.anio = datetime.datetime.strptime(request.POST.get('anio'), "%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
-            expediente.alcance = request.POST.get('alcance')
-            expediente.cuerpo = request.POST.get('cuerpo')
-            print("entro por el else invalido")
-            departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
-            departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+                        if(continueIn == "save-continue"): #Redirección al templete de expediente para seguir cargando
+                            return render(request, 'expediente_ley.html', {'tipo' : tipo, 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
 
+                        if(continueIn == "save-exit"): #Redirección al tempalte de expedeinte_list   
+                            return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+                
+                
+                if(not valido): #Error  en la validación del formulario
+                    
+                    errores.append(form._errors)
+                    expediente = Expediente()
+                    expediente.organismo = request.POST.get('organismo')
+                    expediente.numero = request.POST.get('numero')
+                    expediente.fecha_alta = request.POST.get('fecha_alta')
+                    expediente.caracteristica = request.POST.get('caracteristica')
+                    print(request.POST.get('anio'))
+                    expediente.anio = datetime.datetime.strptime(request.POST.get('anio'), "%Y")  # datetime.strptime( fecha, "%M/%d/%Y" )
+                    expediente.alcance = request.POST.get('alcance')
+                    expediente.cuerpo = request.POST.get('cuerpo')
+                    print("entro por el else invalido")
+               
+                    
+                    return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente , 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
+                
+            if (continueIn == 'exit'): #Exit: Redirección al template expediente_list
+                return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+
+        return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))    
+            
+            
+            
+            
             
            
-            print('departamentos') 
-            print(departamentosExternos)
-            print (departamentosInternos) 
-                  
-            return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente , 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
-
-                
+    '''    
+    Controller:   Upadate de expediente
+    '''            
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def updateExpediente(request):
     

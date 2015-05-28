@@ -1,9 +1,9 @@
 ﻿{% extends "base_site.html" %} {% block content %}
 <h2>Expedientes</h2>
 
-{% if expediente.id == 0 %}
+<!-- {% if  expediente == null %} -->
 <form id="form-expediente"  action="/sig/expedientes/guardar/" method="post" novalidate="novalidate"> 
-{% endif %}
+<!-- {% endif %} -->
 
 <!-- {% if expediente.id > 0 %} -->
 <!-- <form id="form-expediente" action="/sig/expedientes/editar/" method="post" novalidate="novalidate">  -->
@@ -21,12 +21,9 @@
 	
 	<div id="errors" class="error_show">
 		<div class="inner">
-			
 			<ul>
 				{% for error in errores %}
-					  
-						<li>{{error}}</li>
-					  
+						<li>{{error}}</li>					  
 				{% endfor %}
 			</ul>
 			
@@ -39,8 +36,9 @@
 	
 
 
-<input id="continueInId" name="continueIn" value="expediente" type="hidden">
+<input id="continueInId" name="continueIn" value="save-continue" type="hidden">
 <input id="saveId" name="saveData" value="notSaveExpediente" type="hidden">
+<input id="" name="tipo" value="{{tipo}}" type="hidden">
 
 <div id="validate-div">
 
@@ -54,7 +52,7 @@
 	 </td>
 	 <td> 
 		<input id="organismo" name="organismo" value="{{expediente.organismo}}"  
-		{% if accion == 'editar' %} 	readonly   {% endif %} >
+		{% if expediente.id > 0 %} 	readonly   {% endif %} >
 	 </td>
 	 <td>
 	 		<label id="numero-error" class="error_hide">Campo requerido</span>
@@ -68,7 +66,7 @@
 		</td> 
 		<td>
 			<input id="numero" name="numero" value="{{expediente.numero}}"  
-	 		{% if accion == 'editar' %}  readonly   {% endif %} >
+	 		{% if expediente.id > 0 %}  readonly   {% endif %} >
 	 	</td>
 	 	<td>
 	 		<label id="numero-error" class="error_hide">Campo requerido</span>
@@ -82,7 +80,7 @@
 	 	</td>
 	 	<td>
 			<input name="anio" value="{{expediente.anio}}"  type="text"
-	 		{% if accion == 'editar' %}   readonly   
+	 		{% if expediente.id > 0 %}   readonly   
 	 		{% else%}   	id="aniopicker" 	
 	 		{% endif %} >
 	 	</td>
@@ -118,11 +116,10 @@
 
 <tr>
 	<td><label>Alcance</label></td> 
-	<td><input id="alcance" name="alcance" value="{{expediente.alcance}}" type="number" 
-	 {% if accion == 'editar' %}
-	 	readonly
-	 {% endif %}
-	> </td>
+	<td>
+		<input id="alcance" name="alcance" value="{{expediente.alcance}}" type="number" 
+			 {% if expediente.id > 0 %}   	readonly  	 {% endif %} 	> 
+	 </td>
 	<td><span id="alcance-error" class="error_hide">Campo requerido</span> </td>
 </tr>
 
@@ -143,7 +140,7 @@
 			{% if expediente.consolidacion  %}
 					checked="yes"
 			{% endif %}	
-			{% if accion == 'editar' %}
+			{% if expediente.id > 0 %}
 					readonly
 			{% endif %}		
 		></td>
@@ -151,13 +148,15 @@
 	</tr>
 
 
+	{% if tipo == 'ExpedienteLey' %}
+
 	<tr>
 		<td>
 			<label>Partido</label>  
 			 <input id="inputpartido" name= "partido"  type="hidden">
 	    </td>
 		
-		{% if expediente.id == 0 %}
+		{% if expediente.id > 0 %}
 	
 		<td>
 		<select id="selectpartido" >
@@ -175,18 +174,11 @@
 	  </td>
 	  {% else %}
 	  	<td>
-			<input  name= "{{expediente.partido.nombre}}"  >
+			<input  value= "{{expediente.partido.nombre}}"  >
 	    </td>
 	  {% endif %}
 	  
-	  
-		
-		
-	   {% if accion == 'editar' %}
-	   <td>
-			<input  value="{{expediente.partido.nombre}}"  readonly>
-	   </td>
-	  {% endif %}
+
 		
       <span id="inputpartido-error" class="error_hide">Campo requerido</span>
 	</tr>
@@ -197,6 +189,9 @@
 			 {% if accion == 'editar' %} 	readonly 	 {% endif %}> </td>
 		<td> <span id="region-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
+	
+	{% endif %}
+
 
 
 	<tr>
@@ -229,8 +224,11 @@
 </table>
 </div>
 
-<input id="form-expediente-button" type="button" value="Guardar">
-<input id="form-expediente-button-exit" type="button" value="Salir">
+{% if expediente == null %}
+		<input id="form-expediente-button-save-continue" type="submit" value="Guardar y Seguir Cargando"/>
+		<input id="form-expediente-button-save-exit" type="submit" value="Guardar y Salir"/>
+		<input id="form-expediente-button-exit" type="button" value="Salir"/>
+	{% endif %}
 
 </form>
 
@@ -290,7 +288,7 @@
 			<ul>
 				{% if pases.has_previous %}
 					<li>
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.previous_page_number }}">previous</a>
+						<a href="/sig/expediente/inspeccionar/{{expediente.id}}/?page={{pases.previous_page_number }}">previous</a>
 				
 					
 					</li>
@@ -304,7 +302,7 @@
 				
 				{% if pases.has_next %}
 					<li>
-						<a href="/sig/expediente/inspeccionar/{{tipo}}/{{organismoFiltro}}/{{numeroFiltro}}/{{anioFiltro}}/{{expediente.partido.id}}/{{expediente.region}}?page={{pases.next_page_number }}">next</a>
+						<a href="/sig/expediente/inspeccionar/{{expediente.id}}/?page={{pases.next_page_number }}">next</a>
 					</li>
 				{% endif %}
 			</ul>
@@ -395,8 +393,7 @@
 			
 		<tr>	
 			<td> <input type="submit" value="Guardar"> </td>
-			<td>  <input id="close_popup" type="button"  value="Cancelar"> </td>
-		
+			<td> <input id="close_popup" type="button"  value="Cancelar"> </td>
 		</tr>
 		
 		</table>	
