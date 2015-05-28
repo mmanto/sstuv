@@ -14,7 +14,7 @@ from django.conf.urls.static import static
 urlpatterns = patterns('',
                    url(r'^sig/auth/login/$','django.contrib.auth.views.login' , {'template_name': 'login.html'}),
                    url(r'^sig/auth/home/$', LoginView.home),
-                   url(r'^auth/logout/$', LoginView.logout, name='logout_view' ),
+                   url(r'^sig/auth/logout/$', LoginView.logout, name='logout_view' ),
                    #url(r'^$', LoginView.home),
                    url(r'^sig/$', LoginView.home),
                    url(r'^admin/', include(admin.site.urls)),
@@ -24,12 +24,16 @@ urlpatterns = patterns('',
                    url(r'^sig/', include(documentos_sites)),
                       
                    #Pase 
+                   
+                   url(r'^sig/', include(publicador_sites))  ,     
+                   
                                     
-                  url(r'^sig/', include(publicador_sites))  ,     
-                  
-                  
                   #Procesos                                     
                   url(r'^proc/', include(procesos_sites))  ,
+                                    
+                 #Comun                                     
+                  url(r'^comun/', include(comun_sites))  ,
+                  
                   
  
 ) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
