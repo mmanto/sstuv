@@ -10,7 +10,7 @@ class Expediente(models.Model):
 	numero = models.CharField(max_length=200)
 	caracteristica = models.CharField(max_length=200)
 	fecha_alta = models.DateField('Fecha Alta')
-	anio=models.IntegerField()
+	anio = models.IntegerField()
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
 	iniciadopor = models.CharField(max_length=200)
@@ -29,6 +29,8 @@ class ExpedienteLey(Expediente):
 	partido = models.ForeignKey(Partido)
 	
 	region = models.CharField(max_length=200)
+	
+	expedientes = models.ForeignKey('self', related_name="expedientes_set")
 	
 	
 	

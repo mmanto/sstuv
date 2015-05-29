@@ -119,6 +119,13 @@ $(function() {
 		//
 		$(('#panelExterno')).hide();
 
+		//concateno los id de los expedientes seleccionados
+		var expedientes = '';
+		$("#aPasar:checked").each(function(){
+			expedientes += ' ';
+			expedientes += $(this).val();
+			$("#expedientes_ids").val(expedientes);
+		}) 
 		
 		//Abre el pop up
 		$("#pase_popup").dialog("open");		

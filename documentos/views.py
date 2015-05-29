@@ -1,3 +1,18 @@
+Skip to content
+This repository  
+Explore
+Gist
+Blog
+Help
+@mmanto mmanto
+ 
+ Unwatch 5
+  Star 0
+ Fork 0mmanto/sstuv
+ branch: master  sstuv/documentos/views.py
+@mmantommanto an hour ago merge
+3 contributors @avazzano @mmanto @vldiaz
+RawBlameHistory    453 lines (337 sloc)  20.28 kb
 from django.shortcuts import render
 from django.views.generic import ListView
 from documentos.models import ExpedienteLey, Expediente, Pase, Estado

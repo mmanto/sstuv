@@ -43,9 +43,9 @@
 
 			<td><label>Concepto</label> </td>
 			<td> 
-				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  
+				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDe" value= "propio"  
 				 checked /> </label>  
-				<label>Todos <input type="radio" name="radio" id="cheDep1" value= "todos" 
+				<label>Todos <input type="radio" name="radio" id="cheDe1" value= "todos" 
 				{% if expPropiosFiltro == 'todos'%} checked  {%endif%}/> </label>
 					
 			</td>
@@ -78,18 +78,21 @@
 				<input type="submit" value="Nuevo Expediente ">
 		</form>
 	{% endif %}
+	
+	
+	
 {% endfor %}
 
-
-
+<button id="popup">Generar Pase</button>
 
 <div class="datagrid">
 	<table style="width: 100%">
 		<thead>
 			<tr>
+				<th>Generar Pase</th>
 				<th>Número</th>
 				<th>Caracteristica</th>
-				<th>Fecha</th>
+				<th>fecha_alta</th>
 				<th>Alcance</th>
 				<th>Cuerpo</th> 
 				<th>Consolidación</th>
@@ -103,6 +106,7 @@
 
 			<tr>
 				<td>
+<!-- <<<<<<< HEAD -->
 			 		<a href="/sig/expediente/inspeccionar/{{expediente.id}}/">
 						{%  if expediente.partido %}
 							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{ expediente.partido.nombre }}-{{expediente.region}}-{{expediente.alcance}}
@@ -112,11 +116,29 @@
 						
 						
 					</a> 
+<!-- ======= -->
+					<input type="checkbox" name="aPasar" id="aPasar" value="{{ expediente.id }}"></input>
+				</td>
+				<td>
+					{% if tipo == 'ExpedienteLey'%} 
+				 		<a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/{{expediente.partido.id}}/{{expediente.region}}/{{expediente.alcance}}/">
+							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.partido.nombre}}-{{expediente.region}}-{{expediente.alcance}}
+						</a> 
+					 {% else%} 
+						 <a href="/sig/expediente/inspeccionar/{{tipo}}/{{expediente.organismo}}/{{expediente.numero}}/{{expediente.anio}}/0/0/{{expediente.alcance}}/">
+							{{expediente.organismo }}-{{ expediente.numero }}-{{ expediente.anio}}-{{expediente.alcance}}</a> 
+					{% endif %}
+<!-- >>>>>>> origin/lmoro -->
 				</td>
 
 				<td>{{ expediente.caracteristica }}</td>
 
+<!-- <<<<<<< HEAD -->
 				<td>{{expediente.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+<!-- ======= -->
+
+				<td>{{expediente.fecha_alta | date:"SHORT_DATE_FORMAT"}}</td>
+<!-- >>>>>>> origin/lmoro -->
 
 				<td>{{ expediente.alcance }}</td>
 
@@ -139,6 +161,7 @@
 
 
 		<tfoot>
+<!-- <<<<<<< HEAD -->
 			<td colspan="8">
 
 				<div id="paging">
@@ -157,11 +180,140 @@
 							<li>
 								<a 	href="?page={{expedientes.next_page_number}}">next</a>
 							</li> 
+<!-- ======= -->
+
+			{% if tipo == 'ExpedienteLey'%}
+			<td colspan="8">{% else%}
+			<td colspan="6">{% endif %}
+
+
+				<div id="paging">
+					<ul>
+					{% if expedientes.has_previous %}
+						<li>
+ 						{% if tipo == 'ExpedienteLey'%}  
+							<a href="?page={{expedientes.previous_page_number }}">previous</a>
+						{% else %} 
+							<a href="?page={{expedientes.previous_page_number }}">previous</a>
+						{% endif %}
+						</li> 
+						{% endif %}
+
+						<span class="current">
+							<li>Page {{ expedientes.number }} of {{expedientes.paginator.num_pages }}.</li>
+						</span> {% if expedientes.has_next %}
+						<li>
+						{% if tipo == 'ExpedienteLey'%} 
+							<a 	href="?page={{expedientes.next_page_number}}">next</a>
+						{% else %} 
+						 	<a 	href="?page={{expedientes.next_page_number}}">next</a>
+<!-- >>>>>>> origin/lmoro -->
 						{% endif %}
 					</ul>
 				</div>
 		<tfoot>
 	</table>
+<div>
+
+<div id="pase_popup">
+
+<form  action="/sig/pase/generarPaseMultiple/" method="post">
+
+<h2>Alta Pase</h2>
+
+		
+	
+		{% csrf_token %}
+	
+		
+		<input name="expedientes_ids" id="expedientes_ids" value="" type="hidden">
+		<input  name= "departamento_origen" value="{{departamento_origen.codigo}}" id="dep_id" type="hidden">
+		<input id="inputdestino" name= "departamento_destino" type="hidden">
+		
+		
+	
+		<table>
+		
+		
+		<tr>
+			<td> <label>Numero de remito</label>   </td>
+			<td> <input id="numero" name="numero" value="{{pase.numero}}" type="number" >  </td>
+		</tr>
+				
+		<tr>
+			<td> <label>Fecha</label>  </td> 
+			<td> <input id="datepic" name="fecha" value="{{pase.fecha  | date:'DATE_FORMAT' }}" type="text"  readonly> </td>
+		</tr>
+		
+		<tr>
+			<td> <label>Concepto origen</label>  </td> 
+			<td> <input  name= "departamento_origen_name" value="{{departamento_origen.nombre}}" id="dep_name"  size=70 readonly> </td>
+		</tr>
+			
+		<tr>
+			<td> <label>Concepto destino</label>
+			</td>
+			 
+			
+			<td>
+			
+			
+				<label>Interno <input type="radio" name="radio" id="cheDep" value= "Interno" checked/> </label>  
+				<label>         Externo <input type="radio" name="radio" id="cheDep1" value= "Externo" /> </label>
+					
+				</br> 
+			
+			 
+			<div id="panelInterno"> 
+				<select id="selectdestino"> 	
+					<option value="0">Ingrese un concepto</option>
+						{% for departamento	in departamentosInternos %} 
+							<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
+						{% endfor %}
+				</select> 
+			</div>
+			
+			<div id="panelExterno">
+				<select id="selectdestino"> 	
+					<option value="0">Ingrese un concepto</option>
+						{% for departamento	in departamentosExternos %} 
+							<option value="{{departamento.codigo}}" >{{departamento.nombre}}</option>
+						{% endfor %}
+				</select> 
+			</div>
+			</td>
+			
+		</tr>
+			
+		<tr>	
+			<td> <input type="submit" value="Guardar"> </td>
+			<td> <input id="close_popup" type="button"  value="Cancelar"> </td>
+		
+		</tr>
+		
+		</table>
+		</form>		
+</div>
+	
 
 
-	{% endblock %}
+<div id="confirmationExit_popup">
+
+	<h2>Exiten campos con datos</h2>
+	<h2>Esta seguro que desea salir sin guardar los cambios?</h2>
+
+	<form  action="/sig/expedientes/salir/" method="post">	
+		{% csrf_token %}
+		<input name="exp_tipo" value="{{tipo}}" type="hidden">
+		<table>
+			<tr>	
+				<td> <input type="submit" value="Continuar"> </td>
+				<td>  <input id="closeExitPopup_popup" type="button"  value="Cancelar"> </td>
+			</tr>
+		</table>	
+
+	</form>	
+
+</div>
+
+{% endblock %}

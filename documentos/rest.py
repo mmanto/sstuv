@@ -51,11 +51,6 @@ class ExpedienteViewSet(ModelViewSet):
 
     
     
-    
-    
-    
-    
-    
   
 #     Utilitario    
     def toInt(valor):
