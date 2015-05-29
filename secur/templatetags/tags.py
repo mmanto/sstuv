@@ -20,7 +20,7 @@ def menu(user):
     pase= { 'nombreDireccion' : 'Pases', 'target' : '/sig/pases/', 'subsistemas':   [       ]
            }
     
-    expediente= { 'nombreDireccion' : 'Expedientes', 'target' : '/sig/expedientes/', 'subsistemas':  []         }
+    expediente= { 'nombreDireccion' : 'Expedientes', 'target' : '/sig/expedientesLey/', 'subsistemas':  []         }
     
     mesaDeEntrada={ 'nombreDireccion' : 'Admin. Expedientes', 'subsistemas':
            

@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h2>Pases</h2>
+<h2>Censo</h2>
 
 
 
@@ -65,14 +65,19 @@
 
 		<tr>
 			<td><label>Partido</label></td>
-			<td><input id="" name="" value=""  >
+			<td>
+				<input id="partidoId" name="" value=""  readonly>
+				<button id="partido_popup_button">...</button>
+			
 			</td>
 			<td><label id="" class="error_hide">Campo requerido</span></td>
 		</tr>
 
 		<tr>
 			<td><label>Barrio</label></td>
-			<td><input id="" name="" value=""  >
+			<td>
+				<input id="barrioId" name="" value=""  readonly>
+				<button id="barrio_popup_button">...</button>
 			</td>
 			<td><label id="" class="error_hide">Campo requerido</span></td>
 		</tr>
@@ -121,14 +126,6 @@
 
 
 
-
-
-<div id="expediente_popup">
-
-
-	{% include "buscarExpediente.html" %}
-
-</div>
 
 
 
