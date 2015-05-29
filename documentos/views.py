@@ -98,8 +98,26 @@ class ExpedientesView(ListView):
         logger.info('busqueda de expedientes en logger info')
         loggerError.error('busqueda de expedientes en logger error')
         #return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
+        return ExpedientesView.redirectExpedienteley_list(request)
+        
+        
+    #
+    # Redireccio a expedienteLey_list.html
+    #
+    def redirectExpedienteley_list(request):
         expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
-        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : 'Expediente' }, context_instance=RequestContext(request))
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        try :
+            user = request.user
+            departamento_origen = Departamento.objects.get(nombre=user.groups.first())
+                         
+        except Error:
+            logger.info('Error al recuperar los pases con el usuario' + user)  
+              
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo' : 'Expediente', 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request))
+    
+    
     
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpedienteLey(request):
@@ -203,10 +221,23 @@ class ExpedientesView(ListView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             expedientes = paginator.page(paginator.num_pages)           
         
+        '''
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        
+        try :
+            user = request.user
+            departamento_origen = Departamento.objects.get(nombre=user.groups.first())
+                         
+        except Error:
+             logger.info('Error al recuperar los pases con el usuuario' + user)  
+              
+        '''
         if (tipo == 'Expediente'):
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+            return ExpedientesView.redirectExpedienteley_list(request)
+            #return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'departamento_origen' : departamento_origen}, context_instance=RequestContext(request))
         else: 
-            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo }, context_instance=RequestContext(request))
+            return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'departamento_origen' : departamento_origen}, context_instance=RequestContext(request))
     
     '''    
           Persiste el expediente
@@ -265,9 +296,19 @@ class ExpedientesView(ListView):
             if (continueIn == 'expediente'):  
                 return ExpedientesView.showExpediente(request, tipo, 0, 0, 0, 0, 0, 0)
             else:
+                '''
                 expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
-                #return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : 'Expediente' }, context_instance=RequestContext(request))
-                return render(request, 'expedienteley_list.html', {'expedientes' : expedientes,'tipo' : tipo}, context_instance=RequestContext(request))
+                departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+                departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+                try :
+                    user = request.user
+                    departamento_origen = Departamento.objects.get(nombre=user.groups.first())
+                         
+                except Error:
+                    logger.info('Error al recuperar los pases con el usuuario' + user)  
+                '''
+                return ExpedientesView.redirectExpedienteley_list(request)
+                #return render(request, 'expedienteley_list.html', {'expedientes' : expedientes,'tipo' : tipo, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'departamento_origen' : departamento_origen}, context_instance=RequestContext(request))
         else:  # Error
             
             errores.append(form._errors)
@@ -322,7 +363,19 @@ class ExpedientesView(ListView):
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def exitExpediente(request):
         tipo = request.POST.get('exp_tipo', '')
-        return render(request, 'expedienteley_list.html', {'tipo' : tipo}, context_instance=RequestContext(request))
+        '''
+        expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        try :
+            user = request.user
+            departamento_origen = Departamento.objects.get(nombre=user.groups.first())
+                         
+        except Error:
+            logger.info('Error al recuperar los pases con el usuuario' + user)
+        '''
+        return ExpedientesView.redirectExpedienteley_list(request);  
+        #return render(request, 'expedienteley_list.html', {'tipo' : tipo, 'expedientes' : expedientes, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'departamento_origen' : departamento_origen}, context_instance=RequestContext(request))
    
       
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
@@ -461,6 +514,42 @@ class PasesView(ListView):
 
         return ExpedientesView.showExpediente(request, request.POST.get('Expediente'), request.POST.get('expediente_id'))
 
+    
+    @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
+    def generarPaseMultiple(request):
+        
+        idsExpedientes = request.POST.get('expedientes_ids')
+        listIdsExpedientes = idsExpedientes.split()          
+        fecha = (request.POST.get('fecha'))
+
+        for idExpediente in listIdsExpedientes:
+            pase = Pase()
+            pase.departamento_origen = Departamento.objects.get(codigo=int (request.POST.get('departamento_origen')))
+            pase.departamento_destino = Departamento.objects.get(codigo=int (request.POST.get('departamento_destino')))
+            pase.numero = (request.POST.get('numero'))
+            pase.fecha = datetime.datetime.strptime(fecha, "%d/%m/%Y")
+            expediente = Expediente.objects.get(id=idExpediente)
+            pase.expediente = expediente
+            pase.estado = Estado.PENDIENTE.value
+            pase.save() 
+      
+           
+        
+        '''    
+        expedientes = ExpedientesView.expedientesPorDepartamento(request, 'Expediente')
+        departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
+        departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
+        try :
+            user = request.user
+            departamento_origen = Departamento.objects.get(nombre=user.groups.first())
+                         
+        except Error:
+             logger.info('Error al recuperar los pases con el usuuario' + user)  
+           
+        '''
+        return ExpedientesView.redirectExpedienteley_list(request)   
+        #return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos, 'tipo' : 'Expediente', 'departamento_origen' : departamento_origen }, context_instance=RequestContext(request))
+    
 
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def aceptarPase(request, idPase):

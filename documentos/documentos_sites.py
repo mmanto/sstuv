@@ -31,6 +31,8 @@ urlpatterns = patterns('',
                             
                         url(r'^expedientes/imprimirremito/(\d+)/(\d+)/$',PaseReport.generar ),
                         
+                        url(r'^pase/generarPaseMultiple/$', PasesView.generarPaseMultiple ),
+                        
 
                         #Web services
                         url(r'^', include(router.urls)),
