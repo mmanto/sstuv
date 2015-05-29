@@ -38,13 +38,33 @@
 			 </td>
 		</tr>
 		
+		
+		<tr>
+			<td>
+				<label>Partido</label>  
+			 	<input id="inputpartido" name= "partido"  type="hidden">
+			 </td>
+			 <td>
+				<select id="selectpartido" >
+				
+					<option value="" selected="true" ></option>
+				
+					{% for partido in partidos%}
+						  <option value="{{partido.codigo}}">{{partido.nombre}}</option>
+				 	{% endfor %}
+				</select>
+			  </td>
+		</tr>
+		
+		<tr>
+			<td> <label>Región</label> </td> 
+			<td> <input id="region" name="region" value="{{expediente.region}}" >	 </td>	
+		</tr>
+		
+		
 		<tr>
 		
-<<<<<<< HEAD
-		
-=======
-		 
->>>>>>> refs/remotes/origin/avazzano
+
 			<td><label>Concepto</label> </td>
 			<td> 
 				<label>{{user.groups.all.first}} <input type="radio" name="radio" id="cheDep" value= "propio"  

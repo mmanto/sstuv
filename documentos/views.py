@@ -32,13 +32,16 @@ class ExpedientesView(ListView):
         
     paginate_by = 10
     search_fields = ('organismo', 'numero', 'anio')
+
+    
+    
     
     '''
     Controller: carga un expediente ya se para la carga o para visualizarlo.   
     '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def showExpediente(request, id):
-
+        
         departamentosInternos = Departamento.objects.filter(codigo__gt=999, codigo__lt=6001).order_by("nombre")
         departamentosExternos = Departamento.objects.filter(codigo__gt=13, codigo__lt=72).all().order_by("nombre")
         partidos = Partido.objects.all()
@@ -104,7 +107,8 @@ class ExpedientesView(ListView):
     '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpedienteLey(request):
-        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+        partidos = Partido.objects.all()
+        return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey', 'partidos':partidos}, context_instance=RequestContext(request))
 
     '''
     Controller : Búsqueda de expedientes.
@@ -113,44 +117,24 @@ class ExpedientesView(ListView):
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def showResultados(request):
         
+        partidos = Partido.objects.all()
+
         expedientes = []
-        expedientesLey = []
         filter_dict = {}
         page = request.GET.get('page')
-        print (page)
         
         if( page != None  ):
             filter_dict=request.session['filtroExpediente']
         else:    
-           
-            # Se crea el filtro
-            organismo = ExpedientesView.toInt(request.GET['organismo'])
-            numero = ExpedientesView.toInt(request.GET['numero'])
-            anio = ExpedientesView.toInt(request.GET['anio'])
-            buscarExpPropios=(request.GET['radio'])
-            filter_dict['alcance'] = alcance = ExpedientesView.toInt(request.GET['alcance'])
-            extracto= request.GET['extracto']
-            
-            if (organismo > 0):     filter_dict['organismo'] = organismo
-            if (numero > 0):        filter_dict['numero'] = numero
-            if (anio > 0):          filter_dict['anio'] = anio
-#             if((tipo == 'ExpedienteLey')): 
-#                 consolidacion = bool(request.GET['consolidacion'])
-#                 filter_dict['consolidacion'] = consolidacion
-            if(buscarExpPropios == 'propio'):
-                filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
-                filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
-            if(extracto != ''):
-                filter_dict['extracto__icontains'] = extracto
-            
-            
+            filter_dict= ExpedientesView.getFiltros(request)
             request.session['filtroExpediente']= filter_dict  
             
-     
-        expedientes = (list( Expediente.objects.filter(**filter_dict).distinct() ))
+        #Se busca expedientes. Si hay filtros correspondientes a expedeinteLey va a generar una exception
+        try:   expedientes = (list( Expediente.objects.filter(**filter_dict).distinct() ))
+        except: print()      
+        #Se busca expediente Ley
         expedientesLey = (list( ExpedienteLey.objects.filter(**filter_dict).distinct() ))
-            
-            
+        # Se concatenan los expedientes con los expedeintes Ley           
         expedientes.extend(expedientesLey)
       
         paginator = Paginator(expedientes, 10) 
@@ -163,7 +147,7 @@ class ExpedientesView(ListView):
             expedientes = paginator.page(paginator.num_pages)           
         
 
-        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, }, context_instance=RequestContext(request))
+        return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'partidos':partidos }, context_instance=RequestContext(request))
     
     '''   
     Controller : Persiste el expediente
@@ -193,13 +177,13 @@ class ExpedientesView(ListView):
                     if(Expediente.objects.filter(organismo=request.POST.get('organismo') , numero=request.POST.get('numero'), anio=request.POST.get('anio')).exists()):
                         errores.append('El número de expediente ya existe.')
                     
-                    else:  # Persiste Expediente y agrega auditoria                        
-                        exp =  form.save()
-                        exp.usuarioAlta=request.user.username
+                    else:              
+                        exp =  form.save() # Persiste Expediente             
+                        exp.usuarioAlta=request.user.username #agrega auditoria
                         exp =  form.save()
                         depto_origen = Departamento.objects.get( codigo = 1150 )
                         depto_destino = Departamento.objects.get( codigo = 1150 )
-                        guardar_pase( depto_origen, depto_destino, exp )
+                        guardar_pase( depto_origen, depto_destino, exp ) # genera pase
                         valido = True 
                         
                         if(continueIn == "save-continue"): #Redirección al templete de expediente para seguir cargando
@@ -223,7 +207,7 @@ class ExpedientesView(ListView):
                     expediente.cuerpo = request.POST.get('cuerpo')
                     print("entro por el else invalido")
                
-                    
+                    #Expediente con errores, retorna al mismo template     
                     return render(request, 'expediente_ley.html', {'tipo' : tipo, 'expediente': expediente , 'form':form , 'accion' : 'nuevo', 'departamentosInternos':departamentosInternos, 'departamentosExternos':departamentosExternos , "errores":errores}, context_instance=RequestContext(request))
                 
             if (continueIn == 'exit'): #Exit: Redirección al template expediente_list
@@ -341,17 +325,51 @@ class ExpedientesView(ListView):
             object = paginator.page(paginator.num_pages)   
         return object
 
-    #  
-#   Utilitario para castear de forma segura valores numericos  
-#  
+    '''    
+    Utilitario
+    
+    castea de forma segura valores numericos  
+    '''
     def toInt(valor):
-        
         try: 
             x = int(valor)
         except ValueError:
             x = 0
         return x    
  
+    '''
+    Utilitario
+    
+    Recupera los filtros de búsqeuda
+    '''
+    def getFiltros(request):
+        
+         filter_dict = {}
+        
+         organismo = ExpedientesView.toInt(request.GET['organismo'])
+         numero = ExpedientesView.toInt(request.GET['numero'])
+         anio = ExpedientesView.toInt(request.GET['anio'])
+         buscarExpPropios=(request.GET['radio'])
+         alcance = ExpedientesView.toInt(request.GET['alcance'])
+         extracto= request.GET['extracto']
+         region=request.GET['region']
+         partido=request.GET['partido']
+         consolidacion = bool(request.GET['consolidacion'])
+
+         if(alcance != ''):   filter_dict['alcance'] = alcance
+         if (organismo > 0):  filter_dict['organismo'] = organismo
+         if (numero > 0):     filter_dict['numero'] = numero
+         if (anio > 0):       filter_dict['anio'] = anio
+         if(consolidacion):   filter_dict['consolidacion'] = consolidacion
+         if(buscarExpPropios == 'propio'):
+            filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
+            filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
+         if(extracto != ''):
+            filter_dict['extracto__icontains'] = extracto
+         if(region != ''): filter_dict['region']=region
+         if(partido): filter_dict['partido']=partido
+
+         return filter_dict        
 
 
 

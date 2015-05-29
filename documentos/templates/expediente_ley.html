@@ -144,7 +144,6 @@
 	</tr>
 
 
-	{% if tipo == 'ExpedienteLey' %}
 
 	<tr>
 		<td>
@@ -152,19 +151,16 @@
 			 <input id="inputpartido" name= "partido"  type="hidden">
 	    </td>
 		
-		{% if expediente.id > 0 %}
+		{% if expediente == null %}
 	
 		<td>
 		<select id="selectpartido" >
+		
+			<option value="" selected="true" ></option>
+			
 	
 			{% for partido in partidos%}
-		
-				{% if partido.codigo == expediente.partido.codigo %}
-					  <option value="{{partido.codigo}}" selected="true" >{{partido.nombre}}</option>
-				{% else %}  
-					  <option value="{{partido.codigo}}">{{partido.nombre}}</option>
-				{% endif %}
-			 
+				<option value="{{partido.codigo}}">{{partido.nombre}}</option>
 			{% endfor %}
 		</select>
 	  </td>
@@ -172,7 +168,6 @@
 	  	<td>
 			<input  value= "{{expediente.partido.nombre}}"  {% if expediente.id > 0 %}  readonly   {% endif %}>
 	    </td>
-	  {% endif %}
 	  
 
 		
