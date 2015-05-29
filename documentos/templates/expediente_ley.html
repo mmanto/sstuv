@@ -100,11 +100,8 @@
 
 <tr>
 	<td><label>Fecha de alta</label></td> 
-<<<<<<< HEAD
-	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text" {% if expediente.id > 0 %}  readonly   {% endif %} >
-=======
 	<td><input id="datepicker" name="fecha_alta" value="{{expediente.fecha_alta | date:'DATE_FORMAT'}}" type="text"  >
->>>>>>> origin/vdiaz
+
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
@@ -149,7 +146,7 @@
 		<td><input id="checkconsolidacion"  value="{{expediente.consolidacion}}" type="checkbox" 
 			{% if expediente.consolidacion  %} 		checked="yes" 	{% endif %}	
 			{% if expediente.id > 0 %} 		readonly 	{% endif %}		
-		></td>
+		/></td>
 	
 	</tr>
 
