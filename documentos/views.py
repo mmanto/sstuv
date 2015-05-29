@@ -129,6 +129,7 @@ class ExpedientesView(ListView):
             anio = ExpedientesView.toInt(request.GET['anio'])
             buscarExpPropios=(request.GET['radio'])
             filter_dict['alcance'] = alcance = ExpedientesView.toInt(request.GET['alcance'])
+            extracto= request.GET['extracto']
             
             if (organismo > 0):     filter_dict['organismo'] = organismo
             if (numero > 0):        filter_dict['numero'] = numero
@@ -139,9 +140,12 @@ class ExpedientesView(ListView):
             if(buscarExpPropios == 'propio'):
                 filter_dict['pase_set__departamento_destino__nombre'] = request.user.groups.all().first().name    
                 filter_dict['pase_set__estado']= Estado.ACEPTADO.value   
-          
+            if(extracto != ''):
+                filter_dict['extracto__icontains'] = extracto
+            
+            
             request.session['filtroExpediente']= filter_dict  
-                     
+            
      
         expedientes = (list( Expediente.objects.filter(**filter_dict).distinct() ))
         expedientesLey = (list( ExpedienteLey.objects.filter(**filter_dict).distinct() ))
@@ -149,7 +153,7 @@ class ExpedientesView(ListView):
             
         expedientes.extend(expedientesLey)
       
-        paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
+        paginator = Paginator(expedientes, 10) 
 
         try:
             expedientes = paginator.page(page)

@@ -93,14 +93,14 @@
 
 <tr>
 	 <td> <label>Características</label> </td> 
-	 <td> <input id="caracteristica" name="caracteristica" value="{{expediente.caracteristica}}" > </td>
+	 <td> <input id="caracteristica" name="caracteristica" value="{{expediente.caracteristica}}" {% if expediente.id > 0 %}  readonly   {% endif %} > </td>
 	 <td> <span id="caracteristica-error" class="error_hide">Campo requerido</span> </td>
 </tr>
 
 
 <tr>
 	<td><label>Fecha de alta</label></td> 
-	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text"  >
+	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text" {% if expediente.id > 0 %}  readonly   {% endif %} >
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
@@ -108,7 +108,7 @@
 
 <tr>
 	<td><label>Fecha de inicio</label></td> 
-	<td><input id="datepicker1" name="fechaInicio" value="{{expediente.fechaInicio | date:'DATE_FORMAT'}}" type="text"  >
+	<td><input id="datepicker1" name="fechaInicio" value="{{expediente.fechaInicio | date:'DATE_FORMAT'}}" type="text"  {% if expediente.id > 0 %}  readonly   {% endif %}>
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
@@ -125,7 +125,7 @@
 
 <tr>
 	<td><label>Cuerpo</label></td> 
-	<td><input id="cuerpo" name="cuerpo" value="{{expediente.cuerpo}}" type="number"> </td>
+	<td><input id="cuerpo" name="cuerpo" value="{{expediente.cuerpo}}" type="number" {% if expediente.id > 0 %}  readonly   {% endif %}> </td>
 	<td><span id="cuerpo-error" class="error_hide">Campo requerido</span> </td>
 </tr>
 
@@ -137,12 +137,8 @@
 			<label>Consolidación</label> 
 		</td> 
 		<td><input id="checkconsolidacion"  value="{{expediente.consolidacion}}" type="checkbox" 
-			{% if expediente.consolidacion  %}
-					checked="yes"
-			{% endif %}	
-			{% if expediente.id > 0 %}
-					readonly
-			{% endif %}		
+			{% if expediente.consolidacion  %} 		checked="yes" 	{% endif %}	
+			{% if expediente.id > 0 %} 		readonly 	{% endif %}		
 		></td>
 	
 	</tr>
@@ -174,7 +170,7 @@
 	  </td>
 	  {% else %}
 	  	<td>
-			<input  value= "{{expediente.partido.nombre}}"  >
+			<input  value= "{{expediente.partido.nombre}}"  {% if expediente.id > 0 %}  readonly   {% endif %}>
 	    </td>
 	  {% endif %}
 	  
@@ -186,7 +182,7 @@
 	<tr>
 		<td> <label>Región</label> </td> 
 		<td> <input id="region" name="region" value="{{expediente.region}}" 
-			 {% if accion == 'editar' %} 	readonly 	 {% endif %}> </td>
+			 {% if expediente.id > 0 %}  readonly   {% endif %}> </td>
 		<td> <span id="region-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
 	
@@ -196,25 +192,21 @@
 
 	<tr>
 		<td> <label>Extracto</label> </td> 
-		<td> <textarea rows="4" cols="50" id="extracto" name="extracto"  {% if accion == 'editar' %} readonly {% endif %}> 
-				{% if accion == 'editar' %} {{expediente.extracto}}  {% endif %}
+		<td> <textarea rows="4" cols="50" id="extracto" name="extracto" {% if expediente.id > 0 %}  readonly   {% endif %}>{{expediente.extracto}} 
 		</textarea> </td>
 		<td> <span id="extracto-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
 
 	<tr>
 		<td> <label>Cantidad de Fojas</label> </td> 
-		<td> <input id="cant_fojas" name="cant_fojas" value="{{expediente.cant_fojas}}" 
-			 {% if accion == 'editar' %} 	readonly 	 {% endif %} /> </td>
+		<td> <input id="cant_fojas" name="cant_fojas" value="{{expediente.cant_fojas}}"
+			 {% if expediente.id > 0 %}  readonly   {% endif %} /> </td>
 		<td> <span id="cant_fojas-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
 
 	<tr>
 		<td> <label>Observación</label> </td> 
-		<td> <textarea rows="4" cols="50" id="observacion" name="observacion"  {% if accion == 'editar' %} readonly {% endif %} > 
-		 		{% if accion == 'editar' %} {{expediente.observacion}}  {% endif %}
-
-		 </textarea> </td>
+		<td> <textarea rows="4" cols="50" id="observacion" name="observacion" {% if expediente.id > 0 %}  readonly   {% endif %} >{{expediente.observacion}}</textarea> </td>
 		<td> <span id="observacion-error" class="error_hide">Campo requerido</span> </td>
 	</tr>
 
