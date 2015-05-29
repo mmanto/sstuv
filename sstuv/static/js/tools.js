@@ -145,15 +145,19 @@ $(function() {
 	});
 
 	/*
-	 *  Validaciones para expediente
+	 *  Validaciones para save-continue del expediente
+	 *  
+	 *  
 	 */
-	$("#form-expediente-button").click(function(event) {
+	$("#form-expediente-button-save-continue").click(function(event) {
 
 		var error = false;
 
 		var div = document.getElementById('validate-div');
 		var inputs = div.getElementsByTagName("input");
 
+		$("#continueInId").attr("value", "save-continue");
+		
 		$(inputs).each(function() {
 
 			var origen = $(this).attr('id');
@@ -184,11 +188,12 @@ $(function() {
 	});
 	
 	/* 
-	 *   Validaciones para salir de expediente
+	 *   
+	 *   Validaciones save-exit del expediente
 	 */ 
-	$("#form-expediente-button-exit").click(function(event) {
+	$("#form-expediente-button-save-exit").click(function(event) {
 		
-		$("#continueInId").attr("value", "expedienteList");
+		$("#continueInId").attr("value", "save-exit");
 		
 		var div = document.getElementById('validate-div');
 		var inputs = div.getElementsByTagName("input");
@@ -241,6 +246,23 @@ $(function() {
 		}
 
 	});
+	
+	
+	
+
+	/* 
+	 *   
+	 *   Validaciones exit del expediente
+	 */ 
+	$("#form-expediente-button-exit").click(function(event) {
+		$("#continueInId").attr("value", "exit");
+		$("#form-expediente").submit();
+	});
+	
+	
+	
+	
+	
 
 	/*
 	 * Cargar selección del checkbox de consolidación
