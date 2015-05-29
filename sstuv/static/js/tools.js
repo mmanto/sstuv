@@ -132,6 +132,19 @@ $(function() {
 		$("#pase_popup").dialog("close");
 	});
 
+	//Pop up para confirmar la salida del alta de expediente
+	$("#confirmationExit_popup").dialog({
+		autoOpen : false,
+		height : 300,
+		width : 800
+	});
+	
+	//Evento para cerror el pop up de alta de expediente
+	$("#closeExitPopup_popup").click(function() {
+
+		$("#confirmationExit_popup").dialog("close");
+	});
+	
 	/*
 	 * Cargar selección de combo en hidden input en cualquier select
 	 */ 
@@ -216,33 +229,9 @@ $(function() {
 		if (totalInputs == totalInputsVacio){
 			$("#form-expediente").submit();
 		}else{
-			
-			var error = false;
-	
-			$(inputs).each(function() {
-	
-				var origen = $(this).attr('id');
-	
-				if( origen != 'inputconsolidacion' & origen != 'checkconsolidacion'){
-				
-					var objetivo = "#" + origen + "-error";
-		
-					if ($(this).val() == "") {
-						error = true;
-						$(objetivo).removeClass('error_hide');
-						$(objetivo).addClass('error_show');
-					} else {
-						$(objetivo).removeClass('error_show');
-						$(objetivo).addClass('error_hide');
-					}
-				}
-			});
 
-			if (!error) {
-				$("#saveId").attr("value", "saveExpediente");
-				$("#form-expediente").submit();
-							
-			}
+			$("#confirmationExit_popup").dialog("open");
+			
 		}
 
 	});

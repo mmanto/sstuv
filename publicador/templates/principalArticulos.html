@@ -1,0 +1,35 @@
+{% extends "principal.html" %} 
+{% load staticfiles %}
+
+
+{% block contenidoInferiorIzquierda %}
+<div class="miniaturaArticulos">
+	{% for articulo in articulos %}
+	<div class="art">
+		<a class="linkNota" href="/sig/publicador/aArticulo/{{articulo.id}}">
+					<div class="divTitulo">
+						{{ articulo.titulo }}
+					</div>
+					<div class="fotoYResumen">
+						<div class="divImagen">
+								<img class="imagenArticulo" src="{{MEDIA_URL}}{{articulo.imagenes.all.0.imagen}}" alt="SSTUV" />
+						</div>
+						<div class="divResumenContenido" id="divResumenContenido{{forloop.counter0}}">
+							<p>
+								{{ articulo.contenido|linebreaksbr }}
+							</p>
+						</div>	
+					</div>
+		</a>
+	</div>
+	
+	{% endfor %}
+</div>
+{% endblock %}
+
+
+{% block contenidoInferiorDerecha %}
+            <a class="twitter-timeline" href="https://twitter.com/SSTUyV" data-widget-id="576822459007176705">Tweets por el @SSTUyV.</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+{% endblock %}           

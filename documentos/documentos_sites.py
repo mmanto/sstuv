@@ -17,8 +17,13 @@ urlpatterns = patterns('',
                         url(r'^expedientes/buscar/$', ExpedientesView.showResultados),
                         url(r'^expediente/inspeccionar/(\d+)/$', ExpedientesView.showExpediente),
                         url(r'^expedientes/guardar/$', ExpedientesView.saveExpediente),
+<<<<<<< HEAD
                         url(r'^expedientes/nuevoExpediente/$', ExpedientesView.nuevoExpediente),
                         url(r'^expedientes/nuevoExpedienteLey/$', ExpedientesView.nuevoExpedienteLey),
+=======
+                        url(r'^expedientes/salir/$', ExpedientesView.exitExpediente),
+                        url(r'^expedientes/nuevo/(.+)/(\d+)/(\d+)/(\d+)/(\d+)/(.*)/(\d+)/$', ExpedientesView.showExpediente),
+>>>>>>> origin/vdiaz
                         url(r'^expedientes/editar/$', ExpedientesView.updateExpediente),
                         url(r'^expedientes/importarExpedienteLey/$', ExpedientesView.importarExpedientesLey),
                         url(r'^expedientes/importarExpediente/$', ExpedientesView.importarExpedientes),    

@@ -1,0 +1,684 @@
+[05/May/2015 17:18:48] ERROR [django.request:231] Internal Server Error: /sig/expedientes/buscar/Expediente/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/sstuv/documentos/views.py", line 135, in showResultados
+    return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios}, context_instance=RequestContext(request))
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/shortcuts.py", line 25, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader.py", line 178, in render_to_string
+    return t.render(context_instance)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/defaulttags.py", line 162, in render
+    len_values = len(values)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/paginator.py", line 117, in __len__
+    return len(self.object_list)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 122, in __len__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+[05/May/2015 17:18:49] ERROR [django.request:231] Internal Server Error: /sig/expedientes/buscar/Expediente/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/sstuv/documentos/views.py", line 135, in showResultados
+    return render_to_response('expedienteley_list.html', {'expedientes' : expedientes, 'tipo' : tipo, 'organismoFiltro' : organismo, 'numeroFiltro': numero, 'anioFiltro' :anio, 'alcanceFiltro': alcance, 'expPropiosFiltro':buscarExpPropios}, context_instance=RequestContext(request))
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/shortcuts.py", line 25, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader.py", line 178, in render_to_string
+    return t.render(context_instance)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/template/defaulttags.py", line 162, in render
+    len_values = len(values)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/paginator.py", line 117, in __len__
+    return len(self.object_list)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 122, in __len__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column documentos_expediente.fechaInicio does not exist
+LINE 1: ...caracteristica", "documentos_expediente"."fecha", "documento...
+                                                             ^
+
+[05/May/2015 17:33:33] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:34:16] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:34:34] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:35:01] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:36:08] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:38:38] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:40:12] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:40:17] WARNING [django.request:143] Not Found: /sig/auth/logout/
+[05/May/2015 17:40:34] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 17:57:45] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 17:58:22] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 17:58:26] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:01:53] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:01:54] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:02:24] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:02:42] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:02:52] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 18:12:09] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:50] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:51] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:51] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:16:52] WARNING [django.request:143] Not Found: /sig/publicador/principal
+[05/May/2015 18:21:14] WARNING [django.request:143] Not Found: /sig/publicador/principal/
+[05/May/2015 18:28:53] ERROR [django.request:231] Internal Server Error: /sig/publicador/principal/
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: column publicador_articulo.imagen does not exist
+LINE 1: ...ntenido", "publicador_articulo"."fecha_creacion", "publicado...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/sstuv/publicador/views.py", line 115, in principal
+    articulo = Articulo.objects.first()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/manager.py", line 92, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 510, in first
+    return qs[0]
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 177, in __getitem__
+    return list(qs)[0]
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 141, in __iter__
+    self._fetch_all()
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 966, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/query.py", line 265, in iterator
+    for row in compiler.results_iter():
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 700, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/models/sql/compiler.py", line 786, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 81, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/virtualenvs3/lib/python3.4/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column publicador_articulo.imagen does not exist
+LINE 1: ...ntenido", "publicador_articulo"."fecha_creacion", "publicado...
+                                                             ^
+
+[05/May/2015 18:58:38] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 19:11:05] WARNING [django.request:143] Not Found: /sig/auth/logout
+[05/May/2015 19:22:27] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:23:28] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[05/May/2015 19:23:36] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:28:18] WARNING [django.request:143] Not Found: /sig/publicador/aArticuloDesdeImagen/29
+[05/May/2015 19:28:24] WARNING [django.request:143] Not Found: /sig/publicador/
+[06/May/2015 14:13:49] INFO [sstuvInfo:84] busqueda de expedientes en logger info
+[06/May/2015 14:13:50] WARNING [django.request:143] Not Found: /favicon.ico
+[06/May/2015 14:20:57] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 286, in parse
+    compile_func = self.tags[command]
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 989, in do_if
+    nodelist = parser.parse(('endif',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 288, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 343, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+django.template.base.TemplateSyntaxError: Invalid block tag: 'endblock', expected 'endif'
+[06/May/2015 14:23:25] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: ' tipo == 'ExpedienteLey' { Expediente Ley' from 'if tipo == 'ExpedienteLey' { Expediente Ley'
+[06/May/2015 14:25:25] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:26:36] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:26:39] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:26:52] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:26:54] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:28:03] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'
+[06/May/2015 14:28:05] ERROR [django.request:231] Internal Server Error: /sig/expedientesLey/
+Traceback (most recent call last):
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/mmanto/git/sstuv/documentos/views.py", line 90, in loadBusquedaExpedienteLey
+    return render(request, 'expedienteley_list.html', {'tipo' : 'ExpedienteLey'}, context_instance=RequestContext(request))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/shortcuts.py", line 50, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 170, in render_to_string
+    t = get_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 144, in get_template
+    template, origin = find_template(template_name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 132, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 44, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 50, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 132, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 162, in compile_string
+    return parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 201, in do_extends
+    nodelist = parser.parse()
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/loader_tags.py", line 175, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 833, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 290, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/defaulttags.py", line 975, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 266, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 372, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mmanto/virtualenvs3/python3.4/lib/python3.4/site-packages/django/template/base.py", line 588, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.base.TemplateSyntaxError: Could not parse the remainder: '%  if tipo == 'ExpedienteLey' %' from '%  if tipo == 'ExpedienteLey' %'

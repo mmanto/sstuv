@@ -100,18 +100,28 @@
 
 <tr>
 	<td><label>Fecha de alta</label></td> 
+<<<<<<< HEAD
 	<td><input id="datepicker" name="fecha" value="{{expediente.fecha | date:'DATE_FORMAT'}}" type="text" {% if expediente.id > 0 %}  readonly   {% endif %} >
+=======
+	<td><input id="datepicker" name="fecha_alta" value="{{expediente.fecha_alta | date:'DATE_FORMAT'}}" type="text"  >
+>>>>>>> origin/vdiaz
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
 
-
+<!-- 
 <tr>
+<<<<<<< HEAD
 	<td><label>Fecha de inicio</label></td> 
 	<td><input id="datepicker1" name="fechaInicio" value="{{expediente.fechaInicio | date:'DATE_FORMAT'}}" type="text"  {% if expediente.id > 0 %}  readonly   {% endif %}>
+=======
+	<td><label>fecha_alta de inicio</label></td> 
+	<td><input id="datepicker1" name="fecha_altaInicio" value="{{expediente.fecha_altaInicio | date:'DATE_FORMAT'}}" type="text"  >
+>>>>>>> origin/vdiaz
 	</input> </td>		
 	<td><span id="datepicker-error" class="error_hide">Campo requerido</span> </td>
 </tr>
+ -->
 
 
 <tr>
@@ -189,6 +199,17 @@
 	{% endif %}
 
 
+<tr>
+	 <td> <label>Iniciado por</label> </td> 
+	 <td> <input id="iniciadopor" name="iniciadopor" value="{{expediente.iniciadopor}}" > </td>
+<!-- 	 <td> <span id="caracteristica-error" class="error_hide">Campo requerido</span> </td> -->
+</tr>
+
+<tr>
+	 <td> <label>Motivo</label> </td> 
+	 <td> <input id="motivo" name="motivo" value="{{expediente.motivo}}" > </td>
+<!-- 	 <td> <span id="caracteristica-error" class="error_hide">Campo requerido</span> </td> -->
+</tr>
 
 	<tr>
 		<td> <label>Extracto</label> </td> 
@@ -239,7 +260,7 @@
 <div class="datagrid" >
 <table style="width:100%">
   <tr>
-    <th>Fecha</th>
+    <th>fecha_alta</th>
     <th>Origen</th>
  	<th>Destino</th>
  	<th>Estado</th>
@@ -396,7 +417,24 @@
 
 
 
+<div id="confirmationExit_popup">
 
+	<h2>Exiten campos con datos</h2>
+	<h2>¿Esta seguro que desea salir sin guardar los cambios?</h2>
+
+	<form  action="/sig/expedientes/salir/" method="post">	
+		{% csrf_token %}
+		<input name="exp_tipo" value="{{tipo}}" type="hidden">
+		<table>
+			<tr>	
+				<td> <input type="submit" value="Continuar"> </td>
+				<td>  <input id="closeExitPopup_popup" type="button"  value="Cancelar"> </td>
+			</tr>
+		</table>	
+
+	</form>	
+
+</div>
 
 
 

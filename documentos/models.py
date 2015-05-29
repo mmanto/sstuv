@@ -8,23 +8,19 @@ class Expediente(models.Model):
 	
 	organismo = models.IntegerField()
 	numero = models.CharField(max_length=200)
-	anio = models.IntegerField()
-	
 	caracteristica = models.CharField(max_length=200)
-	fecha = models.DateField('Fecha')
-	fechaInicio=models.DateField('FechaInicio')
+	fecha_alta = models.DateField('Fecha Alta')
+	anio=models.IntegerField()
 	alcance = models.CharField(max_length=200)
 	cuerpo = models.CharField(max_length=200)
+	iniciadopor = models.CharField(max_length=200)
+	motivo = models.CharField(max_length=500)
 	extracto = models.CharField(max_length=5000)
 	cant_fojas= models.IntegerField(default = 0)
 	observacion=models.CharField(max_length=10000)
-	
 	consolidacion=models.BooleanField(default = False)
-
 	usuarioAlta=models.CharField(max_length=200)
 
-
-	
 	def __str__(self):
 		return self.numero
 		

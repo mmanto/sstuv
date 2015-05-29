@@ -4,6 +4,7 @@ from django.core.context_processors import request
 from django.shortcuts import render
 from django.template import RequestContext 
 from documentos.models import Expediente, Pase
+import datetime
 
 
 
@@ -24,10 +25,16 @@ class PaseReport(PDFTemplateView):
         expediente.append(Expediente.objects.get(id = idExpediente))
         
         pase = Pase.objects.get(id=idPase)
+        
+        dateNow = datetime.datetime.now()
+        
+#         dateCurrent = dateNow.day + "/" + dateNow.month + "/" + dateNow.year
+        dateCurrent = "%s/%s/%s" % (dateNow.day, dateNow.month, dateNow.year) 
          
         context = {
             'pase' : pase,
-            'expediente' : expediente
+            'expediente' : expediente,
+            'dateCurrent' : dateCurrent
             
         }
 #         cmd_options = settings.WKHTMLTOPDF_CMD_OPTIONS

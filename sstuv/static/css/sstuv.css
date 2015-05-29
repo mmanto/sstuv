@@ -139,12 +139,6 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv {
 
 
 
-
-
-
-
-
-
 ul#menu {
  background:gray;
  float:left;
@@ -155,7 +149,7 @@ ul#menu {
 }
   
 ul#menu li {
- color: #fff;
+ color: #fff !important;
  float: left;
  width: 18%;
  list-style: none;
@@ -227,5 +221,26 @@ a#logout {
  color: #fff;
 }
 
+.tituloArticulo {
+	text-align: justify;
+	font-weight: bold;
+	color: #f6a828;
+}
 
-	
+#guardarImagen{
+	display:none;
+}
+#listaHorizontal li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 30px;
+}
+#imgEliminar {
+	width: 20px;
+}
+.linkSinSubrayado{
+	text-decoration: none;
+}	
+#inputTitulo {
+	width: 600px;
+}

@@ -109,3 +109,17 @@ class ArticulosView(ListView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             articulos = paginator.page(paginator.num_pages)   
         return articulos
+    
+    def principal(request):        
+        
+        articulo = Articulo.objects.first()
+    
+        articulos = Articulo.objects.all().order_by('id').reverse()[:6]
+        
+        for articulo in articulos:
+            if articulo.contenido != '':
+                articulo.contenido = articulo.contenido[0:400]
+            if len(articulo.imagenes.all()) > 0 :
+                imagenes = articulo.imagenes.all()[0]
+
+        return render_to_response('principalArticulos.html',{'articulos' : articulos}, context_instance=RequestContext(request))

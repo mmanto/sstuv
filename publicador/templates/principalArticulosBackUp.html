@@ -1,0 +1,79 @@
+{% load staticfiles %}
+<link href="{% static "css/publicador.css" %}" rel="stylesheet"> 
+
+<div class="recuadroArticulos">
+	<table>
+		<tr>
+			<td>
+				<div class="recuadro">
+					<a href="#">
+						<div class="divRecuadro">
+							<div class="divTitulo">
+								{{ articulos.0.titulo }}
+							</div>
+							<div class="divImagen">
+								<img class="imagenArticulo" src="{{MEDIA_URL}}{{articulos.0.imagen}}" alt="SSTUV" />
+							</div>
+							<div class="divResumenContenido">
+								{{ articulos.0.contenido }}...
+							</div>
+						</div>
+					</a>
+				</div>
+			</td>
+			<td>
+				<div class="recuadro">
+					<a href="#">
+						<div class="divRecuadro">
+							<div class="divTitulo">
+								{{ articulos.1.titulo }}
+							</div>
+							<div class="divImagen">
+								<img class="imagenArticulo" src="{{MEDIA_URL}}{{articulos.1.imagen}}" alt="SSTUV" />
+							</div>
+							<div class="DivResumenContenido">
+								{{ articulos.1contenido }}...
+							</div>
+						</div>
+					</a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="recuadro">
+					<a href="#">
+						<div class="divRecuadro">
+							<div class="divTitulo">
+								{{ articulos.2.titulo }}
+							</div>
+							<div class="divImagen">
+								<img class="imagenArticulo" src="{{MEDIA_URL}}{{articulos.2.imagen}}" alt="SSTUV" />
+							</div>
+							<div class="DivResumenContenido">
+								{{ articulos.2.contenido }}...
+							</div>
+						</div>
+					</a>
+				</div>
+			</td>
+			<td>
+				<div class="recuadro">
+					<a href="#">
+						<div class="divRecuadro">
+							<div class="divTitulo">
+								{{ articulos.3.titulo }}
+							</div>
+							<div class="divImagen">
+								<img class="imagenArticulo" src="{{MEDIA_URL}}{{articulos.3.imagen}}" alt="SSTUV" />
+							</div>
+							<div class="DivResumenContenido">
+								{{ articulos.3.contenido }}...
+							</div>
+						</div>
+					</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

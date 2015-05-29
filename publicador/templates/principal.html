@@ -1,0 +1,32 @@
+{% extends "principal_base.html" %} 
+{% load staticfiles %}
+
+{% block centro %}
+<div class="centroSuperior">   
+	<div class="centroSuperiorIzquierda">
+		<div id="fotoramaPrincipal"	class="fotorama">
+				{% for articulo in articulos %}
+					<img id="{{articulo.imagenes.all.0.id}}" src="{{MEDIA_URL}}{{articulo.imagenes.all.0.imagen}}" data-caption="{{ articulo.titulo }}" alt="SSTUV" />
+				{% endfor %}
+		</div>
+	</div>
+	
+	<div class="centroSuperiorDerecha">
+		<img class="contenidoSuperiorIzquierda centrado" src="/site_media/static/img/2.png" alt="SSTUV" />
+	</div> 
+</div>
+
+<div class="divisionCentral">
+</div>
+
+<div class="centroInferior">
+	{% block contenidoInferiorIzquierda %}
+		<div class="centroInferiorIzquierda">	
+		</div>
+	{% endblock %} 
+	<div class="centroInferiorDerecha">
+			{% block contenidoInferiorDerecha %}
+			{% endblock %}  
+	</div>
+</div>
+{% endblock %}

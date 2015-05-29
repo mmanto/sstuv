@@ -112,9 +112,9 @@ body {
 
 	<div class="wrapper">
 
+		<h1 align="right">ORIGINAL</h1>
 
-
-		<h1 align="center">REMITO ORIGINAL</h1>
+		<h1 align="center">REMITO MOVILIZADO</h1>
 
 
 
@@ -130,6 +130,7 @@ body {
 				</div> <!-- Panel der -->
 				<div align="right">
 					<h2>REMITO {{pase.id}}</h2>
+					<h2>Fecha {{dateCurrent}}</h2>
 				</div>
 
 			</span>
@@ -189,36 +190,25 @@ body {
 
 					<td>{{exp.organismo}}-{{exp.numero}}-{{exp.anio}}</td>
 
-					<td></td>
+					<td>{{exp.anio}}</td>
 
 					<td>{{exp.alcance}}</td>
 
 					<td>{{exp.cuerpo}}</td>
 
-					<td></td>
+					<td>{{exp.iniciadopor}}</td>
 
 
-					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
-
+					<td>{{exp.fecha_alta | date:"SHORT_DATE_FORMAT"}}</td>
 
 				</tr>
-
+				
+				<tr><td colspan="3">Motivo: {{exp.motivo}}</td></tr>
+				<tr><td colspan="3">Cantidad de fojas: {{exp.cant_fojas}}</td></tr>
 				{% endfor %}
 
 			</table>
 		</div>
-
-
-		</br> </br> </br> </br>
-
-		<div>
-			<label> Motivo: </label>
-		</div>
-
-
-		</br> </br> </br> </br>
-
-
 	</div>
 
 
@@ -372,9 +362,9 @@ body {
 
 	<div class="wrapper">
 
+		<h1 align="right">COPIA</h1>
 
-
-		<h1 align="center">REMITO COPIA</h1>
+		<h1 align="center">REMITO MOVILIZADO</h1>
 
 
 
@@ -390,6 +380,7 @@ body {
 				</div> <!-- Panel der -->
 				<div align="right">
 					<h2>REMITO {{pase.id}}</h2>
+					<h2>Fecha {{dateCurrent}}</h2>
 				</div>
 
 			</span>
@@ -449,35 +440,27 @@ body {
 
 					<td>{{exp.numero}}</td>
 
-					<td></td>
+					<td>{{exp.anio}}</td>
 
 					<td>{{exp.alcance}}</td>
 
 					<td>{{exp.cuerpo}}</td>
 
-					<td></td>
+					<td>{{exp.iniciadopor}}</td>
 
 
-					<td>{{exp.fecha | date:"SHORT_DATE_FORMAT"}}</td>
+					<td>{{exp.fecha_alta | date:"SHORT_DATE_FORMAT"}}</td>
 
 
 				</tr>
+				
+				<tr><td colspan="3">Motivo: {{exp.motivo}}</td></tr>
+				<tr><td colspan="3">Cantidad de fojas: {{exp.cant_fojas}}</td></tr>
 
 				{% endfor %}
 
 			</table>
 		</div>
-
-
-		</br> </br> </br> </br>
-
-		<div>
-			<label> Motivo: </label>
-		</div>
-
-
-		</br> </br> </br> </br>
-
 
 	</div>
 
