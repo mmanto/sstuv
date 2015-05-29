@@ -57,11 +57,7 @@ class ExpedientesView(ListView):
                 print (pase_id_actual)
             else:
                 pase_id_actual = 0                                
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> origin/vdiaz
             pase_id_actual = pase_id_actual + 1
             proximo_pase_id = pase_id_actual  
             proximo_pase_id = str(proximo_pase_id) + str(datetime.date.today().year)
@@ -98,12 +94,14 @@ class ExpedientesView(ListView):
     '''
      Controller: Se carga la búsqueda
     '''
+    '''
     @login_required(redirect_field_name='/sig/expedientes/', login_url='/sig/auth/login')
     def loadBusquedaExpediente(request):
         logger.info('busqueda de expedientes en logger info')
         loggerError.error('busqueda de expedientes en logger error')
         return render(request, 'expedienteley_list.html', {'tipo' : 'Expediente'}, context_instance=RequestContext(request))
     
+    '''
     '''
     Controller: 
     '''
@@ -150,7 +148,6 @@ class ExpedientesView(ListView):
             
             
             request.session['filtroExpediente']= filter_dict  
-<<<<<<< HEAD
             
      
         expedientes = (list( Expediente.objects.filter(**filter_dict).distinct() ))
@@ -160,16 +157,6 @@ class ExpedientesView(ListView):
         expedientes.extend(expedientesLey)
       
         paginator = Paginator(expedientes, 10) 
-=======
-                     
-        if(len(filter_dict) > 0):
-            if (tipo == 'Expediente'):
-                expedientes = ( Expediente.objects.filter(**filter_dict).distinct() )
-            elif (tipo == 'ExpedienteLey'):
-                expedientes = ( ExpedienteLey.objects.filter(**filter_dict).distinct() )
-                
-        paginator = Paginator(expedientes, 10)  # Show 25 contacts per page
->>>>>>> origin/vdiaz
 
         try:
             expedientes = paginator.page(page)
